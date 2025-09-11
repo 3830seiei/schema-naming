@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: schema-naming-lint
+        name: schema-naming lint
+        entry: python tools/lint_names.py
+        language: system
+        pass_filenames: false

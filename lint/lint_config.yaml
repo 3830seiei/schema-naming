@@ -1,0 +1,5 @@
+rules:
+  nn_table_regex: "^map_[a-z0-9_]+__[_a-z0-9]+$"
+  pk_suffix: "_id"
+  timestamp_suffixes: ["_at", "_on"]
+  boolean_prefixes: ["is_", "has_", "can_"]

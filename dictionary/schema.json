@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "version",
+    "terms"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "about": {
+      "type": "object"
+    },
+    "legend": {
+      "type": "object"
+    },
+    "terms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "canonical"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "canonical": {
+            "type": "object"
+          },
+          "synonyms": {
+            "type": [
+              "array",
+              "object"
+            ]
+          },
+          "forbidden": {
+            "type": [
+              "array",
+              "object"
+            ]
+          },
+          "lint": {
+            "type": "object"
+          },
+          "migration": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}
