@@ -1,0 +1,11 @@
+table: mst_attribute
+title: { ja: 属性マスタ, en: Attribute Master }
+columns:
+  - { name: attribute_id, type: bigint, identity: true, nullable: false }
+  - { name: attribute_code, type: text, unique: true, nullable: false }
+  - { name: attribute_name_ja, type: text, nullable: false }
+  - { name: attribute_name_en, type: text, nullable: false }
+  - { name: datatype, type: text, nullable: false }
+  - { name: unit_code, type: text, nullable: true }
+constraints:
+  - { name: pk_mst_attribute, type: primary_key, columns: [attribute_id] }

@@ -1,0 +1,68 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: H.Miyazawa
+  history:
+    - version: 1.0.0
+      date: '2025-06-27'
+      author: H.Miyazawa
+      comment: OptiServe用のデータベース設計
+
+#- database info ------------------------------------------
+database:
+  name: pg_optigate  # optiserve gateway
+  owner: usr_optigate
+  encoding: UTF8
+  locale:
+    lc_collate: ja_JP.UTF-8
+    lc_ctype: ja_JP.UTF-8
+    icu_locale: ja-JP
+    provider: icu
+  tablespace: pg_default
+  connection_limit: -1
+  is_template: false
+
+#- table groups -------------------------------------------
+# == v1.1.0 コメントとtable_orderを追加 ==
+# 各テーブルの分類と表示順を定義します。
+#
+# 各テーブルには `table_order` を必ず指定してください。
+# - `table_order` は 1 から始まる **連続した整数値** とします（例：1, 2, 3, ...）。
+# - `table_order` は **重複不可** かつ **欠番を許容しません**。
+# - 定義順ではなく、この `table_order` を元に Alembic マイグレーションの順序が決定されます。
+# - マイグレーション依存（外部キー等）やテーブル構築順に影響しますので、慎重に管理してください。
+#
+# 補足:
+# この順序情報はドキュメント（MkDocs）出力や、開発者向けのグルーピング表示にも活用されます。
+table_groups:
+  - name: OptiServe管理
+    groups:
+      - table_name: mst_user
+        description: OptiServe管理のユーザーマスタ
+        table_order: 1
+      - table_name: user_entity_link
+        description: ユーザーとエンティティの紐付け
+        table_order: 2
+      - table_name: medical_device_usage_flags
+        description: 医療器機の集計使用対象にするかのフラグ管理
+        table_order: 3
+      - table_name: facility_upload_log
+        description: 医療機関のファイルアップロード履歴
+        table_order: 4
+      - table_name: report_publication_log
+        description: 医療機関向けレポートの公開履歴
+        table_order: 5
+      - table_name: medical_device_classification_report_selection
+        description: レポート出力対象の機器分類選択情報
+        table_order: 6
+  - name: 外部提供テーブル
+    groups:
+      - table_name: mst_medical_facility
+        description: 医療機関マスタ（公開データ）
+        table_order: 7
+      - table_name: medical_device_list
+        description: 医療機関の機器台帳
+        table_order: 8
+      - table_name: mst_medical_device_classification
+        description: 機器分類マスタ
+        table_order: 9

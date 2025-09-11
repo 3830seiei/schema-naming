@@ -1,109 +1,147 @@
-# Database Naming & Schema Conventions
+# データベース命名・設計規約（フル版 / 日本語）
+_最終更新: 2025-09-11
 
-> 本書は、長期運用を前提とした **国際対応の命名規約** と **スキーマ設計の原則** を定義します。
-> This document defines durable, internationally-consistent naming and schema conventions.
+本書は長期運用を前提とした **国際対応の命名規約** と **スキーマ設計の原則** を定義します。識別子は英語（ASCII, snake_case, 単数形）を正とし、日本語は説明（title/description）で補います。
 
 ---
 
-## 1. スコープ / Audience
+## 1. スコープ / 対象
+- 対象RDBMS: PostgreSQL（前提）
+- 対象: **テーブル / カラム / 制約 / インデックス / ビュー / マスタ（コード表） / n:n 中間表**
+- 言語・記法: **英語の snake_case・単数形**（`medical_device`, `medical_facility` など）
 
-- RDBMS: PostgreSQL（想定）
-- 対象: テーブル／カラム／制約／インデックス／ビュー／コード表（マスタ）／n:n マッピング
-- 表記: **英語を正（Canonical）**、識別子は ASCII の **snake_case**、**単数形**
+## 2. 設計原則
+1. **Clarity over brevity**：省略よりも明確さを優先。曖昧語・略語は避ける。
+2. **Deterministic naming**：人と機械が同じルールで名前を一意に導出できること。
+3. **Canonical English + Multilingual meta**：識別子は英語、説明は多言語メタ（`title.ja/en`, `description.ja/en`）。
+4. **Separation of concerns**：マスタ / 業務データ / ログ / 中間表を明確に分離。
+5. **Validation-first**：Lint/CI による自動検証を前提とする。
 
-## 2. 設計原則 / Design Principles
+## 3. 規制用語ポリシー（PMDA/MHLW 整合）
 
-1. **Clarity over brevity** — 可読性を優先（曖昧語・省略形を避ける）
-2. **Deterministic naming** — 人と機械で一意に導出できる命名
-3. **Canonical English + Multilingual meta** — 識別子は英語、説明は多言語メタで保持
-4. **Separation of concerns** — マスタ／業務データ／ログ／中間表の分離
-5. **Validation-first** — Lint/CIで規約順守を自動検証
+### 規制用語ポリシー（日本語版）
+_最終更新: 2025-09-11
 
-## 3. テーブル命名 / Table Names
+本プロジェクトの命名は **日本の規制当局（PMDA/厚生労働省）で用いられる用語** に整合させます。
 
-**形式**: `<prefix_optional><domain>_<object>`
+### 基本方針
 
-- `mst_`（マスタ）, `map_`（n:n）, `log_`（ログ/イベント）, `stg_`（ステージング）, `vw_`/`mv_`（ビュー）
-- **n:n 中間表**: `map_<entity_a>__<entity_b>`（ダブルアンダースコアで順序固定）
-- 例: `mst_medical_facility`, `map_medical_facility__equipment`
+- 正規の用語は **`medical_device`（医療機器）** を用います。
+  - ドキュメント上の説明として *medical equipment* を許容しますが、**識別子**では使用しません。
+  - 略語 **ME** は **識別子で禁止**（Medical Engineer/Engineering との混同を避ける）。
+- 規制上のリスク区分は **`risk_class`** とし、値は **`I`/`II`/`III`/`IV`** を採用します。
+- 一般的名称（JMDN）は **`jmdn_code`** と **`jmdn_name_ja` / `jmdn_name_en`** を保持します。
+- **`classification`** は階層的タクソノミー専用の語とし、規制の **「Class」**（リスク区分）とは用途を分離します。
+  - 階層を列で持つ場合は **`classification_level1..N`** を使用します。
+- n:n の表名は **`map_<a>_<b>`**（アンダースコア1個）。
+  - **特例**：ユーザーが医療機関/ディーラー/メーカー等に属しうる多態関連は **`map_user_entity`** を許容し、当該表の外部キー名も **`entity_id`** を維持します。
 
-## 4. カラム命名 / Column Names
+## 4. テーブル命名
+- 形式: `<prefix_optional><domain>_<object>`
+  - 代表プレフィックス:
+    - `mst_`（マスタ）, `map_`（n:n）, `log_`（ログ/イベント）, `stg_`（ステージング）, `vw_`/`mv_`（ビュー/マテビュー）
+- **n:n 中間表**：`map_<a>_<b>`（アンダースコア1個・語順はドメイン優先で固定）
+  - 例: `map_medical_facility_medical_device`
+- **医療機関**：`medical_facility` を用いる（`facility` 単独は不可。一般施設と混同するため）。
+- 例：
+  - `mst_medical_facility`（医療機関マスタ）
+  - `mst_medical_device_classification`（医療機器分類マスタ）
+  - `log_report_publication`（レポート公開ログ）
+  - **特例**：`map_user_entity`（多態関連、`entity_id` を維持）
 
-- **主キー**: `<table_short>_id`（`table_short` は接頭辞除去後の残り。短縮しない）
-  例: `mst_medical_facility.medical_facility_id`
-- **外部キー**: `<referenced_table_short>_id`（例: `medical_facility_id`）
-- **コード/名称/説明**: `*_code` / `*_name` / `*_label` / `*_desc`
-- **真偽**: `is_` / `has_` / `can_`
-- **日時**: `*_at`（timestamptz）, 日付のみ `*_on`（date）
-- **監査**: `created_at`, `created_by`, `updated_at`, `updated_by`（必要に応じ `deleted_*`）
+## 5. カラム命名
+- **主キー**：`<table_short>_id`
+  - `table_short` はプレフィックス（`mst_`, `map_`, `log_` 等）を除いた残り。短縮せずに用いる。
+  - 例: `mst_medical_facility.medical_facility_id`
+- **外部キー**：`<referenced_table_short>_id`
+  - 例: `medical_facility_id`, `medical_device_id`
+- **日時**：`*_at`（timestamptz）, **日付のみ**：`*_on`（date）
+  - 置換の目安：`*_datetime → *_at`, `regdate → created_at`, `lastupdate → updated_at`
+- **真偽**：`is_` / `has_` / `can_`
+- **コード/名称/説明**：`*_code` / `*_name` / `*_label` / `*_desc`
+- **監査**：`created_at`, `created_by`, `updated_at`, `updated_by`（必要に応じ `deleted_*`）
+- **禁止/注意**：`*_type` / `*_kind` / `*_class` は原則禁止（`classification` と `risk_class` を使い分け）。
 
-## 5. 制約・インデックス / Constraints & Indexes
+## 6. 制約・インデックス命名
+- PK：`pk_<table>`
+- FK：`fk_<table>__<column>`（表名と列名の間にダブルアンダースコアを用いて可読性を確保）
+- UQ：`uq_<table>__<column(s)>`
+- CHECK：`ck_<table>__<name>`
+- INDEX：`idx_<table>__<column(s)>`
 
-- PK: `pk_<table>`
-- FK: `fk_<table>__<column>`
-- UQ: `uq_<table>__<column(s)>`
-- CHECK: `ck_<table>__<name>`
-- INDEX: `idx_<table>__<column(s)>`
+## 7. コントロールド・ボキャブラリ（抜粋）
+| 正規語 (識別子) | 日本語 | 説明/注記 | 禁止・注意 |
+|---|---|---|---|
+| `medical_device` | 医療機器 | 規制用語に整合した主語。 | `medical_equipment` は識別子で不可（ドキュメントのみ許容）。`ME` 禁止。 |
+| `medical_facility` | 医療機関 | 病院・クリニック等を含む。 | `facility` 単独は禁止。 |
+| `classification` | 分類（階層） | 例：`classification_level1..N` | `type`/`kind`/`class` を避ける。 |
+| `risk_class` | リスククラス | 値：`I`/`II`/`III`/`IV` | `class` 単独は不可。 |
+| `jmdn_code` | JMDNコード | 一般的名称コード | — |
 
-## 6. コントロールド・ボキャブラリ / Controlled Vocabulary
-
-| Canonical (en)    | 日本語   | OK in docs (synonyms) | Forbidden (識別子不可)       | Notes |
-|---|---|---|---|---|
-| medical_facility  | 医療機関 | hospital, clinic      | facility（医療の意味では不可）| 施設一般は別語 |
-| medical_equipment | 医療機器 | equipment, device     | medical_entity, entity       | “ME”は説明のみ |
-| classification    | 分類     | taxonomy              | type, kind                   | 階層的分類 |
-| category          | 区分     | group                 | type, kind                   | 平坦なグループ |
-| status            | 状態     | state                 | phase（設計により）          | ライフサイクル |
-| boolean prefixes  | —        | is_, has_, can_       | —                            | 真偽接頭辞 |
-
-## 7. 多言語メタ / Multilingual Metadata
-
-- テーブル/カラムに `title.en/ja`, `description.en/ja` を付与可能。識別子は英語固定。
-
-## 8. YAML 定義の最小形 / Minimal YAML
-
+## 8. YAML テンプレート（最小例）
 ```yaml
 table: mst_medical_facility
-title: { en: Medical Facility, ja: 医療機関 }
-description: { en: Master of healthcare provider sites., ja: 医療機関マスタ }
+title: {{ ja: 医療機関, en: Medical Facility }}
+description: {{ ja: 医療機関のマスタ, en: Master of healthcare provider sites. }}
 columns:
-  - { name: medical_facility_id, type: bigint, identity: true, nullable: false }
-  - { name: facility_code, type: text, unique: true, nullable: false }
-  - { name: facility_name, type: text, nullable: false }
-  - { name: is_active, type: boolean, default: true }
-  - { name: created_at, type: timestamptz, nullable: false }
-  - { name: created_by, type: bigint, nullable: false }
-  - { name: updated_at, type: timestamptz, nullable: false }
-  - { name: updated_by, type: bigint, nullable: false }
+  - {{ name: medical_facility_id, type: bigint, identity: true, nullable: false }}
+  - {{ name: facility_code, type: text, unique: true, nullable: false }}
+  - {{ name: facility_name, type: text, nullable: false }}
+  - {{ name: risk_class, type: text, nullable: true }}               # I/II/III/IV
+  - {{ name: jmdn_code, type: text, nullable: true }}
+  - {{ name: is_active, type: boolean, default: true }}
+  - {{ name: created_at, type: timestamptz, nullable: false }}
+  - {{ name: created_by, type: bigint, nullable: false }}
+  - {{ name: updated_at, type: timestamptz, nullable: false }}
+  - {{ name: updated_by, type: bigint, nullable: false }}
 constraints:
-  - { name: pk_mst_medical_facility, type: primary_key, columns: [medical_facility_id] }
+  - {{ name: pk_mst_medical_facility, type: primary_key, columns: [medical_facility_id] }}
 indexes:
-  - { name: idx_mst_medical_facility__facility_code, columns: [facility_code] }
+  - {{ name: idx_mst_medical_facility__facility_code, columns: [facility_code] }}
 ```
 
-### n:n 例
-
+### n:n 例（汎用）
 ```yaml
-table: map_medical_facility__equipment
-title: { en: Facility–Equipment Mapping, ja: 医療機関と医療機器の関連 }
+table: map_medical_facility_medical_device
+title: {{ ja: 医療機関と医療機器の関連, en: Facility–Device Mapping }}
 columns:
-  - { name: medical_facility_id, type: bigint, nullable: false }
-  - { name: medical_equipment_id, type: bigint, nullable: false }
-  - { name: created_at, type: timestamptz, nullable: false }
+  - {{ name: medical_facility_id, type: bigint, nullable: false }}
+  - {{ name: medical_device_id, type: bigint, nullable: false }}
+  - {{ name: created_at, type: timestamptz, nullable: false }}
 constraints:
-  - { name: pk_map_medical_facility__equipment, type: primary_key, columns: [medical_facility_id, medical_equipment_id] }
+  - {{ name: pk_map_medical_facility_medical_device, type: primary_key, columns: [medical_facility_id, medical_device_id] }}
 ```
 
-## 9. 決定性アルゴリズム / Deterministic Rules
+### n:n 例（特例：ユーザー多態関連）
+```yaml
+table: map_user_entity
+title: {{ ja: ユーザーとエンティティの関連（多態）, en: User–Entity (polymorphic) Mapping }}
+columns:
+  - {{ name: user_id, type: bigint, nullable: false }}
+  - {{ name: entity_id, type: bigint, nullable: false }}  # 特例として名称を維持
+  - {{ name: entity_kind, type: text, nullable: false }}  # facility/dealer/manufacturer 等の区別（実装に応じて）
+  - {{ name: created_at, type: timestamptz, nullable: false }}
+constraints:
+  - {{ name: pk_map_user_entity, type: primary_key, columns: [user_id, entity_id] }}
+```
 
-- `table_short` = テーブル名から `mst_/map_/log_/stg_/vw_/mv_` を除去した残り（短縮しない）
-- PK 名: `<table_short>_id`／FK 名: `<referenced_table_short>_id`
-- n:n: `^map_[a-z0-9_]+__[_a-z0-9]+$`
-- 予約・禁止語は `dictionary/naming_dictionary.yaml` で管理
+## 9. 決定性ルール（要約）
+- `table_short` = テーブル名 − プレフィックス（`mst_`, `map_`, `log_`, `stg_`, `vw_`, `mv_`）。
+- PK：`<table_short>_id`、FK：`<referenced_table_short>_id`
+- n:n：`map_<a>_<b>`（特例 `map_user_entity`）
+- 日時接尾辞：`*_at` / `*_on`、真偽接頭辞：`is_` / `has_` / `can_`
+- 禁止語：`facility`（医療機関の意味では禁止）、`type`/`kind`/`class`（classification/risk_class で置換）、`ME`（曖昧）
 
-## 10. ガバナンス / Governance
+## 10. 運用・ガバナンス
+- **Source of Truth**：`dictionary/naming_dictionary.yaml`（schema-naming リポ）
+- **Versioning**：SemVer（MAJOR 破壊的／MINOR 語彙追加／PATCH 誤字訂正等）
+- **レビュー**：辞書・規約の変更は必須レビュー（CODEOWNERS 推奨）
+- **CI/Lint**：禁止語・命名パターン・接尾辞・FK語幹統一などを自動検証
 
-- Source of Truth: `dictionary/naming_dictionary.yaml`
-- SemVer: MAJOR/MINOR/PATCH
-- PR レビュー: 規約変更／語彙追加は必須レビュー
-- Lint/CI: 禁止語・パターン違反・表記ゆれを検出
+---
+
+## 付録：変換の目安（参考）
+- `medical_equipment` / `medical_entity` → `medical_device`
+- `*_datetime` → `*_at`
+- `regdate` → `created_at` / `lastupdate` → `updated_at`
+- `*_link`（中間表）→ `map_<a>_<b>`（`user_entity` は特例として名称固定）

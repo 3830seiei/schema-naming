@@ -1,0 +1,10 @@
+table: map_product_external
+title: { ja: 商品の外部コード対応, en: Product External Codes }
+columns:
+  - { name: product_id, type: bigint, nullable: false }
+  - { name: source_system, type: text, nullable: false }
+  - { name: code_type, type: text, nullable: false }
+  - { name: code_value, type: text, nullable: false }
+  - { name: created_at, type: timestamptz, nullable: false }
+constraints:
+  - { name: pk_map_product_external, type: primary_key, columns: [product_id, source_system, code_type, code_value] }

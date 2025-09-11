@@ -1,0 +1,12 @@
+table: mst_product_sku
+title: { ja: 商品SKU, en: Product SKU }
+columns:
+  - { name: product_sku_id, type: bigint, identity: true, nullable: false }
+  - { name: product_id, type: bigint, nullable: false }
+  - { name: sku_code, type: text, unique: true, nullable: true }
+  - { name: spec_text, type: text, nullable: true }
+  - { name: created_at, type: timestamptz, nullable: false }
+  - { name: updated_at, type: timestamptz, nullable: false }
+constraints:
+  - { name: pk_mst_product_sku, type: primary_key, columns: [product_sku_id] }
+  - { name: fk_mst_product_sku__product_id, type: foreign_key, columns: [product_id], references: mst_product(product_id) }

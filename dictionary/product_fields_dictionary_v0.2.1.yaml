@@ -1,0 +1,93 @@
+# product_fields_dictionary.yaml — v0.2.1 (regulatory-aligned + commerce)
+---
+version: "0.2.1"
+updated_at: "2025-09-11"
+about:
+  ja: "商品領域の正規語彙（規制=medical_device と商流=product を分離）。"
+  en: "Canonical vocabulary for commerce; separates regulatory 'medical_device' from 'product'."
+
+entities:
+  - id: PRODUCT
+    canonical: { en: product, ja: 商品 }
+    lint:
+      pk_name: product_id
+
+  - id: PRODUCT_SKU
+    canonical: { en: product_sku, ja: 商品SKU }
+    lint:
+      pk_name: product_sku_id
+
+fields:
+  - id: MPN
+    canonical: { en: mpn, ja: メーカー型番 }
+    synonyms:
+      ja: [型番, 品番, 製品番号]
+      en: [manufacturer_part_number, part_number]
+    notes:
+      ja: "メーカーが公式に付与した型番。メーカーIDと組で一意。"
+      en: "Official manufacturer part number; unique per manufacturer."
+    lint:
+      unique_with: [manufacturer_id]
+      charset: "A-Z0-9-._/"
+      case: "preserve"
+
+  - id: MODEL_NAME
+    canonical: { en: model_name, ja: モデル名 }
+    synonyms:
+      ja: [シリーズ名, 形式]
+      en: [model, series]
+    notes:
+      ja: "人が読む系のモデル名称（MPNとは別軸）。"
+
+  - id: CATALOG_CODE
+    canonical: { en: catalog_code, ja: カタログコード }
+    synonyms:
+      ja: [掲載コード, 掲載番号]
+    notes:
+      ja: "媒体ごと（medie/jahid 等）の商品掲載コード。媒体内で一意。"
+    lint:
+      unique_with: [source_system]
+
+  - id: SUPPLIER_PRODUCT_CODE
+    canonical: { en: supplier_product_code, ja: 仕入先商品コード }
+    notes:
+      ja: "特定ディーラー/サプライヤが付与する内部コード。supplier_id と組で一意。"
+    lint:
+      unique_with: [supplier_id]
+
+  - id: SKU_CODE
+    canonical: { en: sku_code, ja: SKUコード }
+    notes:
+      ja: "自社のSKU。product_sku単位の識別子。"
+
+  - id: SPEC_TEXT
+    canonical: { en: spec_text, ja: 規格テキスト }
+    synonyms:
+      ja: [規格]
+    notes:
+      ja: "自由記述の規格/仕様。構造化できない記述を保持。"
+
+  - id: ATTRIBUTES
+    canonical: { en: attributes, ja: 属性 }
+    notes:
+      ja: "構造化可能な規格は属性として key/value で表現（例：サイズ、容量、長さ）。"
+    schema:
+      attribute_tables:
+        - mst_attribute: [attribute_id, attribute_code, attribute_name_ja, attribute_name_en, datatype, unit_code]
+        - map_product_sku_attribute: [product_sku_id, attribute_id, value_text, value_numeric, unit_code]
+
+forbidden:
+  - device
+  - item_code
+  - product_number
+
+mapping_guidelines:
+  decision_tree_ja: |
+    1) その番号は誰が付与？
+       - メーカー → mpn
+       - 媒体（medie/jahid） → catalog_code（source_system付き）
+       - ディーラー/仕入先 → supplier_product_code（supplier_id付き）
+       - 自社 → product_code / sku_code
+    2) 「規格」は何を指す？
+       - サイズ/容量/長さなどの**バリアント属性** → attributes に正規化
+       - JIS/ISO等の**規格適合** → 別テーブル（mst_standard / map_product_standard）で管理

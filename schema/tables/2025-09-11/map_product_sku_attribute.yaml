@@ -1,0 +1,10 @@
+table: map_product_sku_attribute
+title: { ja: SKU属性, en: SKU Attributes }
+columns:
+  - { name: product_sku_id, type: bigint, nullable: false }
+  - { name: attribute_id, type: bigint, nullable: false }
+  - { name: value_text, type: text, nullable: true }
+  - { name: value_numeric, type: numeric, nullable: true }
+  - { name: unit_code, type: text, nullable: true }
+constraints:
+  - { name: pk_map_product_sku_attribute, type: primary_key, columns: [product_sku_id, attribute_id] }

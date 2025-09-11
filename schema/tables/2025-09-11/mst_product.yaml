@@ -1,0 +1,15 @@
+table: mst_product
+title: { ja: 商品, en: Product }
+columns:
+  - { name: product_id, type: bigint, identity: true, nullable: false }
+  - { name: product_code, type: text, unique: true, nullable: true }
+  - { name: product_name, type: text, nullable: false }
+  - { name: manufacturer_id, type: bigint, nullable: true }
+  - { name: mpn, type: text, nullable: true }
+  - { name: model_name, type: text, nullable: true }
+  - { name: product_kind, type: text, nullable: true }
+  - { name: created_at, type: timestamptz, nullable: false }
+  - { name: updated_at, type: timestamptz, nullable: false }
+constraints:
+  - { name: pk_mst_product, type: primary_key, columns: [product_id] }
+  - { name: uq_mst_product__manufacturer_mpn, type: unique, columns: [manufacturer_id, mpn] }

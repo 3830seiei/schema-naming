@@ -1,0 +1,63 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: H.Miyazawa
+  history:
+  - version: 1.0.0
+    date: '2025-06-27'
+    author: H.Miyazawa
+    comment: OptiServe用のデータベース設計
+  - version: 1.1.0
+    date: '2025-07-10'
+    author: H.Miyazawa
+    comment: '1.PK情報バグ修正（rank追加）。2.外部キー情報を追加'
+
+#- tableinfo ----------------------------------------------
+table_name: equipment_classification_report_selection
+description: レポート出力用の機器分類の選択情報
+#- columns info -------------------------------------------
+columns:
+- name: medical_id
+  description: 医療機関ID
+  data_type: integer
+  primary_key: true
+  nullable: false
+  comment: null
+  references:
+    table: mst_medical_facility
+    column: medical_id
+    enforced: false  # DB制約無し
+    on_delete: restrict  # restrict, cascade, set null, no action
+    on_update: restrict
+    comment: 'mst_medical_facilityテーブルのmedical_idを参照。'
+- name: rank
+  description: 機器分類の表示順序
+  data_type: integer
+  primary_key: true
+  nullable: false
+  comment: 'レポートの機器分類の表示順序を示す。小さいほど上位に表示される。'
+- name: classification_id
+  description: 機器分類ID
+  data_type: serial
+  primary_key: false
+  nullable: true
+  comment: 'レポート出力対象の機器分類ID。NULLの場合は、システムルールに従って自動的に選択される。'
+  references:
+    table: mst_equipment_classification
+    column: classification_id
+    enforced: false  # DB制約無し
+    on_delete: restrict  # restrict, cascade, set null, no action
+    on_update: restrict
+    comment: 'mst_equipment_classificationテーブルのclassification_idを参照。機器分類のID。'
+- name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: false
+  comment: null
+- name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: false
+  comment: null

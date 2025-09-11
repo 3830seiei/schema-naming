@@ -1,0 +1,99 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: H.Miyazawa
+  history:
+  - version: 1.0.0
+    date: '2025-06-27'
+    author: H.Miyazawa
+    comment: OptiServe用のデータベース設計
+  - version: 1.1.0
+    date: '2025-07-10'
+    author: H.Miyazawa
+    comment: 'インデックス情報と外部キー情報を追加'
+
+#- tableinfo ----------------------------------------------
+table_name: mst_medical_device_classification
+description: 医療機関別と公開用（共通）の医療機器分類を管理するマスタテーブル
+#- columns info -------------------------------------------
+columns:
+- name: classification_id
+  description: 機器分類ID
+  data_type: serial
+  primary_key: true
+  nullable: false
+  comment: null
+- name: medical_facility_id
+  description: 医療機関ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '医療機関ID。医療機関別の分類の場合は設定される。NULLの場合は公開用の分類。'
+  references:
+    table: mst_medical_facility
+    column: medical_facility_id
+    enforced: false  # DB制約無し
+    on_delete: restrict  # restrict, cascade, set null, no action
+    on_update: restrict
+    comment: 'mst_medical_facilityテーブルのmedical_facility_idを参照。医療機関別の分類の場合は設定される。'
+- name: classification_level
+  description: レベル（分類の階層）
+  data_type: integer
+  primary_key: false
+  nullable: false
+  comment: '分類の階層を示す。1 : 大分類、 2 : 中分類、3 : 小分類。'
+- name: classification_name
+  description: 機器分類名
+  data_type: text
+  primary_key: false
+  nullable: false
+  comment: '機器分類の名前。'
+- name: parent_id
+  description: 親となる機器分類ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '親となる機器分類のID。NULLの場合は最上位の分類。'
+  references:
+    table: mst_medical_device_classification
+    column: classification_id
+    enforced: false  # DB制約無し
+    on_delete: restrict  # restrict, cascade, set null, no action
+    on_update: restrict
+    comment: 'mst_medical_device_classificationテーブルのclassification_idを参照。親となる機器分類のID。'
+- name: publication_classification_id
+  description: 公開用の機器分類ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '公開用の機器分類ID。医療機関別の分類の場合は基本的に設定されるが分類できないものはNULL。公開用の機器分類の場合はNULL。'
+  references:
+    table: mst_medical_device_classification
+    column: classification_id
+    enforced: false  # DB制約無し
+    on_delete: restrict  # restrict, cascade, set null, no action
+    on_update: restrict
+    comment: 'mst_medical_device_classificationテーブルのclassification_idを参照。公開用の機器分類ID。'
+- name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: false
+  comment: null
+- name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: false
+  comment: null
+
+#- indexes info -------------------------------------------
+indexes:
+- name: idx_mst_medical_device_classification_medical_facility_id
+  columns: [medical_facility_id]
+  unique: false
+  note: '医療機関IDのインデックス。医療機関別の機器分類を効率的に検索するためのインデックス。'
+- name: idx_mst_medical_device_classification_classification_name
+  columns: [classification_name]
+  unique: false
+  note: '機器分類名のインデックス。機器分類名での検索を効率化するためのインデックス。'

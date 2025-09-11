@@ -15,7 +15,7 @@ This checklist tracks schema-naming governance setup (rules/dictionary/tools) be
 
 - ✅ 既存PoCのDBは**使わない／触らない**
 - ✅ まずは**ルール→辞書→変換ライン**を整える（DB構築は次フェーズ）
-- ✅ 旧→新の**全件対比は alias\_map.csv**（YAML本体は新命名だけ）
+- ✅ 旧→新の**全件対比は alias_map.csv**（YAML本体は新命名だけ）
 
 ## 実行計画（1時間タスクで細切れ）
 
@@ -23,10 +23,11 @@ This checklist tracks schema-naming governance setup (rules/dictionary/tools) be
 
 1. **Non-negotiables一枚化（1h）**
    `map_<a>__<b>`, `<table_short>_id`, `medical_facility`, `medical_equipment`, `classification/category/status`, `*_at/*_on`, 制約名ルール を1ページに。
+
 2. **語彙の最終合意（1h）**
    `medical_entity → medical_equipment`、`facility`は汎用予約、Booleansは `is_/has_/can_`。
-3. **命名の自動判定仕様（1h）**
 
+3. **命名の自動判定仕様（1h）**
     - `table_short` 抽出（`mst_/map_/log_/stg_`を除去→残りをそのまま採用）
     - n\:n 正規表現 `^map_[a-z0-9_]+__[_a-z0-9]+$`
     - PK/FK/日時/禁止語のチェック順
@@ -92,8 +93,16 @@ This checklist tracks schema-naming governance setup (rules/dictionary/tools) be
 - [ ] **命名辞書（YAML）**：JP/EN説明付き、`MEDICAL_FACILITY` / `MEDICAL_EQUIPMENT` ほか
 - [ ] **schema.json**：辞書のスキーマ
 - [ ] **Excel→YAML 変換ツール** & **config（見出しマップ）**
-- [ ] **alias\_map.csv**（旧→新の全件対比）
+- [ ] **alias_map.csv**（旧→新の全件対比）
 - [ ] **occurrences.csv**（コード内出現一覧） & **置換スクリプト**
-- [ ] **rule\_of\_database\_design.md**（Non-negotiables固定、移行記述を削除）
+- [ ] **rule_of_database_design.md**（Non-negotiables固定、移行記述を削除）
 - [ ] **devbase/README**（参照・固定・パイプライン明記）
 - [ ] **Top50対訳表** / **変換チュートリアル**
+
+## 更新履歴（2025-09-11）
+- alias_map 初期版を生成: 0 件の置換候補（規則別: ）
+- 生成物: [alias_map.csv](alias_map.csv) / [alias_report.json](alias_report.json)
+- 次アクション:
+  - 高確度（confidence >= 0.95）を先にレビュー
+  - `*_entity_link` 系は Left 側の正規語確認の上で `map_<left>__medical_equipment` へ確定
+  - `equipment_id -> medical_equipment_id` は文脈確認後に一括適用

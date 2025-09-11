@@ -1,0 +1,91 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: H.Miyazawa
+  history:
+  - version: 1.0.0
+    date: '2025-06-27'
+    author: H.Miyazawa
+    comment: OptiServe用のデータベース設計
+  - version: 1.1.0
+    date: '2025-07-10'
+    author: H.Miyazawa
+    comment: 'インデックス情報を追加'
+
+#- tableinfo ----------------------------------------------
+table_name: mst_medical_facility
+description: 医療機関マスタ（公開データ）
+#- columns info -------------------------------------------
+columns:
+- name: medical_id
+  description: 医療機関ID
+  data_type: serial
+  primary_key: true
+  nullable: false
+  comment: null
+- name: medical_name
+  description: 医療機関名
+  data_type: text
+  primary_key: false
+  nullable: false
+  comment: '医療機関の名称。'
+- name: address_postal_code
+  description: 医療機関の郵便番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: '医療機関の郵便番号（オプション）'
+- name: address_prefecture
+  description: 医療機関の都道府県
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: '医療機関の都道府県（オプション）'
+- name: address_city
+  description: 医療機関の市区町村
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: '医療機関の市区町村（オプション）'
+- name: address_line1
+  description: 医療機関の住所1
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: '医療機関の町名以降・番地（オプション）'
+- name: address_line2
+  description: 医療機関の住所2
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: '医療機関の建物名等（オプション）'
+- name: phone_number
+  description: 医療機関の電話番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: '医療機関の電話番号（オプション）'
+- name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: false
+  comment: null
+- name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: false
+  comment: null
+
+#- indexes info -------------------------------------------
+indexes:
+  - name: idx_medical_name
+    columns: [address_prefecture, medical_name]
+    unique: false
+    note: '医療機関名のインデックスだけど、同名の医療機関が存在する可能性があるので、都道府県と組み合わせてできるだけ一意制約を設ける。'
+
+  - name: idx_phone_number
+    columns: [phone_number]
+    unique: false
+    note: '医療機関の電話番号のインデックス。'

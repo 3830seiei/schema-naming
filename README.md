@@ -1,5 +1,5 @@
 # schema-naming
-Single source of truth for **RDB schema naming** (dictionary + lint + tools).  
+Single source of truth for **RDB schema naming** (dictionary + lint + tools).
 識別子の命名規約と語彙、検証ツール群を横断プロジェクトで共有します。
 
 ## What this repo is
@@ -23,6 +23,7 @@ tools/           # build_alias_map.py / dictionary_flat.py / lint_names.py / xls
 ci/              # pre_commit_hook.yaml（各プロジェクト側に取り込み）
 docs/            # 規約本文（rule_of_database_design.md）など
 examples/        # サンプル入力/出力（必要に応じて追加）
+schema/          # 辞書やツール -> 詳細は `schema/README.md` を参照
 VERSION          # 例: 0.1.0
 CHANGELOG.md
 ```
@@ -34,11 +35,11 @@ CHANGELOG.md
   - PATCH: 誤字や微修正
 
 ## Contribution
-1) 辞書の変更は PR 必須（`dictionary/naming_dictionary.yaml` のみ編集）  
-2) CI で `dictionary/schema.json` による検証を通す  
+1) 辞書の変更は PR 必須（`dictionary/naming_dictionary.yaml` のみ編集）
+2) CI で `dictionary/schema.json` による検証を通す
 3) `CHANGELOG.md` と `VERSION` を更新、タグを付与
 
 ## FAQ
-- **辞書とMarkdownはどちらを編集？** → **辞書（YAML）だけ**。Docsは生成 or 反映。  
-- **略語は使える？** → 識別子では原則禁止。説明/UI文言でのみ（例 “ME”）。  
+- **辞書とMarkdownはどちらを編集？** → **辞書（YAML）だけ**。Docsは生成 or 反映。
+- **略語は使える？** → 識別子では原則禁止。説明/UI文言でのみ（例 “ME”）。
 - **例外は？** → 各プロジェクト側の allowlist（期限付き）で管理。

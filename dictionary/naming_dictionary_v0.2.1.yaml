@@ -1,0 +1,63 @@
+# naming_dictionary.yaml — v0.2.1 (regulatory-aligned)
+---
+version: "0.2.1"
+updated_at: "2025-09-11"
+about:
+  ja: "規制用語（PMDA/MHLW）に整合。medical_device を正規語とし、device の単独使用を識別子で禁止。"
+  en: "Aligned with regulators; medical_device is canonical, forbid standalone 'device' in identifiers."
+
+terms:
+  - id: MEDICAL_DEVICE
+    kind: entity
+    canonical: { en: medical_device, ja: 医療機器 }
+    synonyms:  { en: [medical_equipment], ja: [医療機器] }
+    forbidden: [device, ME]
+    lint:
+      pk_name: medical_device_id
+      fk_name_pattern: "{{ref_table}}_id"
+    migration:
+      rename_tokens:
+        - { from: medical_equipment, to: medical_device }
+        - { from: medical_entity,    to: medical_device }
+        - { from: device_classification, to: medical_device_classification }
+
+  - id: MEDICAL_DEVICE_CLASSIFICATION
+    kind: codebook
+    canonical: { en: medical_device_classification, ja: 医療機器分類 }
+    lint:
+      table_name: mst_medical_device_classification
+      fk_name: medical_device_classification_id
+
+  - id: N_TO_N_TABLE_SINGLE_UNDERSCORE
+    kind: pattern
+    canonical: { en: "map_<a>_<b>", ja: "map_<a>_<b>" }
+    forbidden: ["*_link"]
+
+  - id: SPECIAL_USER_ENTITY_MAP
+    kind: exception
+    canonical: { en: "map_user_entity", ja: "map_user_entity" }
+    notes:
+      ja: "ユーザーと多態エンティティの関連。entity_id を維持。"
+      en: "Polymorphic link; keep entity_id."
+
+  - id: TIMESTAMP_STYLE
+    kind: pattern
+    canonical: { en: "*_at / *_on", ja: "*_at / *_on" }
+    migration:
+      rename_columns:
+        - { from: "*_datetime", to: "*_at" }
+
+  - id: AUDIT_COLUMNS
+    kind: pattern
+    canonical: { en: "created_at/created_by/updated_at/updated_by", ja: 同左 }
+    migration:
+      rename_columns:
+        - { from: regdate,    to: created_at }
+        - { from: lastupdate, to: updated_at }
+
+  - id: CLASSIFICATION_VOCAB
+    kind: vocabulary
+    canonical: { en: classification, ja: 分類 }
+    forbidden: [type, kind, class]
+    lint:
+      level_pattern: "^classification_level[1-9]$"

@@ -1,3 +1,14 @@
-# Python cache
-__pycache__/
+.venv/
+.DS_Store
 *.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.pid
+*.bak
+
+schema/derived/**
+!schema/derived/**/README.md
