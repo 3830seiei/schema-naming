@@ -1,0 +1,7 @@
+ColumnName: name
+DataType: type
+PK: is_pk
+FK: references
+Description: description
+Nullable: nullable
+Default: default
