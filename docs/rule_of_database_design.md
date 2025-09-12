@@ -62,6 +62,14 @@ _最終更新: 2025-09-11
 - **監査**：`created_at`, `created_by`, `updated_at`, `updated_by`（必要に応じ `deleted_*`）
 - **禁止/注意**：`*_type` / `*_kind` / `*_class` は原則禁止（`classification` と `risk_class` を使い分け）。
 
+### 「区分」の見直し
+
+1. category（区分）をデフォルト。
+2. 公式体系が絡めば classification / 体系名を付ける。
+3. 手段・方式なら type。
+4. 時間変化・工程は status。
+5. 真偽なら is_ / has_。
+
 ## 6. 制約・インデックス命名
 - PK：`pk_<table>`
 - FK：`fk_<table>__<column>`（表名と列名の間にダブルアンダースコアを用いて可読性を確保）
