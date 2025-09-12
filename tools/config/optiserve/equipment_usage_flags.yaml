@@ -10,10 +10,12 @@ metadata:
 
 #- tableinfo ----------------------------------------------
 table_name: equipment_usage_flags
+old_table_name: equipment_usage_flags
 description: 医療機器の分析使用フラグ管理テーブル
 #- columns info -------------------------------------------
 columns:
 - name: medical_id
+  old_name: medical_id
   description: 医療機関ID
   data_type: integer
   primary_key: true
@@ -27,6 +29,7 @@ columns:
     on_update: restrict
     comment: 'mst_medical_facilityテーブルのmedical_idを参照。医療機関ID。'
 - name: equipment_id
+  old_name: equipment_id
   description: 医療機器ID
   data_type: integer
   primary_key: true
@@ -40,18 +43,21 @@ columns:
     on_update: restrict
     comment: 'medical_entity_listテーブルのequipment_idを参照。医療機器ID。'
 - name: is_active
+  old_name: is_active
   description: 使用中フラグ
   data_type: boolean
   primary_key: false
   nullable: false
   comment: '医療機器を集計対象として有効化を示すフラグ。Trueの場合は使用中、Falseの場合は使用中ではない。'
 - name: regdate
+  old_name: regdate
   description: データ作成日
   data_type: timestamp
   primary_key: false
   nullable: false
   comment: null
 - name: lastupdate
+  old_name: lastupdate
   description: 最終更新日
   data_type: timestamp
   primary_key: false

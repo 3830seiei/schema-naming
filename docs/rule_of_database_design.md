@@ -70,6 +70,37 @@ _最終更新: 2025-09-11
 4. 時間変化・工程は status。
 5. 真偽なら is_ / has_。
 
+### 必要な英語の省略
+
+- mhlw : Ministry of Health, Labour and Welfare
+  - 厚生労働省
+- 地域情報
+  - 都道府県 : Prefecture
+  - 市町村 : municipality
+  - 一次医療圏 : primary_medical_area
+  - 二次医療圏 : secondary_medical_area
+  - エリアの組み合わせ : combined_area
+    - ex: 二次医療圏と市町村の組み合わせなら、secondary_medical_area_municipality とかの方が明確
+- 親子・グループ化
+  - 親 : parent
+    - ex: mst_medical_device_classification_parent_id
+  - 共通 : common
+    - ex : mst_medical_device_classification_common_id
+
+
+^(\s*new:\s*[^#\n]*?)gov    $1_mhlw_
+^(\s*new:\s*[^#\n]*?)hospital    $1_medical_facility_
+new: pref   new: prefecture_
+^(\s*new:\s*[^#\n]*?)pref    $1
+^(\s*new:\s*[^#\n]*?)medarea    $1_secondary_medical_area_
+^(\s*new:\s*[^#\n]*?)    $1
+^(\s*new:\s*[^#\n]*?)    $1
+^(\s*new:\s*[^#\n]*?)    $1
+^(\s*new:\s*[^#\n]*?)    $1
+^(\s*new:\s*[^#\n]*?)    $1
+^(\s*new:\s*[^#\n]*?)    $1
+^(\s*new:\s*[^#\n]*?)    $1
+
 ## 6. 制約・インデックス命名
 - PK：`pk_<table>`
 - FK：`fk_<table>__<column>`（表名と列名の間にダブルアンダースコアを用いて可読性を確保）

@@ -1,0 +1,114 @@
+metadata:
+  description: テーブル定義書
+  author: H.Miyazawa
+  history:
+  - version: 1.0.0
+    date: '2025-06-27'
+    author: H.Miyazawa
+    comment: OptiServe用のデータベース設計
+table_name: report_publication_log
+old_table_name: report_publication_log
+description: 医療機関向けレポートの公開履歴テーブル
+columns:
+- name: publication_id
+  old_name: publication_id
+  description: レポート公開ID
+  data_type: serial
+  primary_key: true
+  nullable: false
+  comment: null
+- name: medical_facility_id
+  old_name: medical_facility_id
+  description: 医療機関ID
+  data_type: integer
+  primary_key: false
+  nullable: false
+  comment: null
+  references:
+    table: mst_medical_facility
+    column: medical_id
+    enforced: false
+    on_delete: restrict
+    on_update: restrict
+    comment: mst_medical_facilityテーブルのmedical_idを参照。
+- name: publication_ym
+  old_name: publication_ym
+  description: レポート公開年月
+  data_type: text
+  primary_key: false
+  nullable: false
+  comment: レポートが公開された年月。
+- name: file_type
+  old_name: file_type
+  description: 公開したファイルの種類
+  data_type: integer
+  primary_key: false
+  nullable: false
+  comment: '公開したファイルの種類。1: 分析レポート, 2: 故障リスト, 3: 未実績リスト。'
+- name: file_name
+  old_name: file_name
+  description: 公開したファイル名
+  data_type: text
+  primary_key: false
+  nullable: false
+  comment: 公開したファイルの名前。
+- name: upload_at
+  old_name: upload_at
+  description: サイトへの更新日時
+  data_type: timestamp
+  primary_key: false
+  nullable: false
+  comment: サイトへの更新を行った日時
+- name: download_user_id
+  old_name: download_user_id
+  description: ダウンロードを行ったユーザーID
+  data_type: integer
+  primary_key: false
+  nullable: false
+  comment: ダウンロードを行ったユーザーのID。ユーザーマスタのuser_idと紐づく。最初にダウンロードしたユーザーのみ登録される。
+  references:
+    table: m_mst_user
+    column: user_id
+    enforced: false
+    on_delete: restrict
+    on_update: restrict
+    comment: m_mst_userテーブルのuser_idを参照。ダウンロードを行ったユーザーのID。
+- name: download_at
+  old_name: download_at
+  description: ユーザーのダウンロード日時
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: ユーザーがファイルのダウンロードを行った日時。ダウンロードが行われていない場合はNULL。最初にダウンロードした日時のみ登録される。
+- name: created_at
+  old_name: created_at
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: false
+  comment: null
+- name: updated_at
+  old_name: updated_at
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: false
+  comment: null
+indexes:
+- name: idx_report_publication_log_medical_id
+  old_name: idx_report_publication_log_medical_id
+  columns:
+  - medical_id
+  unique: false
+  note: 医療機関IDのインデックス。医療機関ごとのレポート公開履歴を効率的に検索するためのインデックス。
+table: report_publication_log
+x_legacy:
+  poc:
+    source_file: report_publication_log.yaml
+    table: report_publication_log
+    columns:
+      medical_id: medical_facility_id
+      upload_datetime: upload_at
+      download_datetime: download_at
+      regdate: created_at
+      lastupdate: updated_at

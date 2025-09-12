@@ -14,10 +14,12 @@ metadata:
 
 #- tableinfo ----------------------------------------------
 table_name: equipment_classification_report_selection
+old_table_name: equipment_classification_report_selection
 description: レポート出力用の機器分類の選択情報
 #- columns info -------------------------------------------
 columns:
 - name: medical_id
+  old_name: medical_id
   description: 医療機関ID
   data_type: integer
   primary_key: true
@@ -31,12 +33,14 @@ columns:
     on_update: restrict
     comment: 'mst_medical_facilityテーブルのmedical_idを参照。'
 - name: rank
+  old_name: rank
   description: 機器分類の表示順序
   data_type: integer
   primary_key: true
   nullable: false
   comment: 'レポートの機器分類の表示順序を示す。小さいほど上位に表示される。'
 - name: classification_id
+  old_name: classification_id
   description: 機器分類ID
   data_type: serial
   primary_key: false
@@ -50,12 +54,14 @@ columns:
     on_update: restrict
     comment: 'mst_equipment_classificationテーブルのclassification_idを参照。機器分類のID。'
 - name: regdate
+  old_name: regdate
   description: データ作成日
   data_type: timestamp
   primary_key: false
   nullable: false
   comment: null
 - name: lastupdate
+  old_name: lastupdate
   description: 最終更新日
   data_type: timestamp
   primary_key: false

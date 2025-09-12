@@ -4,31 +4,39 @@ notes: "Draft rename dictionary generated from smds_poc YAMLs.\nPriority for new
   'todo' fields indicate items needing human review."
 tables:
   mstgovconbinationarea:
-    new: mstgovconbinationarea
+    new: mst_mhlw_combined_area
     description: 厚労省が公開している各区域情報の関連マスタ
   mstgovmedarea:
-    new: mstgovmedarea
+    new: mst_mhlw_secondary_medical_area
     description: 厚生労働省管理の二次医療圏コードマスタ
   mstgovpref:
-    new: mstgovpref
+    new: mst_mhlw_prefecture
     description: 厚生労働省管理の都道府県コードマスタ
-  mstgroupbunrui:
+  mstgroupbunrui:  # status: crosswalk
     new: mstgroupbunrui
-    description: 小分類のグループ化情報のマスタ
-  mstgroupmaker:
+    description: 分類のグループ化情報のマスタ
+  mstgroupmaker:  # status: crosswalk
     new: mstgroupmaker
     description: メーカー名のグループ化情報のマスタ
+
+---
+--- コメントサンプル ※この行から下が未対応
+--- # status: crosswalk  PoC時のキュレーションテーブルなので、見直しなし
+--- # status: keep  このまま採用
+--- # status: pending  すぐに判断が付かないので保留
+--- # TODO: 作業を記載しておく
+
   msthospital:
-    new: msthospital
+    new: mst_medical_facility
     description: 管理する医療機関を管理するマスタ
   msthospitalgov:
-    new: msthospitalgov
+    new: mst_medical_facility_mhlw
     description: 厚労省が公開している病院情報
   msthospitalizationgov:
-    new: msthospitalizationgov
+    new: mst_medical_facility_ization_mhlw
     description: 厚労省が公開している入院数情報
   msthospitalwardgov:
-    new: msthospitalwardgov
+    new: mst_medical_facility_ward_mhlw
     description: 厚労省が公開している病院情報
   mstjahidiji:
     new: mstjahidiji
@@ -88,7 +96,7 @@ tables:
     new: tblrepairlog
     description: 修理履歴テーブル
   mstgovcity:
-    new: mstgovcity
+    new: mst_mhlw_city
     description: 厚生労働省管理の市区町村コードマスタ
 columns:
   mstgovconbinationarea:
@@ -96,10 +104,10 @@ columns:
       new: id
       description: ID
     prefcode:
-      new: prefcode
+      new: prefecture_code
       description: 都道府県コード
     medareacode:
-      new: medareacode
+      new: _secondary_medical_area_code
       description: 二次医療圏コード
     towncode:
       new: towncode
@@ -115,13 +123,13 @@ columns:
       description: 最終更新日
   mstgovmedarea:
     medareacode:
-      new: medareacode_id
+      new: _secondary_medical_area_code_id
       description: 二次医療圏コード
     medareaname:
-      new: medareaname
+      new: _secondary_medical_area_name
       description: 二次医療圏名
     medareaname_kana:
-      new: medareaname_kana
+      new: _secondary_medical_area_name_kana
       description: 二次医療圏名カナ
     update_date:
       new: update_date
@@ -134,19 +142,19 @@ columns:
       description: 最終更新日
   mstgovpref:
     prefcode:
-      new: prefcode_id
+      new: prefecture_code_id
       description: 都道府県コード
     prefname:
-      new: prefname
+      new: prefecture_name
       description: 都道府県名
     prefname_kana:
-      new: prefname_kana
+      new: prefecture_name_kana
       description: 都道府県名カナ
     prefname_nopref:
-      new: prefname_nopref
+      new: prefecture_name_nopref
       description: 都道府県名_都道府県情報なし
     prefname_roman:
-      new: prefname_roman
+      new: prefecture_name_roman
       description: 都道府県_ローマ字
     update_date:
       new: update_date
@@ -157,7 +165,7 @@ columns:
     lastupdate:
       new: lastupdate
       description: 最終更新日
-  mstgroupbunrui:
+  mstgroupbunrui:  # status: crosswalk
     seq:
       new: seq_id
       description: シリアル値
@@ -185,7 +193,7 @@ columns:
     updateuser:
       new: updateuser
       description: 最終更新者
-  mstgroupmaker:
+  mstgroupmaker:  # status: crosswalk
     seq:
       new: seq_id
       description: シリアル値
@@ -218,7 +226,7 @@ columns:
       new: hpname
       description: 病院名
     govhpcode:
-      new: govhpcode
+      new: _mhlw_hpcode
       description: 医療機関番号
     openhpcode:
       new: openhpcode
@@ -240,7 +248,7 @@ columns:
       new: regtype_sec
       description: 医科種別_副
     prefcode:
-      new: prefcode
+      new: prefecture_code
       description: 都道府県コード
     hpcodepri:
       new: hpcodepri
@@ -264,7 +272,7 @@ columns:
       new: hpname
       description: 医療機関名
     medareacode:
-      new: medareacode
+      new: _secondary_medical_area_code
       description: 二次医療圏コード
     towncode:
       new: towncode

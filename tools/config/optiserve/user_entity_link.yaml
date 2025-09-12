@@ -14,16 +14,19 @@ metadata:
 
 #- tableinfo ----------------------------------------------
 table_name: user_entity_link
+old_table_name: user_entity_link
 description: ユーザーと組織（医療機関・ディーラー・メーカー）の紐付け
 #- columns info -------------------------------------------
 columns:
 - name: entity_type
+  old_name: entity_type
   description: 組織の種別
   data_type: integer
   primary_key: true
   nullable: false
   comment: '1: 医療機関, 2: ディーラー, 3: メーカー'
 - name: entity_relation_id
+  old_name: entity_relation_id
   description: 連携する組織ID
   data_type: integer
   primary_key: true
@@ -55,72 +58,84 @@ columns:
       on_update: restrict
       comment: 'entity_type=1.医療機関の場合、mst_medical_facilityテーブルのmedical_idを参照。'
 - name: entity_name
+  old_name: entity_name
   description: 組織名
   data_type: text
   primary_key: false
   nullable: false
   comment: '表示用に利用する組織名称'
 - name: entity_address_postal_code
+  old_name: entity_address_postal_code
   description: 組織の郵便番号
   data_type: text
   primary_key: false
   nullable: true
   comment: '組織の郵便番号（オプション）'
 - name: entity_address_prefecture
+  old_name: entity_address_prefecture
   description: 組織の都道府県
   data_type: text
   primary_key: false
   nullable: true
   comment: '組織の都道府県（オプション）'
 - name: entity_address_city
+  old_name: entity_address_city
   description: 組織の市区町村
   data_type: text
   primary_key: false
   nullable: true
   comment: '組織の市区町村（オプション）'
 - name: entity_address_line1
+  old_name: entity_address_line1
   description: 組織の住所1
   data_type: text
   primary_key: false
   nullable: true
   comment: '組織の町名以降・番地（オプション）'
 - name: entity_address_line2
+  old_name: entity_address_line2
   description: 組織の住所2
   data_type: text
   primary_key: false
   nullable: true
   comment: '組織の建物名等（オプション）'
 - name: entity_phone_number
+  old_name: entity_phone_number
   description: 組織の電話番号
   data_type: text
   primary_key: false
   nullable: true
   comment: '組織の電話番号（オプション）'
 - name: notification_email_list
+  old_name: notification_email_list
   description: 通知メールアドレス
   data_type: json
   primary_key: false
   nullable: false
   comment: 'ユーザーアカウントのメールアドレスは必須。それ以外にレポート配布の通知等の情報を受け取るメールアドレスをJSON形式で格納します。複数のメールアドレスを登録することができます。'
 - name: count_reportout_classification
+  old_name: count_reportout_classification
   description: レポート公開の分類数
   data_type: integer
   primary_key: false
   nullable: false
   comment: '医療機関向けレポートに、出力させる機器分類数。'
 - name: analiris_classification_level
+  old_name: analiris_classification_level
   description: 分析レポートの分類レベル
   data_type: integer
   primary_key: false
   nullable: false
   comment: '分析レポートで使用する機器分類のレベル。1: 大分類、2: 中分類、3: 小分類。'
 - name: regdate
+  old_name: regdate
   description: データ作成日
   data_type: timestamp
   primary_key: false
   nullable: false
   comment: null
 - name: lastupdate
+  old_name: lastupdate
   description: 最終更新日
   data_type: timestamp
   primary_key: false
@@ -130,6 +145,7 @@ columns:
 #- indexes info -------------------------------------------
 indexes:
   - name: idx_user_entity
+    old_name: idx_user_entity
     columns: [entity_type, entity_relation_id]
     unique: false
     note: '組織種別と連携組織IDの複合インデックス'
