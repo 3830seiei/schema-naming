@@ -1,0 +1,65 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: mstgovconbinationarea
+description: 厚労省が公開している各区域情報の関連マスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment: Serial値
+- name: prefcode
+  old_name: prefcode
+  description: 都道府県コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 数値2桁
+- name: medareacode
+  old_name: medareacode
+  description: 二次医療圏コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 数値4桁
+- name: towncode
+  old_name: towncode
+  description: 市町村コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 数値6桁
+- name: update_date
+  old_name: update_date
+  description: 情報公開日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 厚生労働省が公開したデータがいつ時点かの情報
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:

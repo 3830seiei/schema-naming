@@ -1,0 +1,86 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: mstjahidiji
+description: JAHID提供のサブマスタ内の医事コードマスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment: Serial値
+- name: ijicode
+  old_name: ijicode
+  description: 医事コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: ijiname
+  old_name: ijiname
+  description: 医事名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: jahidregdate
+  old_name: jahidregdate
+  description: 登録日時
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: jahidreguserid
+  old_name: jahidreguserid
+  description: 登録者ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: jahidlastupdate
+  old_name: jahidlastupdate
+  description: 更新日時
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: jahidupdateuserid
+  old_name: jahidupdateuserid
+  description: 更新者ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: jahidproguramid
+  old_name: jahidproguramid
+  description: 更新プログラムID
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:

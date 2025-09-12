@@ -1,0 +1,86 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: msthospitalizationgov
+description: 厚労省が公開している入院数情報
+
+#- columns info -------------------------------------------
+columns:
+- name: id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment:
+- name: openhpcode
+  old_name: openhpcode
+  description: オープンデータ医療機関コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 病床数情報がある病院に限り紐付ける番号が存在。このコードが登録されている場合は、病棟マスタ・入院情報マスタの連携がされている
+- name: openhpwardcode
+  old_name: openhpwardcode
+  description: オープンデータ病棟コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: startstatistics
+  old_name: startstatistics
+  description: 統計期間開始
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: endstatistics
+  old_name: endstatistics
+  description: 統計期間終了
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: countin
+  old_name: countin
+  description: 新規入棟患者数
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: counttotal
+  old_name: counttotal
+  description: 在棟患者延べ数
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countout
+  old_name: countout
+  description: 退棟患者延べ数
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:

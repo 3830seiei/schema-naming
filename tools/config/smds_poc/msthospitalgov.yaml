@@ -1,0 +1,371 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: msthospitalgov
+description: 厚労省が公開している病院情報
+
+#- columns info -------------------------------------------
+columns:
+- name: id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment:
+- name: regtype_pri
+  old_name: regtype_pri
+  description: 医科種別_主
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '登録時の医科種別
+
+    1 : 医科
+
+    2 : 歯科
+
+    3 : 薬局
+
+
+    医科併設は歯科がメインで医科が副、歯科併設は医科がメインで、歯科が副、上記医科種別の場合、secはNone'
+- name: regtype_sec
+  old_name: regtype_sec
+  description: 医科種別_副
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '登録時の医科種別
+
+    1 : 医科
+
+    2 : 歯科
+
+    3 : 薬局
+
+
+    医科併設は歯科がメインで医科が副、歯科併設は医科がメインで、歯科が副、上記医科種別の場合、secはNone'
+- name: prefcode
+  old_name: prefcode
+  description: 都道府県コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: (2024.10.22)医療機関コードが全国で重複するレコードが存在した為、都道府県コードとセットのユニークキーとする。システム的にはidがキーなので、ロジックのみで対応可能だが、項目の配置を上位に移動。
+- name: hpcodepri
+  old_name: hpcodepri
+  description: 医療機関コード＿主
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: '医科種別が併設の場合、メインが主で併設分が副に登録される。
+
+    3つの数字で構成されるがデリミターは地域によって異なる為、データ登録時は0000000で固定する。ただし桁が増えることも考慮して余裕を持たせる。'
+- name: hpcodesec
+  old_name: hpcodesec
+  description: 医療機関コード＿副
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: '医科種別が併設の場合、メインが主で併設分が副に登録される。
+
+    3つの数字で構成されるがデリミターは地域によって異なる為、データ登録時は0000000で固定する。ただし桁が増えることも考慮して余裕を持たせる。'
+- name: hpcodelocal
+  old_name: hpcodelocal
+  description: 医療機関コード_支局独自
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 厚労省各支局独自のコード
+- name: openhpcodemed
+  old_name: openhpcodemed
+  description: オープンデータ医療機関コード_医科
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 病床数情報がある病院に限り紐付ける番号が存在。このコードが登録されている場合は、病棟マスタ・入院情報マスタの連携がされている
+- name: openhpcodedental
+  old_name: openhpcodedental
+  description: オープンデータ医療機関コード_歯科
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 病床数情報がある病院に限り紐付ける番号が存在。このコードが登録されている場合は、病棟マスタ・入院情報マスタの連携がされている
+- name: isactive
+  old_name: isactive
+  description: 稼働状態
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '0：休止
+
+    1：現存
+
+    9：回答なし（辞退）'
+- name: hpname
+  old_name: hpname
+  description: 医療機関名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: medareacode
+  old_name: medareacode
+  description: 二次医療圏コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: towncode
+  old_name: towncode
+  description: 市区町村コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: postcode
+  old_name: postcode
+  description: 郵便番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: address
+  old_name: address
+  description: 所在地
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: tel
+  old_name: tel
+  description: 電話番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: countmaintotal
+  old_name: countmaintotal
+  description: 勤務医数（常勤・合計）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countmaindoc
+  old_name: countmaindoc
+  description: 勤務医数（常勤・医師）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countmaindental
+  old_name: countmaindental
+  description: 勤務医数（常勤・歯科医師）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countmaindrug
+  old_name: countmaindrug
+  description: 勤務医数（常勤・薬剤師）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countmainother
+  old_name: countmainother
+  description: 勤務医数（常勤・その他）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countsubtotal
+  old_name: countsubtotal
+  description: 勤務医数（非常勤・合計）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countsubdoc
+  old_name: countsubdoc
+  description: 勤務医数（非常勤・医師）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countsubdental
+  old_name: countsubdental
+  description: 勤務医数（非常勤・歯科医師）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countsubdrug
+  old_name: countsubdrug
+  description: 勤務医数（非常勤・薬剤師）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countsubother
+  old_name: countsubother
+  description: 勤務医数（非常勤・その他）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countbeds
+  old_name: countbeds
+  description: 病床数
+  data_type: jsonb
+  primary_key: false
+  nullable: true
+  comment:
+- name: departments
+  old_name: departments
+  description: 診療科目
+  data_type: jsonb
+  primary_key: false
+  nullable: true
+  comment:
+- name: hpregusername
+  old_name: hpregusername
+  description: 開設者氏名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: hpmanageusername
+  old_name: hpmanageusername
+  description: 管理者氏名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: hpstartdate
+  old_name: hpstartdate
+  description: 開業日（指定年月日）
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: regreason
+  old_name: regreason
+  description: 登録理由
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '1: ''新規開設'',
+
+    2: ''継承開設'',
+
+    3: ''開設変更'',
+
+    4: ''移転開設'',
+
+    5: ''法人化開設'',
+
+    6: ''開設者変更'',
+
+    7: ''所在地変更'',
+
+    8: ''組織変更'',
+
+    99: ''その他'''
+- name: hpregdate
+  old_name: hpregdate
+  description: 指定期開始日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: hptype
+  old_name: hptype
+  description: 医療機関種別
+  data_type: jsonb
+  primary_key: false
+  nullable: true
+  comment: 'hptype
+
+    総合病院、病院、診療所、地域支援、療養病床、特定機能、薬局
+
+    ※厚労省の病院情報に変動があれば勝手に増えていく'
+- name: fileupdatedate
+  old_name: fileupdatedate
+  description: 厚労省ファイル更新日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 厚労省のサイトに記載されたファイル更新日
+- name: siteuploaddate
+  old_name: siteuploaddate
+  description: 厚労省サイト更新日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 厚労省のサイトに記載されたサイト更新日
+- name: regfilename1
+  old_name: regfilename1
+  description: 登録ファイル①
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: '登録時のファイル名、修正が入る場合はそのファイル名で更新
+
+    ※内容チェックを行い更新対象が存在しない場合、この項目は更新しない
+
+    ※主・副と並びが同じにならないこともあり、それで問題無い為、主副の名前は使っていない'
+- name: regnumber1
+  old_name: regnumber1
+  description: 登録時項番①
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '登録時の項番、修正が入る場合はそのファイルの項番で更新
+
+    ※内容チェックを行い更新対象が存在しない場合、この項目は更新しない'
+- name: regfilename2
+  old_name: regfilename2
+  description: 登録ファイル②
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: ①と同一だが、2つのファイルに同一の情報が入っている併設時は、ここに別ファイル・別項番をセット。
+- name: regnumber2
+  old_name: regnumber2
+  description: 登録時項番②
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: ①と同一だが、2つのファイルに同一の情報が入っている併設時は、ここに別ファイル・別項番をセット。
+- name: checkdate
+  old_name: checkdate
+  description: 内容確認日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: '変更の有無確認を行った日時
+
+    ※厚労省提供情報に掲載されなくなるとこの日付の更新が行われなくなる（いつまで掲載されていたかが明確）'
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: レコードの追加を行った日時
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: レコードの変更を行った日時（ただし内容確認日の更新のみであれば、この項目は更新しない）

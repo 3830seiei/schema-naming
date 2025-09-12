@@ -1,0 +1,72 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: mstgovpref
+description: 厚生労働省管理の都道府県コードマスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: prefcode
+  old_name: prefcode
+  description: 都道府県コード
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment:
+- name: prefname
+  old_name: prefname
+  description: 都道府県名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: prefname_kana
+  old_name: prefname_kana
+  description: 都道府県名カナ
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: prefname_nopref
+  old_name: prefname_nopref
+  description: 都道府県名_都道府県情報なし
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: ex)長野県　→　長野
+- name: prefname_roman
+  old_name: prefname_roman
+  description: 都道府県_ローマ字
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 先頭も小文字
+- name: update_date
+  old_name: update_date
+  description: 情報公開日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 厚生労働省が公開したデータがいつ時点かの情報
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:

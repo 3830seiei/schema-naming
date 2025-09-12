@@ -1,0 +1,128 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: mstjahidproductspackage
+description: JAHID提供の商品マスタ（梱包情報）
+
+#- columns info -------------------------------------------
+columns:
+- name: id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment: Serial値
+- name: recnumber
+  old_name: recnumber
+  description: レコード管理番号
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment: 商品マスタ.レコード管理番号
+- name: packageid
+  old_name: packageid
+  description: 梱包ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 0〜9（JAHID情報の配列）
+- name: startdate_use
+  old_name: startdate_use
+  description: 摘要開始日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: enddate_use
+  old_name: enddate_use
+  description: 摘要終了日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 現在利用中の最新レコードはNULLがセット
+- name: packagetype
+  old_name: packagetype
+  description: 梱包識別インジケータ
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: picode
+  old_name: picode
+  description: 梱包識別インジケータ付商品コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: インジケータ＋JANコード
+- name: irisu
+  old_name: irisu
+  description: 梱包数（入数）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: unitcode
+  old_name: unitcode
+  description: 単位コード
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 単位マスタ.単位コード
+- name: unitname
+  old_name: unitname
+  description: 単位呼称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: qty
+  old_name: qty
+  description: 数量（PI0の単位の総数量）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: isbarcode
+  old_name: isbarcode
+  description: バーコード表示有無
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: jahidregdate
+  old_name: jahidregdate
+  description: 登録日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 提供されたJAHIDに記載せれている登録日で実際に作業した日付とは異なる
+- name: jahidlastupdate
+  old_name: jahidlastupdate
+  description: 更新日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 提供されたJAHIDに記載せれている更新日で実際に作業した日付とは異なる
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:

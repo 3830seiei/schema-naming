@@ -1,0 +1,935 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: mstmedieproducts
+description: メディエ提供商品マスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment: Serial値
+- name: keyrec0
+  old_name: keyrec0
+  description: レコードの開始行
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '「＊」：0
+
+    なし：1'
+- name: keyrec1
+  old_name: keyrec1
+  description: レコード番号
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: mediecode
+  old_name: mediecode
+  description: メディエコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: productname
+  old_name: productname
+  description: 商品名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: kanamei
+  old_name: kanamei
+  description: 商品名読み
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: productcode
+  old_name: productcode
+  description: 商品コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: productcode_old
+  old_name: productcode_old
+  description: 旧商品コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: modelnumber
+  old_name: modelnumber
+  description: 型番
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: jancode
+  old_name: jancode
+  description: JANコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: jancode_old
+  old_name: jancode_old
+  description: 旧JANコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: mandvcode
+  old_name: mandvcode
+  description: 製造販売元コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: mandvname
+  old_name: mandvname
+  description: 製造販売元名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: vendorcode
+  old_name: vendorcode
+  description: 販売元コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: vendorname
+  old_name: vendorname
+  description: 販売元名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: makercode
+  old_name: makercode
+  description: 製造元コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: makername
+  old_name: makername
+  description: 製造元名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: usetype
+  old_name: usetype
+  description: 特徴・用途
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: kikaku
+  old_name: kikaku
+  description: 規格
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: irisu
+  old_name: irisu
+  description: 使用入数（数値）
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 数値にしたいが「×」が入っている行がある為文字列
+- name: unit
+  old_name: unit
+  description: 使用入数（単位）
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: irisu_unit
+  old_name: irisu_unit
+  description: 使用入数
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 入数だが単位や「×」も入った状態なので文字列
+- name: price
+  old_name: price
+  description: 希望小売価格
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: isopenprice
+  old_name: isopenprice
+  description: オープンプライス
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: purcheseunit_min
+  old_name: purcheseunit_min
+  description: 最小購入単位
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: unitcode
+  old_name: unitcode
+  description: 単位コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: unitname
+  old_name: unitname
+  description: 単位名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: istax
+  old_name: istax
+  description: 課税／非課税
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: approvalnumber
+  old_name: approvalnumber
+  description: 承認番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: vendorname_yakuji
+  old_name: vendorname_yakuji
+  description: 薬事申請書上の販売名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: classtype
+  old_name: classtype
+  description: クラス分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: maintainkbn
+  old_name: maintainkbn
+  description: 特定保守管理
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: jmdncode
+  old_name: jmdncode
+  description: JMDNコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: seibutsuyuraikbn
+  old_name: seibutsuyuraikbn
+  description: 生物由来コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: seibutsuyurai
+  old_name: seibutsuyurai
+  description: 生物由来
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: mekkincode
+  old_name: mekkincode
+  description: 滅菌法コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: mekkinname
+  old_name: mekkinname
+  description: 滅菌法
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: materialcode_1
+  old_name: materialcode_1
+  description: 素材コード1
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: materialname_1
+  old_name: materialname_1
+  description: 素材1
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: materialcode_2
+  old_name: materialcode_2
+  description: 素材コード2
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: materialname_2
+  old_name: materialname_2
+  description: 素材2
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: materialcode_3
+  old_name: materialcode_3
+  description: 素材コード3
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: materialname_3
+  old_name: materialname_3
+  description: 素材3
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: materialcode_4
+  old_name: materialcode_4
+  description: 素材コード4
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: materialname_4
+  old_name: materialname_4
+  description: 素材4
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: mediebunruicode
+  old_name: mediebunruicode
+  description: メディエ分類コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: mediebunrui_1
+  old_name: mediebunrui_1
+  description: メディエ大分類名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: mediebunrui_2
+  old_name: mediebunrui_2
+  description: メディエ中分類名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: mediebunrui_3
+  old_name: mediebunrui_3
+  description: メディエ小分類名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: update_mediebunrui
+  old_name: update_mediebunrui
+  description: メディエ分類コード更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: mediebunruicode_old
+  old_name: mediebunruicode_old
+  description: 旧メディエ分類コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: categorycode
+  old_name: categorycode
+  description: カテゴリーコード
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: categoryname
+  old_name: categoryname
+  description: カテゴリー名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: biko1
+  old_name: biko1
+  description: 備考1
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: biko2
+  old_name: biko2
+  description: 備考2
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: biko3
+  old_name: biko3
+  description: 備考3
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: hpcode
+  old_name: hpcode
+  description: 院内（社内）コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: purcheseprice
+  old_name: purcheseprice
+  description: 購入価格
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: qty
+  old_name: qty
+  description: 数量
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: medielastupdate
+  old_name: medielastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: key_tokui
+  old_name: key_tokui
+  description: ★Uniquekey_特医
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment:
+- name: seiqkouho_tokui
+  old_name: seiqkouho_tokui
+  description: 請求候補番号_特医
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: shoukankakaku_tokui
+  old_name: shoukankakaku_tokui
+  description: 参考償還価格_特医
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: seiqhouhou_tokui
+  old_name: seiqhouhou_tokui
+  description: 請求方法コード_特医
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: seiqname_tokui
+  old_name: seiqname_tokui
+  description: 請求方法名称_特医
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: hokencode_tokui
+  old_name: hokencode_tokui
+  description: 保険請求コード_特医
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: hokennaiyou_tokui
+  old_name: hokennaiyou_tokui
+  description: 保険請求内容_特医
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: kokuji_tokui
+  old_name: kokuji_tokui
+  description: 告示番号_特医
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: kinoukubun_tokui
+  old_name: kinoukubun_tokui
+  description: 機能区分コード_特医
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: izaikode_tokui
+  old_name: izaikode_tokui
+  description: 特定保険医療材料コード_特医
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: izai1_7_tokui
+  old_name: izai1_7_tokui
+  description: 特定保険医療材料名1〜特定保険医療材料名7_特医
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: ryaku_tokui
+  old_name: ryaku_tokui
+  description: 略称_特医
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: baseunit_tokui
+  old_name: baseunit_tokui
+  description: 基準単位_特医
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: baseprice_tokui
+  old_name: baseprice_tokui
+  description: 基準材料価格_特医
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: convert_tokui
+  old_name: convert_tokui
+  description: 換算値_特医
+  data_type: numeric(8,3)
+  primary_key: false
+  nullable: true
+  comment:
+- name: pricebyconvert_tokui
+  old_name: pricebyconvert_tokui
+  description: 基準材料価格×換算値_特医
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: baseprice_old_tokui
+  old_name: baseprice_old_tokui
+  description: 旧基準材料価格_特医
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate_tokui
+  old_name: lastupdate_tokui
+  description: 基準材料価格変更日_特医
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: receptioncode_tokui
+  old_name: receptioncode_tokui
+  description: 特定器材（レセ電）コード_特医
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: receptionname_tokui
+  old_name: receptionname_tokui
+  description: 特定器材（レセ電）名称_特医
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: key_tokuzai
+  old_name: key_tokuzai
+  description: ★Uniquekey_特在
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment:
+- name: seiqkouho_tokuzai
+  old_name: seiqkouho_tokuzai
+  description: 請求候補番号_特在
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: shoukankakaku_tokuzai
+  old_name: shoukankakaku_tokuzai
+  description: 参考償還価格_特在
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: seiqhouhou_tokuzai
+  old_name: seiqhouhou_tokuzai
+  description: 請求方法コード_特在
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: seiqname_tokuzai
+  old_name: seiqname_tokuzai
+  description: 請求方法名称_特在
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: hokencode_tokuzai
+  old_name: hokencode_tokuzai
+  description: 保険請求コード_特在
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: hokennaiyou_tokuzai
+  old_name: hokennaiyou_tokuzai
+  description: 保険請求内容_特在
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: kokuji_tokuzai
+  old_name: kokuji_tokuzai
+  description: 告示番号_特在
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: kinoukubun_tokuzai
+  old_name: kinoukubun_tokuzai
+  description: 機能区分コード_特在
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: izaikode_tokuzai
+  old_name: izaikode_tokuzai
+  description: 特定保険医療材料コード_特在
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: izai1_7_tokuzai
+  old_name: izai1_7_tokuzai
+  description: 特定保険医療材料名1〜特定保険医療材料名7_特在
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: ryaku_tokuzai
+  old_name: ryaku_tokuzai
+  description: 略称_特在
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: baseunit_tokuzai
+  old_name: baseunit_tokuzai
+  description: 基準単位_特在
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: baseprice_tokuzai
+  old_name: baseprice_tokuzai
+  description: 基準材料価格_特在
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: convert_tokuzai
+  old_name: convert_tokuzai
+  description: 換算値_特在
+  data_type: numeric(8,3)
+  primary_key: false
+  nullable: true
+  comment:
+- name: pricebyconvert_tokuzai
+  old_name: pricebyconvert_tokuzai
+  description: 基準材料価格×換算値_特在
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: baseprice_old_tokuzai
+  old_name: baseprice_old_tokuzai
+  description: 旧基準材料価格_特在
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate_tokuzai
+  old_name: lastupdate_tokuzai
+  description: 基準材料価格変更日_特在
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: receptioncode_tokuzai
+  old_name: receptioncode_tokuzai
+  description: 特定器材（レセ電）コード_特在
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: receptionname_tokuzai
+  old_name: receptionname_tokuzai
+  description: 特定器材（レセ電）名称_特在
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: key_tokucho
+  old_name: key_tokucho
+  description: ★Uniquekey_特調
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment:
+- name: seiqkouho_tokucho
+  old_name: seiqkouho_tokucho
+  description: 請求候補番号_特調
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: shoukankakaku_tokucho
+  old_name: shoukankakaku_tokucho
+  description: 参考償還価格_特調
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: seiqhouhou_tokucho
+  old_name: seiqhouhou_tokucho
+  description: 請求方法コード_特調
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: seiqname_tokucho
+  old_name: seiqname_tokucho
+  description: 請求方法名称_特調
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: hokencode_tokucho
+  old_name: hokencode_tokucho
+  description: 保険請求コード_特調
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: hokennaiyou_tokucho
+  old_name: hokennaiyou_tokucho
+  description: 保険請求内容_特調
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: kokuji_tokucho
+  old_name: kokuji_tokucho
+  description: 告示番号_特調
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: kinoukubun_tokucho
+  old_name: kinoukubun_tokucho
+  description: 機能区分コード_特調
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: izaikode_tokucho
+  old_name: izaikode_tokucho
+  description: 特定保険医療材料コード_特調
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: izai1_7_tokucho
+  old_name: izai1_7_tokucho
+  description: 特定保険医療材料名1〜特定保険医療材料名7_特調
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: ryaku_tokucho
+  old_name: ryaku_tokucho
+  description: 略称_特調
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: baseunit_tokucho
+  old_name: baseunit_tokucho
+  description: 基準単位_特調
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: baseprice_tokucho
+  old_name: baseprice_tokucho
+  description: 基準材料価格_特調
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: convert_tokucho
+  old_name: convert_tokucho
+  description: 換算値_特調
+  data_type: numeric(8,3)
+  primary_key: false
+  nullable: true
+  comment:
+- name: pricebyconvert_tokucho
+  old_name: pricebyconvert_tokucho
+  description: 基準材料価格×換算値_特調
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: baseprice_old_tokucho
+  old_name: baseprice_old_tokucho
+  description: 旧基準材料価格_特調
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate_tokucho
+  old_name: lastupdate_tokucho
+  description: 基準材料価格変更日_特調
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: receptioncode_tokucho
+  old_name: receptioncode_tokucho
+  description: 特定器材（レセ電）コード_特調
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: receptionname_tokucho
+  old_name: receptionname_tokucho
+  description: 特定器材（レセ電）名称_特調
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: key_kasan
+  old_name: key_kasan
+  description: ★Uniquekey_加算
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment:
+- name: kasancode
+  old_name: kasancode
+  description: 加算コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: pointnumber
+  old_name: pointnumber
+  description: 点数表区分番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: kasanname
+  old_name: kasanname
+  description: 加算名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: tekiyoshinryo
+  old_name: tekiyoshinryo
+  description: 適用診療
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: point
+  old_name: point
+  description: 点数
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: receptioncode
+  old_name: receptioncode
+  description: 診療行為（レセ電）コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: receptionname
+  old_name: receptionname
+  description: 診療行為（レセ電）名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: receptionpoint
+  old_name: receptionpoint
+  description: 点数（レセ電）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:

@@ -100,7 +100,7 @@ mkdir -p schema/derived/alias_map/$TODAY schema/derived/scans/$TODAY
 - **作業計画**: `Checklist.md` - 詳細なフェーズ別作業リスト
 - **命名規約**: `docs/rule_of_database_design.md` - 包括的な命名ルール
 - **作業領域ガイド**: `schema/README.md` - スキーマ変換作業の詳細手順
-- **元データ**: 
+- **元データ**:
   - `tools/config/smds_poc/` - PoCのDB設計書
   - `tools/config/optiserve/` - サブプロジェクトのテーブル仕様書（YAML）
 - **バージョン情報**: `VERSION`, `CHANGELOG.md`
@@ -120,3 +120,28 @@ git submodule add <REPO-URL> schema-naming
 cd schema-naming && git checkout v0.1.0
 ```
 
+---
+
+### Excel のテーブル設計をYAMLに変換したい
+
+- Input:
+  - tools/config/smds_poc/smds_dbdesign.xlsx
+    - シート名が ['templete', '入力シート'] は処理対象外、それ以外はテーブル定義書と判断
+    - B2セルがtable_name、B1セルがdescription
+    - 詳細情報は3行目から
+      - A(説明) : description
+      - B(レコード名) : name, old_name の両方にセット
+      - C(タイプ) : data_type
+      - D(キー) : primary_key -> '〇' ならtrue
+      - E(NULL可) : nullable
+      - F(sqlalchemyタイプ) : 未使用
+      - G(説明) : comment
+- Process:
+  - 各テーブル定義のシートを読み込む
+  - 規定のyamlファイルに変換
+  - 1シートを1 yaml ファイルにして保管
+- Output:
+  - tools/config/smds_poc/フォルダに [テーブル名].yamlで保管
+  - yamlの参考ファイルは、schema/tables/2025-09-11/mst_user.yaml
+    - old_name は既存は存在しないけど追加必須
+    - index情報は不要

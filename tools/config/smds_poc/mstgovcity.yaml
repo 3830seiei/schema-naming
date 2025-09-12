@@ -1,0 +1,65 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: mstgovcity
+description: 厚生労働省管理の市区町村コードマスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: citycode
+  old_name: citycode
+  description: 市区町村コード
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment:
+- name: cityname
+  old_name: cityname
+  description: 市区町村名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: cityname_kana
+  old_name: cityname_kana
+  description: 市区町村名カナ
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: isdesignatedcity
+  old_name: isdesignatedcity
+  description: 政令指定都市フラグ
+  data_type: boolean
+  primary_key: false
+  nullable: true
+  comment: 政令指定都市に指定されている場合はTrue
+- name: update_date
+  old_name: update_date
+  description: 情報公開日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 厚生労働省が公開したデータがいつ時点かの情報
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:

@@ -1,0 +1,130 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: mstjahidkbn
+description: JAHID提供の区分マスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment: Serial値
+- name: kbntype
+  old_name: kbntype
+  description: 区分項目
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 'クラス分類区分
+
+    データオリジナル区分
+
+    バーコード表示有無区分
+
+    画像有無区分
+
+    材料償還請求区分
+
+    使用区分
+
+    修理区分
+
+    商品区分
+
+    生物由来製品区分
+
+    税率区分
+
+    設置管理区分
+
+    特定保守管理区分
+
+    毒劇区分
+
+    保管区分
+
+    減菌区分
+
+    減菌種別'
+- name: kbnid
+  old_name: kbnid
+  description: 区分コード
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: kbnname
+  old_name: kbnname
+  description: 区分名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: biko
+  old_name: biko
+  description: 備考
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 「材料償還請求区分」のみ存在しているが実際の値は2024.08提供データに実在情報なし
+- name: jahidregdate
+  old_name: jahidregdate
+  description: 登録日時
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: jahidreguserid
+  old_name: jahidreguserid
+  description: 登録者ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: jahidlastupdate
+  old_name: jahidlastupdate
+  description: 更新日時
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: jahidupdateuserid
+  old_name: jahidupdateuserid
+  description: 更新者ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: jahidproguramid
+  old_name: jahidproguramid
+  description: 更新プログラムID
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:

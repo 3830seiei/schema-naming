@@ -1,0 +1,121 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: msthospitalwardgov
+description: 厚労省が公開している病院情報
+
+#- columns info -------------------------------------------
+columns:
+- name: id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment:
+- name: openhpcode
+  old_name: openhpcode
+  description: オープンデータ医療機関コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 病床数情報がある病院に限り紐付ける番号が存在。このコードが登録されている場合は、病棟マスタ・入院情報マスタの連携がされている
+- name: openhpwardcode
+  old_name: openhpwardcode
+  description: オープンデータ病棟コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: wardname
+  old_name: wardname
+  description: 病棟名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: function
+  old_name: function
+  description: 医療機能
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: countbedtotal
+  old_name: countbedtotal
+  description: 許可病床数（一般病床）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countbedactive
+  old_name: countbedactive
+  description: 稼働病床数（一般病床）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countbedtreatmenttotal
+  old_name: countbedtreatmenttotal
+  description: 許可病床数（療養病床）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: countbedtreatmentactive
+  old_name: countbedtreatmentactive
+  description: 稼働病床数（療養病床）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: department
+  old_name: department
+  description: 診療科（メイン）
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: department2
+  old_name: department2
+  description: 診療科（サブ1）
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: department3
+  old_name: department3
+  description: 診療科（サブ2）
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: department4
+  old_name: department4
+  description: 診療科（サブ3）
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:

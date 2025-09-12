@@ -1,0 +1,219 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: rawhpmelist
+description: 取込_病院機器台帳テーブル
+
+#- columns info -------------------------------------------
+columns:
+- name: hpcode
+  old_name: hpcode
+  description: 病院コード
+  data_type: integer
+  primary_key: true
+  nullable: true
+  comment:
+- name: hpseq
+  old_name: hpseq
+  description: 病院内連番
+  data_type: integer
+  primary_key: true
+  nullable: true
+  comment:
+- name: hpname
+  old_name: hpname
+  description: 病院名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: recvdate
+  old_name: recvdate
+  description: データ受領日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: menumber
+  old_name: menumber
+  description: 機器番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: grpmanage
+  old_name: grpmanage
+  description: 管理部門
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: grpuser
+  old_name: grpuser
+  description: 利用部門
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: grppurchase
+  old_name: grppurchase
+  description: 購入部門
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: serialnumber
+  old_name: serialnumber
+  description: シリアル番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: datepurchase
+  old_name: datepurchase
+  description: 購入日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: datestock
+  old_name: datestock
+  description: 納入日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: dateoperationstart
+  old_name: dateoperationstart
+  description: 初回稼働日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: kbnpurchase
+  old_name: kbnpurchase
+  description: 購入区分
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: assetnumber
+  old_name: assetnumber
+  description: 資産番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: datedisposal
+  old_name: datedisposal
+  description: 廃棄日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: mestatus
+  old_name: mestatus
+  description: 場所固定
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: productname
+  old_name: productname
+  description: 製品名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: modelnumber
+  old_name: modelnumber
+  description: 型番
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: makername
+  old_name: makername
+  description: メーカー
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: bunrui_1
+  old_name: bunrui_1
+  description: 大分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: bunrui_2
+  old_name: bunrui_2
+  description: 中分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: bunrui_3
+  old_name: bunrui_3
+  description: 小分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: durableyears_legal
+  old_name: durableyears_legal
+  description: 法廷耐用年数
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: durableyears_hp
+  old_name: durableyears_hp
+  description: 院内耐用年数
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: jancode
+  old_name: jancode
+  description: JANコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: jmdncode
+  old_name: jmdncode
+  description: JMDNコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: classtype
+  old_name: classtype
+  description: クラス分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:

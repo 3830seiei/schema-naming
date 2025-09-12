@@ -1,0 +1,170 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: tblrentallog
+description: 貸出履歴テーブル
+
+#- columns info -------------------------------------------
+columns:
+- name: hpcode
+  old_name: hpcode
+  description: 病院コード
+  data_type: integer
+  primary_key: true
+  nullable: true
+  comment:
+- name: hpseq
+  old_name: hpseq
+  description: 病院内連番
+  data_type: integer
+  primary_key: true
+  nullable: true
+  comment:
+- name: hpname
+  old_name: hpname
+  description: 病院名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: recvdate
+  old_name: recvdate
+  description: データ受領日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: menumber
+  old_name: menumber
+  description: 機器番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: rentalid
+  old_name: rentalid
+  description: 管理番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: productname
+  old_name: productname
+  description: 製品名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: modelnumber
+  old_name: modelnumber
+  description: 型番
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: serialnumber
+  old_name: serialnumber
+  description: シリアル番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: NULLの場合は[未登録]をセット
+- name: makername
+  old_name: makername
+  description: メーカー
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: bunrui_1
+  old_name: bunrui_1
+  description: 大分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: bunrui_2
+  old_name: bunrui_2
+  description: 中分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: bunrui_3
+  old_name: bunrui_3
+  description: 小分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: startdate
+  old_name: startdate
+  description: 貸出日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: recipientgrp
+  old_name: recipientgrp
+  description: 貸出先
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: returndate
+  old_name: returndate
+  description: 返却日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: returngrp
+  old_name: returngrp
+  description: 返却先
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: bunrui
+  old_name: bunrui
+  description: 機器分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: startdatecalc
+  old_name: startdatecalc
+  description: 貸出日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: 時間情報が無ければ00:00:00
+- name: returndatecalc
+  old_name: returndatecalc
+  description: 返却日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: 時間情報が無ければ23:59:59

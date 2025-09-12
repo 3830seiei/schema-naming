@@ -1,0 +1,471 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+
+#- tableinfo ----------------------------------------------
+table_name: mstjahidproducts
+description: JAHID提供の商品マスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment: Serial値
+- name: recnumber
+  old_name: recnumber
+  description: レコード管理番号
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: itemnumber
+  old_name: itemnumber
+  description: アイテム管理番号
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: startdate_use
+  old_name: startdate_use
+  description: 摘要開始日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: enddate_use
+  old_name: enddate_use
+  description: 摘要終了日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 現在利用中の最新レコードはNULLがセット
+- name: jancode
+  old_name: jancode
+  description: JANコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: productname
+  old_name: productname
+  description: 商品名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: ryaku
+  old_name: ryaku
+  description: 商品名略称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: kanamei
+  old_name: kanamei
+  description: 商品名カナ
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: kikaku
+  old_name: kikaku
+  description: 規格
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: kikaku_hankaku
+  old_name: kikaku_hankaku
+  description: 規格（半角）
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: productnumber
+  old_name: productnumber
+  description: 製品番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: cataloguecode
+  old_name: cataloguecode
+  description: カタログコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: searchproductnumber
+  old_name: searchproductnumber
+  description: 検索用製品番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: makercode
+  old_name: makercode
+  description: 製造販売業者コード
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 業者マスタ.業者コード
+- name: makername
+  old_name: makername
+  description: 製造販売業者名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: vendorcode
+  old_name: vendorcode
+  description: 国内総販売元業者コード
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 業者マスタ.業者コード
+- name: vendorname
+  old_name: vendorname
+  description: 国内総販売元業者名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: price
+  old_name: price
+  description: 希望小売価格
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: pricekbn
+  old_name: pricekbn
+  description: 価格区分
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: startdate_price
+  old_name: startdate_price
+  description: 希望小売価格適用日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: packagetype_price
+  old_name: packagetype_price
+  description: 希望小売価格梱包インジケータ
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: price_old
+  old_name: price_old
+  description: 旧希望小売価格
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: taxkbn
+  old_name: taxkbn
+  description: 税率区分
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 区分マスタ＞税率区分
+- name: packagetype_hpmin
+  old_name: packagetype_hpmin
+  description: 医療機関最小購入単位梱包インジケータ
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: packagetype_vendormin
+  old_name: packagetype_vendormin
+  description: 製造業者最小出荷単位梱包インジケータ
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: shipqty_vendormin
+  old_name: shipqty_vendormin
+  description: 製造業者最小出荷単位数量
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: jmdncode
+  old_name: jmdncode
+  description: JMDNコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: JMDNマスタ.JMDNコード
+- name: commonname
+  old_name: commonname
+  description: 一般的名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: approvalnumber
+  old_name: approvalnumber
+  description: 承認番号／届出番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: classtype
+  old_name: classtype
+  description: クラス分類
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 区分マスタ＞クラス分類区分
+- name: maintainkbn
+  old_name: maintainkbn
+  description: 特定保守管理区分
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 区分マスタ＞特定保守管理区分
+- name: reparekbn
+  old_name: reparekbn
+  description: 修理区分
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 区分マスタ＞修理区分
+- name: setupkbn
+  old_name: setupkbn
+  description: 設置管理区分
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 区分マスタ＞設置管理区分
+- name: dokugekikbn
+  old_name: dokugekikbn
+  description: 毒劇区分
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 区分マスタ＞毒劇区分
+- name: keepkbn
+  old_name: keepkbn
+  description: 保管区分
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 区分マスタ＞保管区分
+- name: shoukanseiqkbn
+  old_name: shoukanseiqkbn
+  description: 材料償還請求区分
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 区分マスタ＞材料償還請求区分
+- name: seibutsuyuraikbn
+  old_name: seibutsuyuraikbn
+  description: 生物由来製品区分
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 区分マスタ＞生物由来製品区分
+- name: docinfocode
+  old_name: docinfocode
+  description: 添付文書情報管理コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: ijicode
+  old_name: ijicode
+  description: 医事コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 医事コードマスタ.医事コード
+- name: iryouzairyouname
+  old_name: iryouzairyouname
+  description: （現）特定保険医療材料名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: biko
+  old_name: biko
+  description: 償還請求備考
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: price_shoukan
+  old_name: price_shoukan
+  description: 償還価格合計
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: shoukanbunruicode
+  old_name: shoukanbunruicode
+  description: （現）償還分類コード
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 償還分類マスタ.償還分類コード
+- name: startdate_shoukanbunrui
+  old_name: startdate_shoukanbunrui
+  description: （現）償還分類適用開始日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: price_shoukanbunrui
+  old_name: price_shoukanbunrui
+  description: （現）償還分類価格
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: shoukanbunruicode_old
+  old_name: shoukanbunruicode_old
+  description: （旧）償還分類コード
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 償還分類マスタ.償還分類コード
+- name: startdate_shoukanbunrui_old
+  old_name: startdate_shoukanbunrui_old
+  description: （旧）償還分類適用開始日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: price_shoukanbunrui_old
+  old_name: price_shoukanbunrui_old
+  description: （旧）償還分類価格
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: bunruicode
+  old_name: bunruicode
+  description: 分類コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: medisbunruicode
+  old_name: medisbunruicode
+  description: MEDIS分類コード
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: MEDIS分類マスタ.分類コード
+- name: medisvendorname
+  old_name: medisvendorname
+  description: MEDIS登録企業略名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: startdate_medis
+  old_name: startdate_medis
+  description: MEDIS初期登録日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate_medis
+  old_name: lastupdate_medis
+  description: MEDIS最終登録日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: startdate_ship
+  old_name: startdate_ship
+  description: 出荷開始日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: stopdate
+  old_name: stopdate
+  description: 製造停止期日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment:
+- name: itemnumber_old
+  old_name: itemnumber_old
+  description: 旧アイテム管理番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: jancode_old
+  old_name: jancode_old
+  description: 旧JANコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: linkurl
+  old_name: linkurl
+  description: 商品画像ページリンク先
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment:
+- name: jahidregdate
+  old_name: jahidregdate
+  description: 登録日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 提供されたJAHIDに記載せれている登録日で実際に作業した日付とは異なる
+- name: jahidlastupdate
+  old_name: jahidlastupdate
+  description: 更新日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 提供されたJAHIDに記載せれている更新日で実際に作業した日付とは異なる
+- name: qty_pi0
+  old_name: qty_pi0
+  description: PI-0の保険償還単位数
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment:
+- name: price_shoukan_pi0
+  old_name: price_shoukan_pi0
+  description: PI-0の償還価格
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment:
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment:
