@@ -27,7 +27,7 @@ _最終更新: 2025-09-11
 ### 基本方針
 
 - 正規の用語は **`medical_device`（医療機器）** を用います。
-  - ドキュメント上の説明として *medical equipment* を許容しますが、**識別子**では使用しません。
+  - ドキュメント上の説明として *medical equipment* を許容しますが、**識別子**では使用しません。特別意味が無ければ **medical device** で統一。
   - 略語 **ME** は **識別子で禁止**（Medical Engineer/Engineering との混同を避ける）。
 - 規制上のリスク区分は **`risk_class`** とし、値は **`I`/`II`/`III`/`IV`** を採用します。
 - 一般的名称（JMDN）は **`jmdn_code`** と **`jmdn_name_ja` / `jmdn_name_en`** を保持します。
@@ -36,18 +36,85 @@ _最終更新: 2025-09-11
 - n:n の表名は **`map_<a>_<b>`**（アンダースコア1個）。
   - **特例**：ユーザーが医療機関/ディーラー/メーカー等に属しうる多態関連は **`map_user_entity`** を許容し、当該表の外部キー名も **`entity_id`** を維持します。
 
-## 4. テーブル命名
-- 形式: `<prefix_optional><domain>_<object>`
-  - 代表プレフィックス:
-    - `mst_`（マスタ）, `map_`（n:n）, `log_`（ログ/イベント）, `stg_`（ステージング）, `vw_`/`mv_`（ビュー/マテビュー）
-- **n:n 中間表**：`map_<a>_<b>`（アンダースコア1個・語順はドメイン優先で固定）
-  - 例: `map_medical_facility_medical_device`
-- **医療機関**：`medical_facility` を用いる（`facility` 単独は不可。一般施設と混同するため）。
-- 例：
-  - `mst_medical_facility`（医療機関マスタ）
-  - `mst_medical_device_classification`（医療機器分類マスタ）
-  - `log_report_publication`（レポート公開ログ）
-  - **特例**：`map_user_entity`（多態関連、`entity_id` を維持）
+## 4. スキーマ／テーブル命名（差し替え）
+
+### 4.1 レイヤ（スキーマ）
+- **raw** … 供給元そのまま（スナップショット保存庫）
+- **cur** … キュレーション／正規化後（重複解消・型／命名統一）
+- **core** … 業務コア（台帳＝ledger、履歴＝history、業務マスタ＝mst 等）
+- **xref** … 対照・名寄せ（外部プロバイダやシステム間の対応関係）
+- **mart** … 集計／分析（dim/fact/agg、BI向け）
+- **util** … 補助（ユーティリティ／設定／ジョブ管理）※任意
+
+> 形式：`<schema>.<table>`
+
+### 4.2 テーブル命名の基本
+- 形式：`<domain>_<entity>[_<suffix>]`
+- **domain**：業務ドメイン（例：`product`, `equipment`, `medical_facility`）
+- **entity**：対象（例：`ledger`, `history`, `mst`, `codes`, `crosswalk`）
+- **suffix**：必要時のみ（例：`daily`, `monthly`, `pi`, `packaging_units` など）
+- **複数形**：集合（行が増える“名簿系”）は **複数形**を原則
+  - 例：`products`, `facilities`, `vendors`
+  - ただし `ledger/history` は慣例的に単数ベースでも可
+- **予約接頭辞**
+  - ビュー：`v_`（例：`core.v_products_with_provider_ids`）
+  - マテビュー：`mv_`
+  - 業務マスタ：`mst_`（例：`core.mst_provider_codes`）
+
+### 4.3 レイヤ別の命名・用語
+- **raw**：`raw.<provider>_<source>_<yyyymm>`
+  - 例：`raw.jahid_products_202311`, `raw.medie_facilities_202311`
+- **cur**：`cur.<domain>[ _<detail> ]`
+  - 例：`cur.products`, `cur.product_pi`, `cur.packaging_units`, `cur.facilities`
+- **core（台帳／履歴／業務マスタ）**
+  - 台帳：`<domain>_ledger`
+    - 例：`core.equipment_ledger`
+  - 履歴：`<domain>_history`
+    - 例：`core.equipment_rental_history`, `core.equipment_repair_history`
+  - 業務マスタ：`mst_<domain>` / `mst_<domain>_<detail>`
+    - 例：`core.mst_jahid_products`, `core.mst_medie_packaging_units`
+    - 共通区分：`core.mst_provider_codes`（＋`core.v_mst_jahid_codes` 等ビュー）
+- **xref（対照・名寄せ）**
+  - 外部ID対照：`<domain>_crosswalk` または `<domain>_xref`
+    - 例：`xref.product_crosswalk`, `xref.facility_crosswalk`
+  - `map_` は使用しない（処理用マッピングの印象が強いため）
+- **mart（分析）**
+  - 次元：`dim_<domain>`
+  - 事実：`fact_<domain>`
+  - 集約：`agg_<domain>_<grain>`
+  - 例：`mart.dim_equipment`, `mart.fact_rentals`, `mart.agg_rentals_daily`
+
+### 4.4 n:n 中間表（純粋な内部関係）
+- 形式：`link_<a>_<b>`
+- アンダースコアは1個
+- 語順はビジネス優先度を優先、同格ならアルファベット昇順
+- 例：`core.link_user_role`, `core.link_product_category`
+- 外部プロバイダや他システムとの対応は **xref/crosswalk** を使用
+  - 例：`xref.product_crosswalk`（JAHID/MEDIE/将来プロバイダ）
+
+### 4.5 ドメイン語彙のルール
+- 医療機関は必ず `medical_facility` を用いる（`facility` 単独は不可）
+  - 例：`cur.medical_facilities`, `xref.facility_crosswalk`, `core.mst_medical_facility_types`
+- 物流単位は `packaging_unit`
+- 梱包バリエーション（JAN+PI 等）は `product_pi`
+- プロバイダ名は必要箇所のみ使用
+  - 例：`mst_jahid_*`, `mst_medie_*`
+  - `xref` は列で識別
+
+### 4.6 例（まとめ）
+- 台帳：`core.equipment_ledger`
+- 貸出履歴：`core.equipment_rental_history`
+- 修理履歴：`core.equipment_repair_history`
+- 商品（キュレーション）：`cur.products`
+- 梱包単位（マスタ）：`core.mst_medie_packaging_units`, `core.mst_jahid_packaging_units`
+- JAN+PI：`cur.product_pi`
+- 区分共通表：`core.mst_provider_codes`（ビュー：`core.v_mst_jahid_codes`）
+- 外部ID対照：`xref.product_crosswalk`, `xref.facility_crosswalk`
+- BI：`mart.dim_product`, `mart.fact_rentals`, `mart.agg_rentals_monthly`
+
+---
+
+※ 単一スキーマ運用の場合は `cur_*/raw_*/core_*/xref_*/mart_*` の接頭辞方式に読み替えても同義です。
 
 ## 5. カラム命名
 - **主キー**：`<table_short>_id`
@@ -93,7 +160,7 @@ _最終更新: 2025-09-11
 new: pref   new: prefecture_
 ^(\s*new:\s*[^#\n]*?)pref    $1
 ^(\s*new:\s*[^#\n]*?)medarea    $1_secondary_medical_area_
-^(\s*new:\s*[^#\n]*?)    $1
+^(\s*new:\s*[^#\n]*?)jahid    $1_jahid_
 ^(\s*new:\s*[^#\n]*?)    $1
 ^(\s*new:\s*[^#\n]*?)    $1
 ^(\s*new:\s*[^#\n]*?)    $1

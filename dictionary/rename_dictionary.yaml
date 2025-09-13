@@ -12,20 +12,15 @@ tables:
   mstgovpref:
     new: mst_mhlw_prefecture
     description: 厚生労働省管理の都道府県コードマスタ
+  mstgovcity:
+    new: mst_mhlw_city
+    description: 厚生労働省管理の市区町村コードマスタ
   mstgroupbunrui:  # status: crosswalk
     new: mstgroupbunrui
     description: 分類のグループ化情報のマスタ
   mstgroupmaker:  # status: crosswalk
     new: mstgroupmaker
     description: メーカー名のグループ化情報のマスタ
-
----
---- コメントサンプル ※この行から下が未対応
---- # status: crosswalk  PoC時のキュレーションテーブルなので、見直しなし
---- # status: keep  このまま採用
---- # status: pending  すぐに判断が付かないので保留
---- # TODO: 作業を記載しておく
-
   msthospital:
     new: mst_medical_facility
     description: 管理する医療機関を管理するマスタ
@@ -39,65 +34,76 @@ tables:
     new: mst_medical_facility_ward_mhlw
     description: 厚労省が公開している病院情報
   mstjahidiji:
-    new: mstjahidiji
+    new: mst_jahid_medical_codes
     description: JAHID提供のサブマスタ内の医事コードマスタ
   mstjahidjmdn:
-    new: mstjahidjmdn
+    new: mst_jahid_jmdn
     description: JAHID提供のサブマスタ内JMDNマスタ
   mstjahidkbn:
-    new: mstjahidkbn
+    new: mst_provider_codes
     description: JAHID提供の区分マスタ
+    notes: chat_note 167行周辺参照。区分マスタはJAHID/Medie共通化を想定
   mstjahidmedisbunrui:
-    new: mstjahidmedisbunrui
+    new: mst_jahid_medis_classification
     description: JAHID提供のサブマスタ内MEDIS分類マスタ
   mstjahidproducts:
-    new: mstjahidproducts
+    new: mst_jahid_products
     description: JAHID提供の商品マスタ
   mstjahidproductspackage:
-    new: mstjahidproductspackage
+    new: mst_jahid_product_pi
     description: JAHID提供の商品マスタ（梱包情報）
+    notes: PI(packaging indicator)+梱包情報の組み合わせ
   mstjahidshoukanbunrui:
-    new: mstjahidshoukanbunrui
+    new: mst_jahid_reimbursement_classes
     description: JAHID提供のサブマスタ内の償還分類マスタ
   mstjahidunit:
-    new: mstjahidunit
+    new: mst_jahid_packaging_units
     description: JAHID提供のサブマスタ内単位マスタ
   mstjahidvendor:
-    new: mstjahidvendor
+    new: mst_jahid_vendor
     description: JAHID提供のサブマスタ内の業者マスタ
   mstmedieproducts:
-    new: mstmedieproducts
+    new: mst_medie_products
     description: メディエ提供商品マスタ
   mstrelationproducts:
-    new: mstrelationproducts
+    new: product_crosswalk
     description: 雑多な商品情報とJahid、Medieを関連付ける
+    notes: 複数のプロバイダー(JAHID, MEDIE, APTAGEなど)増えていくことを想定
   rawhpmelist:
-    new: rawhpmelist
+    new: raw.source_medical_device
     description: 取込_病院機器台帳テーブル
+    notes: raw. スキーマに入れて切り分ける。供給元からの生データをそのまま取り込むイメージ
   rawrentallog:
-    new: rawrentallog
+    new: raw.source_rental
     description: 取込_貸出履歴テーブル
+    notes: raw. スキーマに入れて切り分ける。供給元からの生データをそのまま取り込むイメージ
   rawrepairlog:
-    new: rawrepairlog
+    new: raw.source_repair
     description: 取込_修理履歴テーブル
+    notes: raw. スキーマに入れて切り分ける。供給元からの生データをそのまま取り込むイメージ
   tblhpmelist:
-    new: tblhpmelist
+    new: core.tbl_medical_device_ledger
     description: 病院機器台帳テーブル
-  tblimportstatus:
-    new: tblimportstatus
-    description: 取込対象ファイルの作業状況
-  tblregdate:
-    new: tblregdate
-    description: 各テーブルの更新日時管理
+    notes: core. スキーマで業務の中心と定義する。
   tblrentallog:
-    new: tblrentallog
+    new: core.medical_device_rental_history
     description: 貸出履歴テーブル
   tblrepairlog:
-    new: tblrepairlog
+    new: core.medical_device_repair_history
     description: 修理履歴テーブル
-  mstgovcity:
-    new: mst_mhlw_city
-    description: 厚生労働省管理の市区町村コードマスタ
+  tblimportstatus:  # status: notfound
+    new: tblimportstatus
+    description: 取込対象ファイルの作業状況
+  tblregdate:  # status: notfound
+    new: tblregdate
+    description: 各テーブルの更新日時管理
+---
+--- コメントサンプル ※この行から下が未対応
+--- # status: crosswalk  PoC時のキュレーションテーブルなので、見直しなし
+--- # status: keep  このまま採用
+--- # status: pending  すぐに判断が付かないので保留
+--- # status: notfound  実際PoCでは使われていない
+--- # TODO: 作業を記載しておく
 columns:
   mstgovconbinationarea:
     id:
@@ -455,19 +461,19 @@ columns:
       new: ijiname
       description: 医事名
     jahidregdate:
-      new: jahidregdate
+      new: _jahid_regdate
       description: 登録日時
     jahidreguserid:
-      new: jahidreguser_id
+      new: _jahid_reguser_id
       description: 登録者ID
     jahidlastupdate:
-      new: jahidlastupdate
+      new: _jahid_lastupdate
       description: 更新日時
     jahidupdateuserid:
-      new: jahidupdateuser_id
+      new: _jahid_updateuser_id
       description: 更新者ID
     jahidproguramid:
-      new: jahidproguram_id
+      new: _jahid_proguram_id
       description: 更新プログラムID
     regdate:
       new: regdate
@@ -501,19 +507,19 @@ columns:
       new: classbunruikbn
       description: クラス分類区分
     jahidregdate:
-      new: jahidregdate
+      new: _jahid_regdate
       description: 登録日時
     jahidreguserid:
-      new: jahidreguser_id
+      new: _jahid_reguser_id
       description: 登録者ID
     jahidlastupdate:
-      new: jahidlastupdate
+      new: _jahid_lastupdate
       description: 更新日時
     jahidupdateuserid:
-      new: jahidupdateuser_id
+      new: _jahid_updateuser_id
       description: 更新者ID
     jahidproguramid:
-      new: jahidproguram_id
+      new: _jahid_proguram_id
       description: 更新プログラムID
     syurikbn:
       new: syurikbn
@@ -544,19 +550,19 @@ columns:
       new: biko
       description: 備考
     jahidregdate:
-      new: jahidregdate
+      new: _jahid_regdate
       description: 登録日時
     jahidreguserid:
-      new: jahidreguser_id
+      new: _jahid_reguser_id
       description: 登録者ID
     jahidlastupdate:
-      new: jahidlastupdate
+      new: _jahid_lastupdate
       description: 更新日時
     jahidupdateuserid:
-      new: jahidupdateuser_id
+      new: _jahid_updateuser_id
       description: 更新者ID
     jahidproguramid:
-      new: jahidproguram_id
+      new: _jahid_proguram_id
       description: 更新プログラムID
     regdate:
       new: regdate
@@ -575,19 +581,19 @@ columns:
       new: bunruiname
       description: 分類名称
     jahidregdate:
-      new: jahidregdate
+      new: _jahid_regdate
       description: 登録日時
     jahidreguserid:
-      new: jahidreguser_id
+      new: _jahid_reguser_id
       description: 登録者ID
     jahidlastupdate:
-      new: jahidlastupdate
+      new: _jahid_lastupdate
       description: 更新日時
     jahidupdateuserid:
-      new: jahidupdateuser_id
+      new: _jahid_updateuser_id
       description: 更新者ID
     jahidproguramid:
-      new: jahidproguram_id
+      new: _jahid_proguram_id
       description: 更新プログラムID
     regdate:
       new: regdate
@@ -774,10 +780,10 @@ columns:
       new: linkurl
       description: 商品画像ページリンク先
     jahidregdate:
-      new: jahidregdate
+      new: _jahid_regdate
       description: 登録日
     jahidlastupdate:
-      new: jahidlastupdate
+      new: _jahid_lastupdate
       description: 更新日
     qty_pi0:
       new: qty_pi0
@@ -829,10 +835,10 @@ columns:
       new: isbarcode
       description: バーコード表示有無
     jahidregdate:
-      new: jahidregdate
+      new: _jahid_regdate
       description: 登録日
     jahidlastupdate:
-      new: jahidlastupdate
+      new: _jahid_lastupdate
       description: 更新日
     regdate:
       new: regdate
@@ -899,19 +905,19 @@ columns:
       new: ijicode
       description: 医事コード
     jahidregdate:
-      new: jahidregdate
+      new: _jahid_regdate
       description: 登録日時
     jahidreguserid:
-      new: jahidreguser_id
+      new: _jahid_reguser_id
       description: 登録者ID
     jahidlastupdate:
-      new: jahidlastupdate
+      new: _jahid_lastupdate
       description: 更新日時
     jahidupdateuserid:
-      new: jahidupdateuser_id
+      new: _jahid_updateuser_id
       description: 更新者ID
     jahidproguramid:
-      new: jahidproguram_id
+      new: _jahid_proguram_id
       description: 更新プログラムID
     regdate:
       new: regdate
@@ -930,19 +936,19 @@ columns:
       new: unitname
       description: 単位名
     jahidregdate:
-      new: jahidregdate
+      new: _jahid_regdate
       description: 登録日時
     jahidreguserid:
-      new: jahidreguser_id
+      new: _jahid_reguser_id
       description: 登録者ID
     jahidlastupdate:
-      new: jahidlastupdate
+      new: _jahid_lastupdate
       description: 更新日時
     jahidupdateuserid:
-      new: jahidupdateuser_id
+      new: _jahid_updateuser_id
       description: 更新者ID
     jahidproguramid:
-      new: jahidproguram_id
+      new: _jahid_proguram_id
       description: 更新プログラムID
     regdate:
       new: regdate
@@ -997,19 +1003,19 @@ columns:
       new: jflag
       description: Jフラグ
     jahidregdate:
-      new: jahidregdate
+      new: _jahid_regdate
       description: 登録日時
     jahidreguserid:
-      new: jahidreguser_id
+      new: _jahid_reguser_id
       description: 登録者ID
     jahidlastupdate:
-      new: jahidlastupdate
+      new: _jahid_lastupdate
       description: 更新日時
     jahidupdateuserid:
-      new: jahidupdateuser_id
+      new: _jahid_updateuser_id
       description: 更新者ID
     jahidproguramid:
-      new: jahidproguram_id
+      new: _jahid_proguram_id
       description: 更新プログラム
     regdate:
       new: regdate
