@@ -161,9 +161,9 @@ new: pref   new: prefecture_
 ^(\s*new:\s*[^#\n]*?)pref    $1
 ^(\s*new:\s*[^#\n]*?)medarea    $1_secondary_medical_area_
 ^(\s*new:\s*[^#\n]*?)jahid    $1_jahid_
-^(\s*new:\s*[^#\n]*?)    $1
-^(\s*new:\s*[^#\n]*?)    $1
-^(\s*new:\s*[^#\n]*?)    $1
+^(\s*new:\s*[^#\n]*?)towncode    $1municipality_code
+^(\s*new:\s*[^#\n]*?)hpname    $1_medical_facility_name
+^(\s*new:\s*[^#\n]*?)recvdate    $1
 ^(\s*new:\s*[^#\n]*?)    $1
 ^(\s*new:\s*[^#\n]*?)    $1
 ^(\s*new:\s*[^#\n]*?)    $1
@@ -250,4 +250,5 @@ constraints:
 - `medical_equipment` / `medical_entity` → `medical_device`
 - `*_datetime` → `*_at`
 - `regdate` → `created_at` / `lastupdate` → `updated_at`
+- `update_date` (情報公開日) → `published_at`
 - `*_link`（中間表）→ `map_<a>_<b>`（`user_entity` は特例として名称固定）

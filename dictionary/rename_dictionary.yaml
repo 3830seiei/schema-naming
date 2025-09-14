@@ -2,18 +2,26 @@ version: 1
 notes: "Draft rename dictionary generated from smds_poc YAMLs.\nPriority for new names:\n  1) New naming rules (snake_case,\
   \ reserved avoidance, *_id suffix)\n  2) JMDN / MHLW canonical terms\n  3) Clear English names for global readability\n\
   'todo' fields indicate items needing human review."
+# -------------
+# checkline
+# status: crosswalk  PoC時のキュレーションテーブルなので、見直しなし
+# status: keep  このまま採用
+# status: pending  すぐに判断が付かないので保留
+# status: notfound  実際PoCでは使われていない
+# TODO: 作業を記載しておく
+# -------------
 tables:
   mstgovconbinationarea:
-    new: mst_mhlw_combined_area
+    new: mhlw_combined_area
     description: 厚労省が公開している各区域情報の関連マスタ
   mstgovmedarea:
-    new: mst_mhlw_secondary_medical_area
+    new: mhlw_secondary_medical_area
     description: 厚生労働省管理の二次医療圏コードマスタ
   mstgovpref:
-    new: mst_mhlw_prefecture
+    new: mhlw_prefecture
     description: 厚生労働省管理の都道府県コードマスタ
   mstgovcity:
-    new: mst_mhlw_city
+    new: mhlw_municipality
     description: 厚生労働省管理の市区町村コードマスタ
   mstgroupbunrui:  # status: crosswalk
     new: mstgroupbunrui
@@ -25,45 +33,45 @@ tables:
     new: mst_medical_facility
     description: 管理する医療機関を管理するマスタ
   msthospitalgov:
-    new: mst_medical_facility_mhlw
+    new: mhlw_medical_facility
     description: 厚労省が公開している病院情報
   msthospitalizationgov:
-    new: mst_medical_facility_ization_mhlw
+    new: mhlw_hospitalization_statistics
     description: 厚労省が公開している入院数情報
   msthospitalwardgov:
-    new: mst_medical_facility_ward_mhlw
+    new: mhlw_medical_facility_ward
     description: 厚労省が公開している病院情報
   mstjahidiji:
-    new: mst_jahid_medical_codes
+    new: jahid_medical_codes
     description: JAHID提供のサブマスタ内の医事コードマスタ
   mstjahidjmdn:
-    new: mst_jahid_jmdn
+    new: jahid_jmdn
     description: JAHID提供のサブマスタ内JMDNマスタ
   mstjahidkbn:
     new: mst_provider_codes
     description: JAHID提供の区分マスタ
     notes: chat_note 167行周辺参照。区分マスタはJAHID/Medie共通化を想定
   mstjahidmedisbunrui:
-    new: mst_jahid_medis_classification
+    new: jahid_medis_classification
     description: JAHID提供のサブマスタ内MEDIS分類マスタ
   mstjahidproducts:
-    new: mst_jahid_products
+    new: jahid_products
     description: JAHID提供の商品マスタ
   mstjahidproductspackage:
-    new: mst_jahid_product_pi
+    new: jahid_product_package
     description: JAHID提供の商品マスタ（梱包情報）
     notes: PI(packaging indicator)+梱包情報の組み合わせ
   mstjahidshoukanbunrui:
-    new: mst_jahid_reimbursement_classes
+    new: jahid_reimbursement_classes
     description: JAHID提供のサブマスタ内の償還分類マスタ
   mstjahidunit:
-    new: mst_jahid_packaging_units
+    new: jahid_packaging_units
     description: JAHID提供のサブマスタ内単位マスタ
   mstjahidvendor:
-    new: mst_jahid_vendor
+    new: jahid_vendor
     description: JAHID提供のサブマスタ内の業者マスタ
   mstmedieproducts:
-    new: mst_medie_products
+    new: medie_products
     description: メディエ提供商品マスタ
   mstrelationproducts:
     new: product_crosswalk
@@ -95,15 +103,8 @@ tables:
     new: tblimportstatus
     description: 取込対象ファイルの作業状況
   tblregdate:  # status: notfound
-    new: tblregdate
+    new: tblcreated_at
     description: 各テーブルの更新日時管理
----
---- コメントサンプル ※この行から下が未対応
---- # status: crosswalk  PoC時のキュレーションテーブルなので、見直しなし
---- # status: keep  このまま採用
---- # status: pending  すぐに判断が付かないので保留
---- # status: notfound  実際PoCでは使われていない
---- # TODO: 作業を記載しておく
 columns:
   mstgovconbinationarea:
     id:
@@ -113,38 +114,38 @@ columns:
       new: prefecture_code
       description: 都道府県コード
     medareacode:
-      new: _secondary_medical_area_code
+      new: secondary_medical_area_code
       description: 二次医療圏コード
     towncode:
-      new: towncode
+      new: municipality_code
       description: 市町村コード
     update_date:
-      new: update_date
+      new: published_at
       description: 情報公開日
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
   mstgovmedarea:
     medareacode:
-      new: _secondary_medical_area_code_id
+      new: secondary_medical_area_code_id
       description: 二次医療圏コード
     medareaname:
-      new: _secondary_medical_area_name
+      new: secondary_medical_area_name
       description: 二次医療圏名
     medareaname_kana:
-      new: _secondary_medical_area_name_kana
+      new: secondary_medical_area_name_kana
       description: 二次医療圏名カナ
     update_date:
-      new: update_date
+      new: published_at
       description: 情報公開日
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
   mstgovpref:
     prefcode:
@@ -157,20 +158,45 @@ columns:
       new: prefecture_name_kana
       description: 都道府県名カナ
     prefname_nopref:
-      new: prefecture_name_nopref
+      new: prefecture_name_short
       description: 都道府県名_都道府県情報なし
+      notes: prefecture_name_en との対比で、都道府県を省いた名称, 例: 東京, 大阪。今後enも追加しても良いかも。
     prefname_roman:
       new: prefecture_name_roman
       description: 都道府県_ローマ字
     update_date:
-      new: update_date
+      new: published_at
       description: 情報公開日
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
+
+  mstgovcity:  # mhlw_municipality
+    citycode:
+      new: municipality_code
+      description: 市区町村コード
+    cityname:
+      new: municipality_name
+      description: 市区町村名
+    cityname_kana:
+      new: municipality_name_kana
+      description: 市区町村名カナ
+    isdesignatedcity:
+      new: is_designated_city
+      description: 政令指定都市フラグ
+    update_date:
+      new: published_at
+      description: 情報公開日
+    regdate:
+      new: created_at
+      description: データ作成日
+    lastupdate:
+      new: updated_at
+      description: 最終更新日
+
   mstgroupbunrui:  # status: crosswalk
     seq:
       new: seq_id
@@ -188,13 +214,13 @@ columns:
       new: bunruiname
       description: 分類名
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     reguser:
       new: reguser
       description: データ作成者
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
     updateuser:
       new: updateuser
@@ -213,327 +239,329 @@ columns:
       new: makername
       description: メーカー名
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     reguser:
       new: reguser
       description: データ作成者
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
     updateuser:
       new: updateuser
       description: 最終更新者
   msthospital:
     hpcode:
-      new: hpcode_id
+      new: medical_facility_id
       description: 病院コード
     hpname:
-      new: hpname
+      new: medical_facility_name
       description: 病院名
     govhpcode:
-      new: _mhlw_hpcode
+      new: mhlw__medical_facility_code
       description: 医療機関番号
     openhpcode:
-      new: openhpcode
+      new: mhlw_open_medical_facility_code
       description: オープンデータ医療機関コード
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
   msthospitalgov:
     id:
-      new: id
+      new: nhlw_medical_facility_id
       description: ID
+      notes: hhlwだけど、システム側のIDとして利用するので、codeではなくidを採用
     regtype_pri:
-      new: regtype_pri
+      new: primary_medical_facility_type
       description: 医科種別_主
     regtype_sec:
-      new: regtype_sec
+      new: secondary_medical_facility_type
       description: 医科種別_副
     prefcode:
       new: prefecture_code
       description: 都道府県コード
     hpcodepri:
-      new: hpcodepri
+      new: primary_nhlw_medical_facility_code
       description: 医療機関コード＿主
     hpcodesec:
-      new: hpcodesec
+      new: secondary_nhlw_medical_facility_code
       description: 医療機関コード＿副
     hpcodelocal:
-      new: hpcodelocal
+      new: nhlw_medical_facility_code_local
       description: 医療機関コード_支局独自
     openhpcodemed:
-      new: openhpcodemed
+      new: nhlw_open_medical_facility_code_medical
       description: オープンデータ医療機関コード_医科
     openhpcodedental:
-      new: openhpcodedental
+      new: nhlw_open_medical_facility_code_dental
       description: オープンデータ医療機関コード_歯科
     isactive:
-      new: isactive
+      new: is_active
       description: 稼働状態
     hpname:
-      new: hpname
+      new: medical_facility_name
       description: 医療機関名
     medareacode:
-      new: _secondary_medical_area_code
+      new: secondary_medical_area_code
       description: 二次医療圏コード
     towncode:
-      new: towncode
+      new: municipality_code
       description: 市区町村コード
     postcode:
-      new: postcode
+      new: postal_code
       description: 郵便番号
     address:
       new: address
       description: 所在地
     tel:
-      new: tel
+      new: phone_number
       description: 電話番号
     countmaintotal:
-      new: countmaintotal
+      new: count_fulltime_total
       description: 勤務医数（常勤・合計）
     countmaindoc:
-      new: countmaindoc
+      new: count_fulltime_doctor
       description: 勤務医数（常勤・医師）
     countmaindental:
-      new: countmaindental
+      new: count_fulltime_dentist
       description: 勤務医数（常勤・歯科医師）
     countmaindrug:
-      new: countmaindrug
+      new: count_fulltime_pharmacist
       description: 勤務医数（常勤・薬剤師）
     countmainother:
-      new: countmainother
+      new: count_fulltime_other
       description: 勤務医数（常勤・その他）
     countsubtotal:
-      new: countsubtotal
+      new: count_parttime_total
       description: 勤務医数（非常勤・合計）
     countsubdoc:
-      new: countsubdoc
+      new: count_parttime_doctor
       description: 勤務医数（非常勤・医師）
     countsubdental:
-      new: countsubdental
+      new: count_parttime_dentist
       description: 勤務医数（非常勤・歯科医師）
     countsubdrug:
-      new: countsubdrug
+      new: count_parttime_pharmacist
       description: 勤務医数（非常勤・薬剤師）
     countsubother:
-      new: countsubother
+      new: count_parttime_other
       description: 勤務医数（非常勤・その他）
     countbeds:
-      new: countbeds
+      new: count_beds
       description: 病床数
     departments:
       new: departments
       description: 診療科目
     hpregusername:
-      new: hpregusername
+      new: hospital_founder
       description: 開設者氏名
+      notes: 法令や行政文書を意識した名称
     hpmanageusername:
-      new: hpmanageusername
+      new: hospital_administrator
       description: 管理者氏名
     hpstartdate:
-      new: hpstartdate
+      new: hospital_opening_date
       description: 開業日（指定年月日）
     regreason:
-      new: regreason
+      new: registration_reason
       description: 登録理由
     hpregdate:
-      new: hpregdate
+      new: hospital_registration_date
       description: 指定期開始日
     hptype:
-      new: hptype
+      new: medical_facility_type
       description: 医療機関種別
     fileupdatedate:
-      new: fileupdatedate
+      new: nhlw_file_updated_at
       description: 厚労省ファイル更新日
     siteuploaddate:
-      new: siteuploaddate
+      new: nhlw_site_upload_date
       description: 厚労省サイト更新日
     regfilename1:
-      new: regfilename1
+      new: registration_file_1
       description: 登録ファイル①
     regnumber1:
-      new: regnumber1
+      new: registration_seq_no_1
       description: 登録時項番①
     regfilename2:
-      new: regfilename2
+      new: registration_file_2
       description: 登録ファイル②
     regnumber2:
-      new: regnumber2
+      new: registration_seq_no_2
       description: 登録時項番②
     checkdate:
-      new: checkdate
+      new: checked_at
       description: 内容確認日
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  msthospitalizationgov:
+  msthospitalizationgov:  # mhlw_hospitalization_statistics
     id:
-      new: id
+      new: mhlw_hospitalization_statistics_id
       description: ID
     openhpcode:
-      new: openhpcode
+      new: nhlw_open_medical_facility_code
       description: オープンデータ医療機関コード
     openhpwardcode:
-      new: openhpwardcode
+      new: mhlw_open_ward_code
       description: オープンデータ病棟コード
     startstatistics:
-      new: startstatistics
+      new: statistics_start_date
       description: 統計期間開始
     endstatistics:
-      new: endstatistics
+      new: statistics_end_date
       description: 統計期間終了
     countin:
-      new: countin
+      new: admission_count
       description: 新規入棟患者数
     counttotal:
-      new: counttotal
+      new: inpatient_total_days
       description: 在棟患者延べ数
     countout:
-      new: countout
+      new: discharge_count
       description: 退棟患者延べ数
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  msthospitalwardgov:
+  msthospitalwardgov:  # mhlw_medical_facility_ward
     id:
-      new: id
+      new: mhlw_medical_facility_ward_id
       description: ID
     openhpcode:
-      new: openhpcode
+      new: nhlw_open_medical_facility_code
       description: オープンデータ医療機関コード
     openhpwardcode:
-      new: openhpwardcode
+      new: nhlw_openhpwardcode
       description: オープンデータ病棟コード
     wardname:
-      new: wardname
+      new: ward_name
       description: 病棟名
     function:
-      new: function
+      new: medical_function
       description: 医療機能
     countbedtotal:
-      new: countbedtotal
+      new: licensed_general_bed_count
       description: 許可病床数（一般病床）
     countbedactive:
-      new: countbedactive
+      new: active_general_bed_count
       description: 稼働病床数（一般病床）
     countbedtreatmenttotal:
-      new: countbedtreatmenttotal
+      new: licensed_longterm_bed_count
       description: 許可病床数（療養病床）
     countbedtreatmentactive:
-      new: countbedtreatmentactive
+      new: active_longterm_bed_count
       description: 稼働病床数（療養病床）
     department:
-      new: department
+      new: main_department
       description: 診療科（メイン）
     department2:
-      new: department2
+      new: sub_department_1
       description: 診療科（サブ1）
     department3:
-      new: department3
+      new: sub_department_2
       description: 診療科（サブ2）
     department4:
-      new: department4
+      new: sub_department_3
       description: 診療科（サブ3）
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  mstjahidiji:
+  mstjahidiji:  # jahid_medical_codes
     id:
-      new: id
+      new: jahid_medical_codes_id
       description: ID
     ijicode:
-      new: ijicode
+      new: medical_code
       description: 医事コード
     ijiname:
-      new: ijiname
+      new: medical_name
       description: 医事名
     jahidregdate:
-      new: _jahid_regdate
+      new: jahid_created_at
       description: 登録日時
     jahidreguserid:
-      new: _jahid_reguser_id
+      new: jahid_reguser_id
       description: 登録者ID
     jahidlastupdate:
-      new: _jahid_lastupdate
+      new: jahid_updated_at
       description: 更新日時
     jahidupdateuserid:
-      new: _jahid_updateuser_id
+      new: jahid_updateuser_id
       description: 更新者ID
     jahidproguramid:
-      new: _jahid_proguram_id
+      new: jahid_proguram_id
       description: 更新プログラムID
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  mstjahidjmdn:
+  mstjahidjmdn:  # jahid_jmdn
     id:
-      new: id
+      new: jahid_jmdn_id
       description: ID
     jmdnid:
-      new: jmdn_id
+      new: jmdn_management_code
       description: JMDN管理コード
     jmdncode:
-      new: jmdncode
+      new: jmdn_code
       description: JMDNコード
     jmdnname:
-      new: jmdnname
-      description: 一般的名称
+      new: jmdn_name
+      description: 一般的名称（JMDN名称）
     ruibetsucode:
-      new: ruibetsucode
+      new: category_code
       description: 類別コード
     ruibetsuname:
-      new: ruibetsuname
+      new: category_name
       description: 類別名称
     tokuteihosyukanrikbn:
-      new: tokuteihosyukanrikbn
+      new: special_maintenance_category
       description: 特定保守管理区分
     classbunruikbn:
-      new: classbunruikbn
-      description: クラス分類区分
+      new: class_classification
+      description: クラス分類区分（例：Class I/II/III/IV）
     jahidregdate:
-      new: _jahid_regdate
+      new: jahid_created_at
       description: 登録日時
     jahidreguserid:
-      new: _jahid_reguser_id
+      new: jahid_created_by
       description: 登録者ID
     jahidlastupdate:
-      new: _jahid_lastupdate
+      new: jahid_updated_at
       description: 更新日時
     jahidupdateuserid:
-      new: _jahid_updateuser_id
+      new: jahid_updated_by
       description: 更新者ID
     jahidproguramid:
-      new: _jahid_proguram_id
+      new: jahid_program_id
       description: 更新プログラムID
     syurikbn:
-      new: syurikbn
+      new: repair_category
       description: 修理区分
     settikanrikbn:
-      new: settikanrikbn
+      new: installation_management_category
       description: 設置管理区分
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  mstjahidkbn:
+  mstjahidkbn:  # mst_provider_codes status: pending レイアウト見直し
     id:
       new: id
       description: ID
@@ -550,874 +578,878 @@ columns:
       new: biko
       description: 備考
     jahidregdate:
-      new: _jahid_regdate
+      new: jahid_created_at
       description: 登録日時
     jahidreguserid:
-      new: _jahid_reguser_id
+      new: jahid_reguser_id
       description: 登録者ID
     jahidlastupdate:
-      new: _jahid_lastupdate
+      new: jahid_updated_at
       description: 更新日時
     jahidupdateuserid:
-      new: _jahid_updateuser_id
+      new: jahid_updateuser_id
       description: 更新者ID
     jahidproguramid:
-      new: _jahid_proguram_id
+      new: jahid_proguram_id
       description: 更新プログラムID
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  mstjahidmedisbunrui:
+  mstjahidmedisbunrui:  # jahid_medis_classification
     id:
-      new: id
+      new: jahid_medis_classification_id
       description: ID
     medisbunruicode:
-      new: medisbunruicode
+      new: jahid_medis_classification_code
       description: MEDIS分類コード
     bunruiname:
-      new: bunruiname
+      new: jahid_medis_classification_name
       description: 分類名称
     jahidregdate:
-      new: _jahid_regdate
+      new: jahid_created_at
       description: 登録日時
     jahidreguserid:
-      new: _jahid_reguser_id
+      new: jahid_reguser_id
       description: 登録者ID
     jahidlastupdate:
-      new: _jahid_lastupdate
+      new: jahid_updated_at
       description: 更新日時
     jahidupdateuserid:
-      new: _jahid_updateuser_id
+      new: jahid_updateuser_id
       description: 更新者ID
     jahidproguramid:
-      new: _jahid_proguram_id
+      new: jahid_proguram_id
       description: 更新プログラムID
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  mstjahidproducts:
+  mstjahidproducts:  # jahid_products
     id:
       new: id
       description: ID
     recnumber:
-      new: recnumber
+      new: record_management_number
       description: レコード管理番号
     itemnumber:
-      new: itemnumber
+      new: item_management_number
       description: アイテム管理番号
     startdate_use:
-      new: startdate_use
+      new: valid_from
       description: 摘要開始日
+      notes: valid_from, valid_to が国際的に一般的な命名
     enddate_use:
-      new: enddate_use
+      new: valid_to
       description: 摘要終了日
     jancode:
-      new: jancode
+      new: jan_code
       description: JANコード
     productname:
-      new: productname
+      new: product_name
       description: 商品名
     ryaku:
-      new: ryaku
+      new: product_name_short
       description: 商品名略称
     kanamei:
-      new: kanamei
+      new: product_name_kana
       description: 商品名カナ
     kikaku:
-      new: kikaku
+      new: product_specification
       description: 規格
     kikaku_hankaku:
-      new: kikaku_hankaku
+      new: product_specification_halfwidth
       description: 規格（半角）
     productnumber:
-      new: productnumber
+      new: product_number
       description: 製品番号
     cataloguecode:
-      new: cataloguecode
+      new: catalogue_code
       description: カタログコード
     searchproductnumber:
-      new: searchproductnumber
+      new: search_product_number
       description: 検索用製品番号
     makercode:
-      new: makercode
+      new: maker_code
       description: 製造販売業者コード
     makername:
-      new: makername
+      new: maker_name
       description: 製造販売業者名
     vendorcode:
-      new: vendorcode
+      new: vendor_code
       description: 国内総販売元業者コード
     vendorname:
-      new: vendorname
+      new: vendor_name
       description: 国内総販売元業者名
     price:
-      new: price
+      new: retail_price
       description: 希望小売価格
     pricekbn:
-      new: pricekbn
+      new: price_category
       description: 価格区分
     startdate_price:
-      new: startdate_price
+      new: retail_price_start_date
       description: 希望小売価格適用日
     packagetype_price:
-      new: packagetype_price
+      new: retail_price_package_indicator
       description: 希望小売価格梱包インジケータ
     price_old:
-      new: price_old
+      new: retail_price_previous
       description: 旧希望小売価格
     taxkbn:
-      new: taxkbn
+      new: tax_category
       description: 税率区分
     packagetype_hpmin:
-      new: packagetype_hpmin
+      new: hospital_min_package_indicator
       description: 医療機関最小購入単位梱包インジケータ
     packagetype_vendormin:
-      new: packagetype_vendormin
+      new: vendor_min_package_indicator
       description: 製造業者最小出荷単位梱包インジケータ
     shipqty_vendormin:
-      new: shipqty_vendormin
+      new: vendor_min_shipment_quantity
       description: 製造業者最小出荷単位数量
     jmdncode:
-      new: jmdncode
+      new: jmdn_code
       description: JMDNコード
     commonname:
-      new: commonname
+      new: common_name
       description: 一般的名称
     approvalnumber:
-      new: approvalnumber
+      new: approval_number
       description: 承認番号／届出番号
     classtype:
-      new: classtype
+      new: class_type
       description: クラス分類
     maintainkbn:
-      new: maintainkbn
+      new: maintenance_category
       description: 特定保守管理区分
     reparekbn:
-      new: reparekbn
+      new: repair_category
       description: 修理区分
     setupkbn:
-      new: setupkbn
+      new: installation_category
       description: 設置管理区分
     dokugekikbn:
-      new: dokugekikbn
+      new: poison_category
       description: 毒劇区分
     keepkbn:
-      new: keepkbn
+      new: storage_category
       description: 保管区分
     shoukanseiqkbn:
-      new: shoukanseiqkbn
+      new: reimbursement_request_category
       description: 材料償還請求区分
     seibutsuyuraikbn:
-      new: seibutsuyuraikbn
+      new: biological_origin_category
       description: 生物由来製品区分
     docinfocode:
-      new: docinfocode
+      new: package_insert_info_code
       description: 添付文書情報管理コード
     ijicode:
-      new: ijicode
+      new: medical_affairs_code
       description: 医事コード
     iryouzairyouname:
-      new: iryouzairyouname
+      new: medical_material_name
       description: （現）特定保険医療材料名
     biko:
-      new: biko
+      new: reimbursement_note
       description: 償還請求備考
     price_shoukan:
-      new: price_shoukan
+      new: reimbursement_total_price
       description: 償還価格合計
     shoukanbunruicode:
-      new: shoukanbunruicode
+      new: reimbursement_classification_code
       description: （現）償還分類コード
     startdate_shoukanbunrui:
-      new: startdate_shoukanbunrui
+      new: reimbursement_classification_start_date
       description: （現）償還分類適用開始日
     price_shoukanbunrui:
-      new: price_shoukanbunrui
+      new: reimbursement_classification_price
       description: （現）償還分類価格
     shoukanbunruicode_old:
-      new: shoukanbunruicode_old
+      new: reimbursement_classification_code_old
       description: （旧）償還分類コード
     startdate_shoukanbunrui_old:
-      new: startdate_shoukanbunrui_old
+      new: reimbursement_classification_start_date_old
       description: （旧）償還分類適用開始日
     price_shoukanbunrui_old:
-      new: price_shoukanbunrui_old
+      new: reimbursement_classification_price_old
       description: （旧）償還分類価格
     bunruicode:
-      new: bunruicode
+      new: classification_code
       description: 分類コード
     medisbunruicode:
-      new: medisbunruicode
+      new: medis_classification_code
       description: MEDIS分類コード
     medisvendorname:
-      new: medisvendorname
+      new: medis_vendor_short_name
       description: MEDIS登録企業略名
     startdate_medis:
-      new: startdate_medis
+      new: medis_registered_at
       description: MEDIS初期登録日
     lastupdate_medis:
-      new: lastupdate_medis
+      new: medis_updated_at
       description: MEDIS最終登録日
     startdate_ship:
-      new: startdate_ship
+      new: shipment_start_date
       description: 出荷開始日
     stopdate:
-      new: stopdate
+      new: production_end_date
       description: 製造停止期日
     itemnumber_old:
-      new: itemnumber_old
+      new: item_number_old
       description: 旧アイテム管理番号
     jancode_old:
-      new: jancode_old
+      new: jan_code_old
       description: 旧JANコード
     linkurl:
-      new: linkurl
+      new: product_image_url
       description: 商品画像ページリンク先
     jahidregdate:
-      new: _jahid_regdate
+      new: jahid_created_at
       description: 登録日
     jahidlastupdate:
-      new: _jahid_lastupdate
+      new: jahid_updated_at
       description: 更新日
     qty_pi0:
-      new: qty_pi0
+      new: reimbursement_unit_quantity_pi0
       description: PI-0の保険償還単位数
     price_shoukan_pi0:
-      new: price_shoukan_pi0
+      new: reimbursement_price_pi0
       description: PI-0の償還価格
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  mstjahidproductspackage:
+  mstjahidproductspackage:  # jahid_product_package (pi情報を分離したもの)
     id:
-      new: id
+      new: jahid_product_package_id
       description: ID
     recnumber:
-      new: recnumber
+      new: record_number
       description: レコード管理番号
     packageid:
       new: package_id
       description: 梱包ID
     startdate_use:
-      new: startdate_use
+      new: valid_from
       description: 摘要開始日
     enddate_use:
-      new: enddate_use
+      new: valid_to
       description: 摘要終了日
     packagetype:
-      new: packagetype
+      new: package_type
       description: 梱包識別インジケータ
     picode:
-      new: picode
+      new: package_item_code
       description: 梱包識別インジケータ付商品コード
     irisu:
-      new: irisu
+      new: package_quantity
       description: 梱包数（入数）
     unitcode:
-      new: unitcode
+      new: unit_code
       description: 単位コード
     unitname:
-      new: unitname
+      new: unit_name
       description: 単位呼称
     qty:
-      new: qty
-      description: 数量（PI0の単位の総数量）
+      new: total_quantity
+      description: 数量（PI0単位の総数量）
     isbarcode:
-      new: isbarcode
+      new: has_barcode
       description: バーコード表示有無
     jahidregdate:
-      new: _jahid_regdate
+      new: jahid_created_at
       description: 登録日
     jahidlastupdate:
-      new: _jahid_lastupdate
+      new: jahid_updated_at
       description: 更新日
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  mstjahidshoukanbunrui:
+  mstjahidshoukanbunrui:  # jahid_reimbursement_class
     id:
-      new: id
+      new: jahid_reimbursement_class_id
       description: ID
     kanricode:
-      new: kanricode
+      new: reimbursement_management_code
       description: 償還管理コード
     startdate:
-      new: startdate
+      new: valid_from
       description: 適用開始日
     enddate:
-      new: enddate
+      new: valid_to
       description: 適用終了日
     bunruinumber:
-      new: bunruinumber
+      new: reimbursement_class_number
       description: 償還分類番号
     bunruicode1:
-      new: bunruicode1
+      new: reimbursement_class_code_1
       description: 償還分類コード1
     bunruicode2:
-      new: bunruicode2
+      new: reimbursement_class_code_2
       description: 償還分類コード2
     bunruicode3:
-      new: bunruicode3
+      new: reimbursement_class_code_3
       description: 償還分類コード3
     bunruiname1:
-      new: bunruiname1
+      new: reimbursement_class_name_1
       description: 償還分類名1
     bunruiname2:
-      new: bunruiname2
+      new: reimbursement_class_name_2
       description: 償還分類名2
     bunruiname3:
-      new: bunruiname3
+      new: reimbursement_class_name_3
       description: 償還分類名3
     bunruiname:
-      new: bunruiname
+      new: reimbursement_class_name
       description: 償還分類名
     ryakuname:
-      new: ryakuname
+      new: reimbursement_class_short_name
       description: 償還分類略名
     bunruimark:
-      new: bunruimark
+      new: reimbursement_class_symbol
       description: 償還分類記号
     price:
-      new: price
+      new: reimbursement_price
       description: 償還価格
     unit:
-      new: unit
+      new: calculation_unit
       description: 算定単位
     memo:
-      new: memo
+      new: reimbursement_notes
       description: 償還価格算定留意事項
     biko:
-      new: biko
+      new: reimbursement_claim_note
       description: 償還請求備考
     ijicode:
-      new: ijicode
+      new: medical_affairs_code
       description: 医事コード
     jahidregdate:
-      new: _jahid_regdate
+      new: jahid_created_at
       description: 登録日時
     jahidreguserid:
-      new: _jahid_reguser_id
+      new: jahid_created_by
       description: 登録者ID
     jahidlastupdate:
-      new: _jahid_lastupdate
+      new: jahid_updated_at
       description: 更新日時
     jahidupdateuserid:
-      new: _jahid_updateuser_id
+      new: jahid_updated_by
       description: 更新者ID
     jahidproguramid:
-      new: _jahid_proguram_id
+      new: jahid_program_id
       description: 更新プログラムID
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  mstjahidunit:
+  mstjahidunit:  # jahid_packaging_units
     id:
-      new: id
+      new: jahid_unit_id
       description: ID
     unitcode:
-      new: unitcode
+      new: unit_code
       description: 単位コード
     unitname:
-      new: unitname
+      new: unit_name
       description: 単位名
     jahidregdate:
-      new: _jahid_regdate
+      new: jahid_created_at
       description: 登録日時
     jahidreguserid:
-      new: _jahid_reguser_id
+      new: jahid_created_by
       description: 登録者ID
     jahidlastupdate:
-      new: _jahid_lastupdate
+      new: jahid_updated_at
       description: 更新日時
     jahidupdateuserid:
-      new: _jahid_updateuser_id
+      new: jahid_updated_by
       description: 更新者ID
     jahidproguramid:
-      new: _jahid_proguram_id
+      new: jahid_program_id
       description: 更新プログラムID
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  mstjahidvendor:
+  mstjahidvendor:  # jahid_vendor
     id:
-      new: id
+      new: jahid_vendor_id
       description: ID
     vendorcode:
-      new: vendorcode
+      new: vendor_code
       description: 業者コード
     yobicode:
-      new: yobicode
+      new: reserved_code
       description: 予備コード
     vendorname:
-      new: vendorname
+      new: vendor_name
       description: 業者名
     ryakumei:
-      new: ryakumei
+      new: vendor_short_name
       description: 業者略名
     kanamei:
-      new: kanamei
+      new: vendor_kana
       description: 業者カナ
     postnumber:
-      new: postnumber
+      new: postal_code
       description: 郵便番号
     address1:
-      new: address1
+      new: address_line1
       description: 住所1
     address2:
-      new: address2
+      new: address_line2
       description: 住所2
     telnumber:
-      new: telnumber
+      new: phone_number
       description: 電話番号
     faxnumber:
-      new: faxnumber
+      new: fax_number
       description: FAX番号
     memo:
-      new: memo
+      new: notes
       description: メモ
     sectionname:
-      new: sectionname
+      new: department_name
       description: 部署名
     medisname:
-      new: medisname
+      new: medis_vendor_name
       description: MEDIS製造販売企業名称
     jflag:
-      new: jflag
+      new: j_flag
       description: Jフラグ
     jahidregdate:
-      new: _jahid_regdate
+      new: jahid_created_at
       description: 登録日時
     jahidreguserid:
-      new: _jahid_reguser_id
+      new: jahid_created_by
       description: 登録者ID
     jahidlastupdate:
-      new: _jahid_lastupdate
+      new: jahid_updated_at
       description: 更新日時
     jahidupdateuserid:
-      new: _jahid_updateuser_id
+      new: jahid_updated_by
       description: 更新者ID
     jahidproguramid:
-      new: _jahid_proguram_id
-      description: 更新プログラム
+      new: jahid_program_id
+      description: 更新プログラムID
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  mstmedieproducts:
+  mstmedieproducts:  # medie_products
     id:
-      new: id
+      new: medie_product_id
       description: ID
     keyrec0:
-      new: keyrec0
+      new: record_start_line
       description: レコードの開始行
     keyrec1:
-      new: keyrec1
+      new: record_number
       description: レコード番号
     mediecode:
-      new: mediecode
+      new: medie_code
       description: メディエコード
     productname:
-      new: productname
+      new: product_name
       description: 商品名
     kanamei:
-      new: kanamei
+      new: product_kana
       description: 商品名読み
     productcode:
-      new: productcode
+      new: product_code
       description: 商品コード
     productcode_old:
-      new: productcode_old
+      new: product_code_old
       description: 旧商品コード
     modelnumber:
-      new: modelnumber
+      new: model_number
       description: 型番
     jancode:
-      new: jancode
+      new: jan_code
       description: JANコード
     jancode_old:
-      new: jancode_old
+      new: jan_code_old
       description: 旧JANコード
     mandvcode:
-      new: mandvcode
+      new: manufacturer_vendor_code
       description: 製造販売元コード
     mandvname:
-      new: mandvname
+      new: manufacturer_vendor_name
       description: 製造販売元名称
     vendorcode:
-      new: vendorcode
+      new: vendor_code
       description: 販売元コード
     vendorname:
-      new: vendorname
+      new: vendor_name
       description: 販売元名称
     makercode:
-      new: makercode
+      new: maker_code
       description: 製造元コード
     makername:
-      new: makername
+      new: maker_name
       description: 製造元名称
     usetype:
-      new: usetype
+      new: usage_type
       description: 特徴・用途
     kikaku:
-      new: kikaku
+      new: specification
       description: 規格
     irisu:
-      new: irisu
+      new: package_quantity
       description: 使用入数（数値）
     unit:
       new: unit
       description: 使用入数（単位）
     irisu_unit:
-      new: irisu_unit
+      new: package_unit
       description: 使用入数
     price:
-      new: price
+      new: retail_price
       description: 希望小売価格
     isopenprice:
-      new: isopenprice
+      new: is_open_price
       description: オープンプライス
     purcheseunit_min:
-      new: purcheseunit_min
+      new: min_purchase_unit
       description: 最小購入単位
     unitcode:
-      new: unitcode
+      new: unit_code
       description: 単位コード
     unitname:
-      new: unitname
+      new: unit_name
       description: 単位名称
     istax:
-      new: istax
+      new: is_taxable
       description: 課税／非課税
     approvalnumber:
-      new: approvalnumber
+      new: approval_number
       description: 承認番号
     vendorname_yakuji:
-      new: vendorname_yakuji
+      new: regulatory_vendor_name
       description: 薬事申請書上の販売名
     classtype:
-      new: classtype
+      new: class_type
       description: クラス分類
     maintainkbn:
-      new: maintainkbn
+      new: maintenance_category
       description: 特定保守管理
     jmdncode:
-      new: jmdncode
+      new: jmdn_code
       description: JMDNコード
     seibutsuyuraikbn:
-      new: seibutsuyuraikbn
+      new: biological_origin_category
       description: 生物由来コード
     seibutsuyurai:
-      new: seibutsuyurai
+      new: biological_origin
       description: 生物由来
     mekkincode:
-      new: mekkincode
+      new: sterilization_method_code
       description: 滅菌法コード
     mekkinname:
-      new: mekkinname
+      new: sterilization_method_name
       description: 滅菌法
     materialcode_1:
-      new: materialcode_1
+      new: material_code_1
       description: 素材コード1
     materialname_1:
-      new: materialname_1
+      new: material_name_1
       description: 素材1
     materialcode_2:
-      new: materialcode_2
+      new: material_code_2
       description: 素材コード2
     materialname_2:
-      new: materialname_2
+      new: material_name_2
       description: 素材2
     materialcode_3:
-      new: materialcode_3
+      new: material_code_3
       description: 素材コード3
     materialname_3:
-      new: materialname_3
+      new: material_name_3
       description: 素材3
     materialcode_4:
-      new: materialcode_4
+      new: material_code_4
       description: 素材コード4
     materialname_4:
-      new: materialname_4
+      new: material_name_4
       description: 素材4
     mediebunruicode:
-      new: mediebunruicode
+      new: medie_classification_code
       description: メディエ分類コード
     mediebunrui_1:
-      new: mediebunrui_1
+      new: medie_classification_major
       description: メディエ大分類名称
     mediebunrui_2:
-      new: mediebunrui_2
+      new: medie_classification_middle
       description: メディエ中分類名称
     mediebunrui_3:
-      new: mediebunrui_3
+      new: medie_classification_minor
       description: メディエ小分類名称
     update_mediebunrui:
-      new: update_mediebunrui
+      new: medie_classification_updated_at
       description: メディエ分類コード更新日
     mediebunruicode_old:
-      new: mediebunruicode_old
+      new: medie_classification_code_old
       description: 旧メディエ分類コード
     categorycode:
-      new: categorycode
+      new: category_code
       description: カテゴリーコード
     categoryname:
-      new: categoryname
+      new: category_name
       description: カテゴリー名
     biko1:
-      new: biko1
+      new: note_1
       description: 備考1
     biko2:
-      new: biko2
+      new: note_2
       description: 備考2
     biko3:
-      new: biko3
+      new: note_3
       description: 備考3
     hpcode:
-      new: hpcode
+      new: medie_medical_facility_code
       description: 院内（社内）コード
     purcheseprice:
-      new: purcheseprice
+      new: purchase_price
       description: 購入価格
     qty:
-      new: qty
+      new: quantity
       description: 数量
     medielastupdate:
-      new: medielastupdate
+      new: medie_updated_at
       description: 最終更新日
     key_tokui:
       new: key_tokui_id
-      description: ★Uniquekey_特医
+      description: Unique Key - 特定保険医療材料（特医）
+      notes: 特医 = 特定保険医療材料 → 保険償還の対象になる特定医療材料（ステント、人工関節など）。
     seiqkouho_tokui:
-      new: seiqkouho_tokui
+      new: claim_candidate_number_tokui
       description: 請求候補番号_特医
     shoukankakaku_tokui:
-      new: shoukankakaku_tokui
+      new: reference_reimbursement_price_tokui
       description: 参考償還価格_特医
     seiqhouhou_tokui:
-      new: seiqhouhou_tokui
+      new: claim_method_code_tokui
       description: 請求方法コード_特医
     seiqname_tokui:
-      new: seiqname_tokui
+      new: claim_method_name_tokui
       description: 請求方法名称_特医
     hokencode_tokui:
-      new: hokencode_tokui
+      new: insurance_claim_code_tokui
       description: 保険請求コード_特医
     hokennaiyou_tokui:
-      new: hokennaiyou_tokui
+      new: insurance_claim_description_tokui
       description: 保険請求内容_特医
     kokuji_tokui:
-      new: kokuji_tokui
+      new: notification_number_tokui
       description: 告示番号_特医
     kinoukubun_tokui:
-      new: kinoukubun_tokui
+      new: functional_category_code_tokui
       description: 機能区分コード_特医
     izaikode_tokui:
-      new: izaikode_tokui
+      new: special_reimbursement_material_code_tokui
       description: 特定保険医療材料コード_特医
     izai1_7_tokui:
-      new: izai1_7_tokui
-      description: 特定保険医療材料名1〜特定保険医療材料名7_特医
+      new: special_reimbursement_material_names_1_7_tokui
+      description: 特定保険医療材料名1〜7_特医
     ryaku_tokui:
-      new: ryaku_tokui
+      new: short_name_tokui
       description: 略称_特医
     baseunit_tokui:
-      new: baseunit_tokui
+      new: base_unit_tokui
       description: 基準単位_特医
     baseprice_tokui:
-      new: baseprice_tokui
+      new: base_price_tokui
       description: 基準材料価格_特医
     convert_tokui:
-      new: convert_tokui
+      new: conversion_value_tokui
       description: 換算値_特医
     pricebyconvert_tokui:
-      new: pricebyconvert_tokui
+      new: converted_price_tokui
       description: 基準材料価格×換算値_特医
     baseprice_old_tokui:
-      new: baseprice_old_tokui
+      new: base_price_old_tokui
       description: 旧基準材料価格_特医
     lastupdate_tokui:
-      new: lastupdate_tokui
+      new: updated_at_tokui
       description: 基準材料価格変更日_特医
     receptioncode_tokui:
-      new: receptioncode_tokui
+      new: receipt_system_code_tokui
       description: 特定器材（レセ電）コード_特医
     receptionname_tokui:
-      new: receptionname_tokui
+      new: receipt_system_name_tokui
       description: 特定器材（レセ電）名称_特医
     key_tokuzai:
       new: key_tokuzai_id
-      description: ★Uniquekey_特在
+      description: Unique Key - 特定保険医療材料（特在）
+      notes: 特在 = 特定保険医療材料・在宅関連 → 在宅医療で使う特定材料（在宅酸素療法機器など）。
     seiqkouho_tokuzai:
-      new: seiqkouho_tokuzai
+      new: claim_candidate_number_tokuzai
       description: 請求候補番号_特在
     shoukankakaku_tokuzai:
-      new: shoukankakaku_tokuzai
+      new: reference_reimbursement_price_tokuzai
       description: 参考償還価格_特在
     seiqhouhou_tokuzai:
-      new: seiqhouhou_tokuzai
+      new: claim_method_code_tokuzai
       description: 請求方法コード_特在
     seiqname_tokuzai:
-      new: seiqname_tokuzai
+      new: claim_method_name_tokuzai
       description: 請求方法名称_特在
     hokencode_tokuzai:
-      new: hokencode_tokuzai
+      new: insurance_claim_code_tokuzai
       description: 保険請求コード_特在
     hokennaiyou_tokuzai:
-      new: hokennaiyou_tokuzai
+      new: insurance_claim_description_tokuzai
       description: 保険請求内容_特在
     kokuji_tokuzai:
-      new: kokuji_tokuzai
+      new: notification_number_tokuzai
       description: 告示番号_特在
     kinoukubun_tokuzai:
-      new: kinoukubun_tokuzai
+      new: functional_category_code_tokuzai
       description: 機能区分コード_特在
     izaikode_tokuzai:
-      new: izaikode_tokuzai
+      new: special_reimbursement_material_code_tokuzai
       description: 特定保険医療材料コード_特在
     izai1_7_tokuzai:
-      new: izai1_7_tokuzai
-      description: 特定保険医療材料名1〜特定保険医療材料名7_特在
+      new: special_reimbursement_material_names_1_7_tokuzai
+      description: 特定保険医療材料名1〜7_特在
     ryaku_tokuzai:
-      new: ryaku_tokuzai
+      new: short_name_tokuzai
       description: 略称_特在
     baseunit_tokuzai:
-      new: baseunit_tokuzai
+      new: base_unit_tokuzai
       description: 基準単位_特在
     baseprice_tokuzai:
-      new: baseprice_tokuzai
+      new: base_price_tokuzai
       description: 基準材料価格_特在
     convert_tokuzai:
-      new: convert_tokuzai
+      new: conversion_value_tokuzai
       description: 換算値_特在
     pricebyconvert_tokuzai:
-      new: pricebyconvert_tokuzai
+      new: converted_price_tokuzai
       description: 基準材料価格×換算値_特在
     baseprice_old_tokuzai:
-      new: baseprice_old_tokuzai
+      new: base_price_old_tokuzai
       description: 旧基準材料価格_特在
     lastupdate_tokuzai:
-      new: lastupdate_tokuzai
+      new: updated_at_tokuzai
       description: 基準材料価格変更日_特在
     receptioncode_tokuzai:
-      new: receptioncode_tokuzai
+      new: receipt_system_code_tokuzai
       description: 特定器材（レセ電）コード_特在
     receptionname_tokuzai:
-      new: receptionname_tokuzai
+      new: receipt_system_name_tokuzai
       description: 特定器材（レセ電）名称_特在
     key_tokucho:
       new: key_tokucho_id
-      description: ★Uniquekey_特調
+      description: Unique Key - 特定保険医療材料（特調）
+      notes: 特調 = 特定保険医療材料・調剤関連 → 調剤に関連する特定材料（透析関連なども含まれる）。
     seiqkouho_tokucho:
-      new: seiqkouho_tokucho
+      new: claim_candidate_number_tokucho
       description: 請求候補番号_特調
     shoukankakaku_tokucho:
-      new: shoukankakaku_tokucho
+      new: reference_reimbursement_price_tokucho
       description: 参考償還価格_特調
     seiqhouhou_tokucho:
-      new: seiqhouhou_tokucho
+      new: claim_method_code_tokucho
       description: 請求方法コード_特調
     seiqname_tokucho:
-      new: seiqname_tokucho
+      new: claim_method_name_tokucho
       description: 請求方法名称_特調
     hokencode_tokucho:
-      new: hokencode_tokucho
+      new: insurance_claim_code_tokucho
       description: 保険請求コード_特調
     hokennaiyou_tokucho:
-      new: hokennaiyou_tokucho
+      new: insurance_claim_description_tokucho
       description: 保険請求内容_特調
     kokuji_tokucho:
-      new: kokuji_tokucho
+      new: notification_number_tokucho
       description: 告示番号_特調
     kinoukubun_tokucho:
-      new: kinoukubun_tokucho
+      new: functional_category_code_tokucho
       description: 機能区分コード_特調
     izaikode_tokucho:
-      new: izaikode_tokucho
+      new: special_reimbursement_material_code_tokucho
       description: 特定保険医療材料コード_特調
     izai1_7_tokucho:
-      new: izai1_7_tokucho
-      description: 特定保険医療材料名1〜特定保険医療材料名7_特調
+      new: special_reimbursement_material_names_1_7_tokucho
+      description: 特定保険医療材料名1〜7_特調
     ryaku_tokucho:
-      new: ryaku_tokucho
+      new: short_name_tokucho
       description: 略称_特調
     baseunit_tokucho:
-      new: baseunit_tokucho
+      new: base_unit_tokucho
       description: 基準単位_特調
     baseprice_tokucho:
-      new: baseprice_tokucho
+      new: base_price_tokucho
       description: 基準材料価格_特調
     convert_tokucho:
-      new: convert_tokucho
+      new: conversion_value_tokucho
       description: 換算値_特調
     pricebyconvert_tokucho:
-      new: pricebyconvert_tokucho
+      new: converted_price_tokucho
       description: 基準材料価格×換算値_特調
     baseprice_old_tokucho:
-      new: baseprice_old_tokucho
+      new: base_price_old_tokucho
       description: 旧基準材料価格_特調
     lastupdate_tokucho:
-      new: lastupdate_tokucho
+      new: updated_at_tokucho
       description: 基準材料価格変更日_特調
     receptioncode_tokucho:
-      new: receptioncode_tokucho
+      new: receipt_system_code_tokucho
       description: 特定器材（レセ電）コード_特調
     receptionname_tokucho:
-      new: receptionname_tokucho
+      new: receipt_system_name_tokucho
       description: 特定器材（レセ電）名称_特調
     key_kasan:
       new: key_kasan_id
-      description: ★Uniquekey_加算
+      description: Unique Key - 加算
     kasancode:
-      new: kasancode
+      new: additional_fee_code
       description: 加算コード
     pointnumber:
-      new: pointnumber
+      new: fee_schedule_section_number
       description: 点数表区分番号
     kasanname:
-      new: kasanname
+      new: additional_fee_name
       description: 加算名
     tekiyoshinryo:
-      new: tekiyoshinryo
+      new: applicable_medical_service
       description: 適用診療
     point:
-      new: point
+      new: fee_point
       description: 点数
     receptioncode:
-      new: receptioncode
+      new: receipt_system_code
       description: 診療行為（レセ電）コード
     receptionname:
-      new: receptionname
+      new: receipt_system_name
       description: 診療行為（レセ電）名称
     receptionpoint:
-      new: receptionpoint
+      new: receipt_system_point
       description: 点数（レセ電）
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  mstrelationproducts:
+  mstrelationproducts:  # product_crosswalk status: pending
     productname:
       new: productname_id
       description: key製品名
@@ -1436,391 +1468,396 @@ columns:
     key2:
       new: key2
       description: key2
-  rawhpmelist:
+
+  rawhpmelist:  # raw.source_medical_device
     hpcode:
-      new: hpcode_id
+      new: medical_facility_id
       description: 病院コード
     hpseq:
-      new: hpseq_id
+      new: medical_facility_seq_id
       description: 病院内連番
     hpname:
-      new: hpname
+      new: medical_facility_name
       description: 病院名
     recvdate:
-      new: recvdate
+      new: received_at
       description: データ受領日
     menumber:
-      new: menumber
+      new: device_number
       description: 機器番号
     grpmanage:
-      new: grpmanage
+      new: managing_department
       description: 管理部門
     grpuser:
-      new: grpuser
+      new: user_department
       description: 利用部門
     grppurchase:
-      new: grppurchase
+      new: purchasing_department
       description: 購入部門
     serialnumber:
-      new: serialnumber
+      new: serial_number
       description: シリアル番号
     datepurchase:
-      new: datepurchase
+      new: purchase_date
       description: 購入日
     datestock:
-      new: datestock
+      new: delivery_date
       description: 納入日
     dateoperationstart:
-      new: dateoperationstart
+      new: operation_start_date
       description: 初回稼働日
     kbnpurchase:
-      new: kbnpurchase
+      new: purchase_category
       description: 購入区分
     assetnumber:
-      new: assetnumber
+      new: asset_number
       description: 資産番号
     datedisposal:
-      new: datedisposal
+      new: disposal_date
       description: 廃棄日
     mestatus:
-      new: mestatus
+      new: location_fixed
       description: 場所固定
     productname:
-      new: productname
+      new: product_name
       description: 製品名
     modelnumber:
-      new: modelnumber
+      new: model_number
       description: 型番
     makername:
-      new: makername
+      new: manufacturer_name
       description: メーカー
     bunrui_1:
-      new: bunrui_1
+      new: category_major
       description: 大分類
     bunrui_2:
-      new: bunrui_2
+      new: category_middle
       description: 中分類
     bunrui_3:
-      new: bunrui_3
+      new: category_minor
       description: 小分類
     durableyears_legal:
-      new: durableyears_legal
-      description: 法廷耐用年数
+      new: legal_service_life_years
+      description: 法定耐用年数
     durableyears_hp:
-      new: durableyears_hp
+      new: facility_service_life_years
       description: 院内耐用年数
     jancode:
-      new: jancode
+      new: jan_code
       description: JANコード
     jmdncode:
-      new: jmdncode
+      new: jmdn_code
       description: JMDNコード
     classtype:
-      new: classtype
+      new: class_type
       description: クラス分類
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  rawrentallog:
+
+  rawrentallog:  # raw.raw.source_rental
     hpcode:
-      new: hpcode_id
+      new: medical_facility_id
       description: 病院コード
     hpseq:
-      new: hpseq_id
+      new: medical_facility_seq_id
       description: 病院内連番
     hpname:
-      new: hpname
+      new: medical_facility_name
       description: 病院名
     recvdate:
-      new: recvdate
+      new: received_at
       description: データ受領日
     menumber:
-      new: menumber
+      new: device_number
       description: 機器番号
     rentalid:
       new: rental_id
       description: 管理番号
     productname:
-      new: productname
+      new: product_name
       description: 製品名
     modelnumber:
-      new: modelnumber
+      new: model_number
       description: 型番
     serialnumber:
-      new: serialnumber
+      new: serial_number
       description: シリアル番号
     makername:
-      new: makername
+      new: manufacturer_name
       description: メーカー
     bunrui_1:
-      new: bunrui_1
+      new: category_major
       description: 大分類
     bunrui_2:
-      new: bunrui_2
+      new: category_middle
       description: 中分類
     bunrui_3:
-      new: bunrui_3
+      new: category_minor
       description: 小分類
     startdate:
-      new: startdate
+      new: rental_start_date
       description: 貸出日
     recipientgrp:
-      new: recipientgrp
+      new: recipient_department
       description: 貸出先
     returndate:
-      new: returndate
+      new: return_date
       description: 返却日
     returngrp:
-      new: returngrp
+      new: return_department
       description: 返却先
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  rawrepairlog:
+
+  rawrepairlog:  # raw.source_repair
     hpcode:
-      new: hpcode_id
+      new: medical_facility_id
       description: 病院コード
     hpseq:
-      new: hpseq_id
+      new: medical_facility_seq_id
       description: 病院内連番
     hpname:
-      new: hpname
+      new: medical_facility_name
       description: 病院名
     recvdate:
-      new: recvdate
+      new: received_at
       description: データ受領日
     menumber:
-      new: menumber
+      new: device_number
       description: 機器番号
     repairid:
       new: repair_id
       description: 管理番号
     troubledate:
-      new: troubledate
+      new: trouble_date
       description: 発生日
     completedate:
-      new: completedate
+      new: completion_date
       description: 修理完了日
     grprequest:
-      new: grprequest
+      new: requesting_department
       description: 依頼部門
     productname:
-      new: productname
+      new: product_name
       description: 製品名
     modelnumber:
-      new: modelnumber
+      new: model_number
       description: 型番
     serialnumber:
-      new: serialnumber
+      new: serial_number
       description: シリアル番号
     bunrui_1:
-      new: bunrui_1
+      new: category_major
       description: 大分類
     bunrui_2:
-      new: bunrui_2
+      new: category_middle
       description: 中分類
     bunrui_3:
-      new: bunrui_3
+      new: category_minor
       description: 小分類
     makername:
-      new: makername
+      new: manufacturer_name
       description: メーカー
     grpuser:
-      new: grpuser
+      new: user_department
       description: 発生部門
     kbnrepair:
-      new: kbnrepair
+      new: repair_category
       description: 保守区分
     eventnote:
-      new: eventnote
+      new: event_note
       description: 発生状況
     reasonnote:
-      new: reasonnote
+      new: failure_reason
       description: 故障理由
     worknote:
-      new: worknote
+      new: work_note
       description: 作業内容
     resultnote:
-      new: resultnote
+      new: repair_result
       description: 修理結果
     downtime:
-      new: downtime
+      new: downtime_hours
       description: 障害時間
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  tblhpmelist:
+
+  tblhpmelist:  # core.tbl_medical_device_ledger
     hpcode:
-      new: hpcode_id
+      new: medical_facility_id
       description: 病院コード
     hpseq:
-      new: hpseq_id
+      new: medical_facility_seq_id
       description: 病院内連番
     hpname:
-      new: hpname
+      new: medical_facility_name
       description: 病院名
     recvdate:
-      new: recvdate
+      new: received_at
       description: データ受領日
     menumber:
-      new: menumber
+      new: device_number
       description: 機器番号
     grpmanage:
-      new: grpmanage
+      new: managing_department
       description: 管理部門
     grpuser:
-      new: grpuser
+      new: user_department
       description: 利用部門
     grppurchase:
-      new: grppurchase
+      new: purchasing_department
       description: 購入部門
     serialnumber:
-      new: serialnumber
+      new: serial_number
       description: シリアル番号
     datepurchase:
-      new: datepurchase
+      new: purchase_date
       description: 購入日
     datestock:
-      new: datestock
+      new: delivery_date
       description: 納入日
     dateoperationstart:
-      new: dateoperationstart
+      new: operation_start_date
       description: 初回稼働日
     kbnpurchase:
-      new: kbnpurchase
+      new: purchase_category
       description: 購入区分
     assetnumber:
-      new: assetnumber
+      new: asset_number
       description: 資産番号
     datedisposal:
-      new: datedisposal
+      new: disposal_date
       description: 廃棄日
     mestatus:
-      new: mestatus
+      new: location_fixed
       description: 場所固定
     productname:
-      new: productname
+      new: product_name
       description: 製品名
     modelnumber:
-      new: modelnumber
+      new: model_number
       description: 型番
     makername:
-      new: makername
+      new: manufacturer_name
       description: メーカー
     bunrui_1:
-      new: bunrui_1
+      new: category_major
       description: 大分類
     bunrui_2:
-      new: bunrui_2
+      new: category_middle
       description: 中分類
     bunrui_3:
-      new: bunrui_3
+      new: category_minor
       description: 小分類
     durableyears_legal:
-      new: durableyears_legal
-      description: 法廷耐用年数
+      new: legal_service_life_years
+      description: 法定耐用年数
     durableyears_hp:
-      new: durableyears_hp
+      new: facility_service_life_years
       description: 院内耐用年数
     jancode:
-      new: jancode
+      new: jan_code
       description: JANコード
     jmdncode:
-      new: jmdncode
+      new: jmdn_code
       description: JMDNコード
     classtype:
-      new: classtype
+      new: class_type
       description: クラス分類
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
     pdbptn:
-      new: pdbptn
+      new: data_source_pattern
       description: 情報取得元
     pkey1:
-      new: pkey1
+      new: data_source_key1
       description: 情報取得キー1
     pkey2:
-      new: pkey2
+      new: data_source_key2
       description: 情報取得キー2
     pname:
-      new: pname
+      new: data_source_product_name
       description: 情報取得製品名
     pkana:
-      new: pkana
+      new: data_source_product_kana
       description: 情報取得カナ
     pcode1:
-      new: pcode1
+      new: data_source_product_code1
       description: 情報取得商品情報1
     pcode2:
-      new: pcode2
+      new: data_source_product_code2
       description: 情報取得商品情報2
     pcode3:
-      new: pcode3
+      new: data_source_product_code3
       description: 情報取得商品情報3
     pcode4:
-      new: pcode4
+      new: data_source_product_code4
       description: 情報取得商品情報4
     pmaker:
-      new: pmaker
+      new: data_source_manufacturer_name
       description: 情報取得メーカー名
     pvendor:
-      new: pvendor
+      new: data_source_vendor_name
       description: 情報取得ベンダー名
     pjan:
-      new: pjan
+      new: data_source_jan_code
       description: 情報取得JANコード
     pjmdn:
-      new: pjmdn
+      new: data_source_jmdn_code
       description: 情報取得JMDNコード
     pcommonname:
-      new: pcommonname
+      new: data_source_common_name
       description: 情報取得一般名称
     stsactive:
-      new: stsactive
+      new: status_active
       description: 利用可能ステータス
     stsrental:
-      new: stsrental
+      new: status_rental
       description: 貸出状況ステータス
     stsrepair:
-      new: stsrepair
+      new: status_repair
       description: 修理状況ステータス
     flgstock:
-      new: flgstock
+      new: flag_delivery_date
       description: 納入日フラグ
     datestockcalc:
-      new: datestockcalc
-      description: 納入日
+      new: calculated_delivery_date
+      description: 納入日（再計算）
     bunrui:
-      new: bunrui
+      new: device_category
       description: 機器分類
     durableyears:
-      new: durableyears
+      new: service_life_years
       description: 耐用年数
     expirationdate:
-      new: expirationdate
+      new: expiration_date
       description: 機器使用期限
     datedisposalcalc:
-      new: datedisposalcalc
-      description: 廃棄日
-  tblimportstatus:
+      new: calculated_disposal_date
+      description: 廃棄日（再計算）
+
+  tblimportstatus:  # status: pending
     filetype:
       new: filetype_id
       description: ファイル種別
     hpcode:
-      new: hpcode_id
+      new: medical_facility_id
       description: 病院コード
     recvdate:
       new: recvdate_id
@@ -1856,12 +1893,12 @@ columns:
       new: maketbldate
       description: TBL反映日
     regdate:
-      new: regdate
+      new: created_at
       description: データ作成日
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  tblregdate:
+  tblregdate:  # status: pending
     id:
       new: id
       description: ID
@@ -1869,182 +1906,162 @@ columns:
       new: tablename
       description: テーブル名
     lastupdate:
-      new: lastupdate
+      new: updated_at
       description: 最終更新日
-  tblrentallog:
-    hpcode:
-      new: hpcode_id
-      description: 病院コード
-    hpseq:
-      new: hpseq_id
-      description: 病院内連番
-    hpname:
-      new: hpname
-      description: 病院名
-    recvdate:
-      new: recvdate
-      description: データ受領日
-    menumber:
-      new: menumber
-      description: 機器番号
-    rentalid:
-      new: rental_id
-      description: 管理番号
-    productname:
-      new: productname
-      description: 製品名
-    modelnumber:
-      new: modelnumber
-      description: 型番
-    serialnumber:
-      new: serialnumber
-      description: シリアル番号
-    makername:
-      new: makername
-      description: メーカー
-    bunrui_1:
-      new: bunrui_1
-      description: 大分類
-    bunrui_2:
-      new: bunrui_2
-      description: 中分類
-    bunrui_3:
-      new: bunrui_3
-      description: 小分類
-    startdate:
-      new: startdate
-      description: 貸出日
-    recipientgrp:
-      new: recipientgrp
-      description: 貸出先
-    returndate:
-      new: returndate
-      description: 返却日
-    returngrp:
-      new: returngrp
-      description: 返却先
-    regdate:
-      new: regdate
-      description: データ作成日
-    lastupdate:
-      new: lastupdate
-      description: 最終更新日
-    bunrui:
-      new: bunrui
-      description: 機器分類
-    startdatecalc:
-      new: startdatecalc
-      description: 貸出日
-    returndatecalc:
-      new: returndatecalc
-      description: 返却日
-  tblrepairlog:
-    hpcode:
-      new: hpcode_id
-      description: 病院コード
-    hpseq:
-      new: hpseq_id
-      description: 病院内連番
-    hpname:
-      new: hpname
-      description: 病院名
-    recvdate:
-      new: recvdate
-      description: データ受領日
-    menumber:
-      new: menumber
-      description: 機器番号
-    repairid:
-      new: repair_id
-      description: 管理番号
-    troubledate:
-      new: troubledate
-      description: 発生日
-    completedate:
-      new: completedate
-      description: 修理完了日
-    grprequest:
-      new: grprequest
-      description: 依頼部門
-    productname:
-      new: productname
-      description: 製品名
-    modelnumber:
-      new: modelnumber
-      description: 型番
-    serialnumber:
-      new: serialnumber
-      description: シリアル番号
-    bunrui_1:
-      new: bunrui_1
-      description: 大分類
-    bunrui_2:
-      new: bunrui_2
-      description: 中分類
-    bunrui_3:
-      new: bunrui_3
-      description: 小分類
-    makername:
-      new: makername
-      description: メーカー
-    grpuser:
-      new: grpuser
-      description: 発生部門
-    kbnrepair:
-      new: kbnrepair
-      description: 保守区分
-    eventnote:
-      new: eventnote
-      description: 発生状況
-    reasonnote:
-      new: reasonnote
-      description: 故障理由
-    worknote:
-      new: worknote
-      description: 作業内容
-    resultnote:
-      new: resultnote
-      description: 修理結果
-    downtime:
-      new: downtime
-      description: 障害時間
-    regdate:
-      new: regdate
-      description: データ作成日
-    lastupdate:
-      new: lastupdate
-      description: 最終更新日
-    bunrui:
-      new: bunrui
-      description: 機器分類
-    troubledatecalc:
-      new: troubledatecalc
-      description: 発生日
-    completedatecalc:
-      new: completedatecalc
-      description: 修理完了日
-    downtimecalc:
-      new: downtimecalc
-      description: 障害時間
-  mstgovcity:
-    citycode:
-      new: citycode_id
-      description: 市区町村コード
-    cityname:
-      new: cityname
-      description: 市区町村名
-    cityname_kana:
-      new: cityname_kana
-      description: 市区町村名カナ
-    isdesignatedcity:
-      new: isdesignatedcity
-      description: 政令指定都市フラグ
-    update_date:
-      new: update_date
-      description: 情報公開日
-    regdate:
-      new: regdate
-      description: データ作成日
-    lastupdate:
-      new: lastupdate
-      description: 最終更新日
+
+tblrentallog:  # core.medical_device_rental_history
+  hpcode:
+    new: medical_facility_id
+    description: 病院コード
+  hpseq:
+    new: medical_facility_seq_id
+    description: 病院内連番
+  hpname:
+    new: medical_facility_name
+    description: 病院名
+  recvdate:
+    new: received_at
+    description: データ受領日
+  menumber:
+    new: device_number
+    description: 機器番号
+  rentalid:
+    new: rental_id
+    description: 管理番号
+  productname:
+    new: product_name
+    description: 製品名
+  modelnumber:
+    new: model_number
+    description: 型番
+  serialnumber:
+    new: serial_number
+    description: シリアル番号
+  makername:
+    new: manufacturer_name
+    description: メーカー
+  bunrui_1:
+    new: category_major
+    description: 大分類
+  bunrui_2:
+    new: category_middle
+    description: 中分類
+  bunrui_3:
+    new: category_minor
+    description: 小分類
+  startdate:
+    new: rental_start_date
+    description: 貸出日
+  recipientgrp:
+    new: recipient_department
+    description: 貸出先
+  returndate:
+    new: return_date
+    description: 返却日
+  returngrp:
+    new: return_department
+    description: 返却先
+  regdate:
+    new: created_at
+    description: データ作成日
+  lastupdate:
+    new: updated_at
+    description: 最終更新日
+  bunrui:
+    new: device_category
+    description: 機器分類
+  startdatecalc:
+    new: calculated_rental_start_date
+    description: 貸出日（再計算）
+  returndatecalc:
+    new: calculated_return_date
+    description: 返却日（再計算）
+
+tblrepairlog:  # core.medical_device_repair_history
+  hpcode:
+    new: medical_facility_id
+    description: 病院コード
+  hpseq:
+    new: medical_facility_seq_id
+    description: 病院内連番
+  hpname:
+    new: medical_facility_name
+    description: 病院名
+  recvdate:
+    new: received_at
+    description: データ受領日
+  menumber:
+    new: device_number
+    description: 機器番号
+  repairid:
+    new: repair_id
+    description: 管理番号
+  troubledate:
+    new: trouble_date
+    description: 発生日
+  completedate:
+    new: completion_date
+    description: 修理完了日
+  grprequest:
+    new: requesting_department
+    description: 依頼部門
+  productname:
+    new: product_name
+    description: 製品名
+  modelnumber:
+    new: model_number
+    description: 型番
+  serialnumber:
+    new: serial_number
+    description: シリアル番号
+  bunrui_1:
+    new: category_major
+    description: 大分類
+  bunrui_2:
+    new: category_middle
+    description: 中分類
+  bunrui_3:
+    new: category_minor
+    description: 小分類
+  makername:
+    new: manufacturer_name
+    description: メーカー
+  grpuser:
+    new: user_department
+    description: 発生部門
+  kbnrepair:
+    new: repair_category
+    description: 保守区分
+  eventnote:
+    new: event_note
+    description: 発生状況
+  reasonnote:
+    new: failure_reason
+    description: 故障理由
+  worknote:
+    new: work_note
+    description: 作業内容
+  resultnote:
+    new: repair_result
+    description: 修理結果
+  downtime:
+    new: downtime_hours
+    description: 障害時間
+  regdate:
+    new: created_at
+    description: データ作成日
+  lastupdate:
+    new: updated_at
+    description: 最終更新日
+  bunrui:
+    new: device_category
+    description: 機器分類
+  troubledatecalc:
+    new: calculated_trouble_date
+    description: 発生日（再計算）
+  completedatecalc:
+    new: calculated_completion_date
+    description: 修理完了日（再計算）
+  downtimecalc:
+    new: calculated_downtime_hours
+    description: 障害時間（再計算）
