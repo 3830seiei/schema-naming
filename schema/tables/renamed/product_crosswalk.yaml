@@ -1,0 +1,69 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書（新命名規約適用済み）
+  author: Claude Code
+  conversion_info:
+    source_file: mstrelationproducts.yaml
+    original_table_name: mstrelationproducts
+    conversion_date: '2025-09-18'
+    applied_rules: rename_dictionary.yaml v1
+  history:
+  - version: 1.0.0
+    date: '2025-09-18'
+    author: Claude Code
+    comment: PoCのYAML(mstrelationproducts) → 新命名規約(product_crosswalk)への変換
+
+#- tableinfo ----------------------------------------------
+table_name: product_crosswalk
+description: 雑多な商品情報とJahid、Medieを関連付ける
+
+#- columns info -------------------------------------------
+columns:
+- name: productname_id
+  old_name: productname
+  description: key製品名
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment: null
+- name: modelnumber_id
+  old_name: modelnumber
+  description: key型番
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment: 存在しない場合は「-」を強制
+- name: makername_id
+  old_name: makername
+  description: keyメーカー
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment: 存在しない場合は「-」を強制
+- name: dbgroup
+  old_name: dbgroup
+  description: 参照元
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 'JAHID：J
+
+    MEDIE：M'
+- name: key1
+  old_name: key1
+  description: key1
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment: 'JAHID：recnumber
+
+    MEDIE：keyrec0'
+- name: key2
+  old_name: key2
+  description: key2
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment: 'JAHID：itemnumber
+
+    MEDIE：keyrec1'

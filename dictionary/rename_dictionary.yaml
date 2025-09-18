@@ -160,7 +160,7 @@ columns:
     prefname_nopref:
       new: prefecture_name_short
       description: 都道府県名_都道府県情報なし
-      notes: prefecture_name_en との対比で、都道府県を省いた名称, 例: 東京, 大阪。今後enも追加しても良いかも。
+      notes: "prefecture_name_en との対比で、都道府県を省いた名称, 例: 東京, 大阪。今後enも追加しても良いかも。"
     prefname_roman:
       new: prefecture_name_roman
       description: 都道府県_ローマ字
@@ -1909,159 +1909,159 @@ columns:
       new: updated_at
       description: 最終更新日
 
-tblrentallog:  # core.medical_device_rental_history
-  hpcode:
-    new: medical_facility_id
-    description: 病院コード
-  hpseq:
-    new: medical_facility_seq_id
-    description: 病院内連番
-  hpname:
-    new: medical_facility_name
-    description: 病院名
-  recvdate:
-    new: received_at
-    description: データ受領日
-  menumber:
-    new: device_number
-    description: 機器番号
-  rentalid:
-    new: rental_id
-    description: 管理番号
-  productname:
-    new: product_name
-    description: 製品名
-  modelnumber:
-    new: model_number
-    description: 型番
-  serialnumber:
-    new: serial_number
-    description: シリアル番号
-  makername:
-    new: manufacturer_name
-    description: メーカー
-  bunrui_1:
-    new: category_major
-    description: 大分類
-  bunrui_2:
-    new: category_middle
-    description: 中分類
-  bunrui_3:
-    new: category_minor
-    description: 小分類
-  startdate:
-    new: rental_start_date
-    description: 貸出日
-  recipientgrp:
-    new: recipient_department
-    description: 貸出先
-  returndate:
-    new: return_date
-    description: 返却日
-  returngrp:
-    new: return_department
-    description: 返却先
-  regdate:
-    new: created_at
-    description: データ作成日
-  lastupdate:
-    new: updated_at
-    description: 最終更新日
-  bunrui:
-    new: device_category
-    description: 機器分類
-  startdatecalc:
-    new: calculated_rental_start_date
-    description: 貸出日（再計算）
-  returndatecalc:
-    new: calculated_return_date
-    description: 返却日（再計算）
+  tblrentallog:  # core.medical_device_rental_history
+    hpcode:
+      new: medical_facility_id
+      description: 病院コード
+    hpseq:
+      new: medical_facility_seq_id
+      description: 病院内連番
+    hpname:
+      new: medical_facility_name
+      description: 病院名
+    recvdate:
+      new: received_at
+      description: データ受領日
+    menumber:
+      new: device_number
+      description: 機器番号
+    rentalid:
+      new: rental_id
+      description: 管理番号
+    productname:
+      new: product_name
+      description: 製品名
+    modelnumber:
+      new: model_number
+      description: 型番
+    serialnumber:
+      new: serial_number
+      description: シリアル番号
+    makername:
+      new: manufacturer_name
+      description: メーカー
+    bunrui_1:
+      new: category_major
+      description: 大分類
+    bunrui_2:
+      new: category_middle
+      description: 中分類
+    bunrui_3:
+      new: category_minor
+      description: 小分類
+    startdate:
+      new: rental_start_date
+      description: 貸出日
+    recipientgrp:
+      new: recipient_department
+      description: 貸出先
+    returndate:
+      new: return_date
+      description: 返却日
+    returngrp:
+      new: return_department
+      description: 返却先
+    regdate:
+      new: created_at
+      description: データ作成日
+    lastupdate:
+      new: updated_at
+      description: 最終更新日
+    bunrui:
+      new: device_category
+      description: 機器分類
+    startdatecalc:
+      new: calculated_rental_start_date
+      description: 貸出日（再計算）
+    returndatecalc:
+      new: calculated_return_date
+      description: 返却日（再計算）
 
-tblrepairlog:  # core.medical_device_repair_history
-  hpcode:
-    new: medical_facility_id
-    description: 病院コード
-  hpseq:
-    new: medical_facility_seq_id
-    description: 病院内連番
-  hpname:
-    new: medical_facility_name
-    description: 病院名
-  recvdate:
-    new: received_at
-    description: データ受領日
-  menumber:
-    new: device_number
-    description: 機器番号
-  repairid:
-    new: repair_id
-    description: 管理番号
-  troubledate:
-    new: trouble_date
-    description: 発生日
-  completedate:
-    new: completion_date
-    description: 修理完了日
-  grprequest:
-    new: requesting_department
-    description: 依頼部門
-  productname:
-    new: product_name
-    description: 製品名
-  modelnumber:
-    new: model_number
-    description: 型番
-  serialnumber:
-    new: serial_number
-    description: シリアル番号
-  bunrui_1:
-    new: category_major
-    description: 大分類
-  bunrui_2:
-    new: category_middle
-    description: 中分類
-  bunrui_3:
-    new: category_minor
-    description: 小分類
-  makername:
-    new: manufacturer_name
-    description: メーカー
-  grpuser:
-    new: user_department
-    description: 発生部門
-  kbnrepair:
-    new: repair_category
-    description: 保守区分
-  eventnote:
-    new: event_note
-    description: 発生状況
-  reasonnote:
-    new: failure_reason
-    description: 故障理由
-  worknote:
-    new: work_note
-    description: 作業内容
-  resultnote:
-    new: repair_result
-    description: 修理結果
-  downtime:
-    new: downtime_hours
-    description: 障害時間
-  regdate:
-    new: created_at
-    description: データ作成日
-  lastupdate:
-    new: updated_at
-    description: 最終更新日
-  bunrui:
-    new: device_category
-    description: 機器分類
-  troubledatecalc:
-    new: calculated_trouble_date
-    description: 発生日（再計算）
-  completedatecalc:
-    new: calculated_completion_date
-    description: 修理完了日（再計算）
-  downtimecalc:
-    new: calculated_downtime_hours
-    description: 障害時間（再計算）
+  tblrepairlog:  # core.medical_device_repair_history
+    hpcode:
+      new: medical_facility_id
+      description: 病院コード
+    hpseq:
+      new: medical_facility_seq_id
+      description: 病院内連番
+    hpname:
+      new: medical_facility_name
+      description: 病院名
+    recvdate:
+      new: received_at
+      description: データ受領日
+    menumber:
+      new: device_number
+      description: 機器番号
+    repairid:
+      new: repair_id
+      description: 管理番号
+    troubledate:
+      new: trouble_date
+      description: 発生日
+    completedate:
+      new: completion_date
+      description: 修理完了日
+    grprequest:
+      new: requesting_department
+      description: 依頼部門
+    productname:
+      new: product_name
+      description: 製品名
+    modelnumber:
+      new: model_number
+      description: 型番
+    serialnumber:
+      new: serial_number
+      description: シリアル番号
+    bunrui_1:
+      new: category_major
+      description: 大分類
+    bunrui_2:
+      new: category_middle
+      description: 中分類
+    bunrui_3:
+      new: category_minor
+      description: 小分類
+    makername:
+      new: manufacturer_name
+      description: メーカー
+    grpuser:
+      new: user_department
+      description: 発生部門
+    kbnrepair:
+      new: repair_category
+      description: 保守区分
+    eventnote:
+      new: event_note
+      description: 発生状況
+    reasonnote:
+      new: failure_reason
+      description: 故障理由
+    worknote:
+      new: work_note
+      description: 作業内容
+    resultnote:
+      new: repair_result
+      description: 修理結果
+    downtime:
+      new: downtime_hours
+      description: 障害時間
+    regdate:
+      new: created_at
+      description: データ作成日
+    lastupdate:
+      new: updated_at
+      description: 最終更新日
+    bunrui:
+      new: device_category
+      description: 機器分類
+    troubledatecalc:
+      new: calculated_trouble_date
+      description: 発生日（再計算）
+    completedatecalc:
+      new: calculated_completion_date
+      description: 修理完了日（再計算）
+    downtimecalc:
+      new: calculated_downtime_hours
+      description: 障害時間（再計算）

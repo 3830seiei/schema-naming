@@ -1,0 +1,44 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+  conversion_info:
+    source_file: tblregdate.yaml
+    original_table_name: tblregdate
+    conversion_date: '2025-09-18'
+    applied_rules: rename_dictionary.yaml v1
+
+#- tableinfo ----------------------------------------------
+table_name: tblcreated_at
+description: 各テーブルの更新日時管理
+
+#- columns info -------------------------------------------
+columns:
+- name: id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment: null
+- name: tablename
+  old_name: tablename
+  description: テーブル名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: kintoneの場合はアプリ名
+- name: updated_at
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: '各テーブルの[regdate][lastupdate]処理時はここであらかじめ取得したtimestampを利用し、トランザクションで統一させる事
+
+    ※transaction_timestamp()でも同様の対応は可能だが、複数のテーブルを意図的にコントロールしたり、kintoneとも同じtimestampを利用する為にテーブルを利用して行う'

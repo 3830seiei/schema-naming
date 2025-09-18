@@ -1,0 +1,135 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書（新命名規約適用済み）
+  author: Claude Code
+  conversion_info:
+    source_file: mstjahidkbn.yaml
+    original_table_name: mstjahidkbn
+    conversion_date: '2025-09-18'
+    applied_rules: rename_dictionary.yaml v1
+  history:
+  - version: 1.0.0
+    date: '2025-09-18'
+    author: Claude Code
+    comment: PoCのYAML(mstjahidkbn) → 新命名規約(mst_provider_codes)への変換
+
+#- tableinfo ----------------------------------------------
+table_name: mst_provider_codes
+description: JAHID提供の区分マスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment: Serial値
+- name: kbntype
+  old_name: kbntype
+  description: 区分項目
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 'クラス分類区分
+
+    データオリジナル区分
+
+    バーコード表示有無区分
+
+    画像有無区分
+
+    材料償還請求区分
+
+    使用区分
+
+    修理区分
+
+    商品区分
+
+    生物由来製品区分
+
+    税率区分
+
+    設置管理区分
+
+    特定保守管理区分
+
+    毒劇区分
+
+    保管区分
+
+    減菌区分
+
+    減菌種別'
+- name: kbn_id
+  old_name: kbnid
+  description: 区分コード
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: null
+- name: kbnname
+  old_name: kbnname
+  description: 区分名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: biko
+  old_name: biko
+  description: 備考
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 「材料償還請求区分」のみ存在しているが実際の値は2024.08提供データに実在情報なし
+- name: jahid_created_at
+  old_name: jahidregdate
+  description: 登録日時
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: jahid_reguser_id
+  old_name: jahidreguserid
+  description: 登録者ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: null
+- name: jahid_updated_at
+  old_name: jahidlastupdate
+  description: 更新日時
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: jahid_updateuser_id
+  old_name: jahidupdateuserid
+  description: 更新者ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: null
+- name: jahid_proguram_id
+  old_name: jahidproguramid
+  description: 更新プログラムID
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: created_at
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: updated_at
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null

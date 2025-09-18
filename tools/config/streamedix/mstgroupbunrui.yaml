@@ -1,0 +1,84 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+  conversion_info:
+    source_file: mstgroupbunrui.yaml
+    original_table_name: mstgroupbunrui
+    conversion_date: '2025-09-18'
+    applied_rules: rename_dictionary.yaml v1
+
+#- tableinfo ----------------------------------------------
+table_name: mstgroupbunrui
+description: 小分類のグループ化情報のマスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: seq_id
+  old_name: seq
+  description: シリアル値
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment: null
+- name: grpbunrui
+  old_name: grpbunrui
+  description: 分類グループ
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 1:大分類、2:中分類、3:小分類
+- name: grp_id
+  old_name: grpid
+  description: グループID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 同一の分類名は同じ値
+- name: grpbunruiname
+  old_name: grpbunruiname
+  description: グループ分類名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: bunruiname
+  old_name: bunruiname
+  description: 分類名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: created_at
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: reguser
+  old_name: reguser
+  description: データ作成者
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: kintoneユーザ
+- name: updated_at
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: updateuser
+  old_name: updateuser
+  description: 最終更新者
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: kintoneユーザ

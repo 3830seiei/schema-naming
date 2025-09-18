@@ -1,0 +1,78 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+  conversion_info:
+    source_file: mhlw_prefecture.yaml
+    original_table_name: mhlw_prefecture
+    conversion_date: '2025-09-18'
+    applied_rules: rename_dictionary.yaml v1
+
+#- tableinfo ----------------------------------------------
+table_name: mhlw_prefecture
+schema: core
+description: 厚生労働省管理の都道府県コードマスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: prefecture_code_id
+  old_name: prefcode
+  description: 都道府県コード
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment: null
+- name: prefecture_name
+  old_name: prefname
+  description: 都道府県名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: prefecture_name_kana
+  old_name: prefname_kana
+  description: 都道府県名カナ
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: prefecture_name_short
+  old_name: prefname_nopref
+  description: 都道府県名_都道府県情報なし
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: ex)長野県　→　長野
+- name: prefecture_name_roman
+  old_name: prefname_roman
+  description: 都道府県_ローマ字
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 先頭も小文字
+- name: published_at
+  old_name: update_date
+  description: 情報公開日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 厚生労働省が公開したデータがいつ時点かの情報
+- name: created_at
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: updated_at
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null

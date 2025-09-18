@@ -1,0 +1,419 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書（新命名規約適用済み）
+  author: Claude Code
+  conversion_info:
+    source_file: tblhpmelist.yaml
+    original_table_name: tblhpmelist
+    conversion_date: '2025-09-18'
+    applied_rules: rename_dictionary.yaml v1
+  history:
+  - version: 1.0.0
+    date: '2025-09-18'
+    author: Claude Code
+    comment: PoCのYAML(tblhpmelist) → 新命名規約(core.tbl_medical_device_ledger)への変換
+
+#- tableinfo ----------------------------------------------
+table_name: core.tbl_medical_device_ledger
+description: 病院機器台帳テーブル
+
+#- columns info -------------------------------------------
+columns:
+- name: medical_facility_id
+  old_name: hpcode
+  description: 病院コード
+  data_type: integer
+  primary_key: true
+  nullable: true
+  comment: null
+- name: medical_facility_seq_id
+  old_name: hpseq
+  description: 病院内連番
+  data_type: integer
+  primary_key: true
+  nullable: true
+  comment: null
+- name: medical_facility_name
+  old_name: hpname
+  description: 病院名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: received_at
+  old_name: recvdate
+  description: データ受領日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: null
+- name: device_number
+  old_name: menumber
+  description: 機器番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: managing_department
+  old_name: grpmanage
+  description: 管理部門
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: user_department
+  old_name: grpuser
+  description: 利用部門
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: purchasing_department
+  old_name: grppurchase
+  description: 購入部門
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: serial_number
+  old_name: serialnumber
+  description: シリアル番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: NULLの場合は[未登録]をセット
+- name: purchase_date
+  old_name: datepurchase
+  description: 購入日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: null
+- name: delivery_date
+  old_name: datestock
+  description: 納入日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: null
+- name: operation_start_date
+  old_name: dateoperationstart
+  description: 初回稼働日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: null
+- name: purchase_category
+  old_name: kbnpurchase
+  description: 購入区分
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: asset_number
+  old_name: assetnumber
+  description: 資産番号
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: disposal_date
+  old_name: datedisposal
+  description: 廃棄日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: null
+- name: location_fixed
+  old_name: mestatus
+  description: 場所固定
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: product_name
+  old_name: productname
+  description: 製品名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: model_number
+  old_name: modelnumber
+  description: 型番
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: manufacturer_name
+  old_name: makername
+  description: メーカー
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: category_major
+  old_name: bunrui_1
+  description: 大分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: category_middle
+  old_name: bunrui_2
+  description: 中分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: category_minor
+  old_name: bunrui_3
+  description: 小分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: legal_service_life_years
+  old_name: durableyears_legal
+  description: 法廷耐用年数
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: null
+- name: facility_service_life_years
+  old_name: durableyears_hp
+  description: 院内耐用年数
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: null
+- name: jan_code
+  old_name: jancode
+  description: JANコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: jmdn_code
+  old_name: jmdncode
+  description: JMDNコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: class_type
+  old_name: classtype
+  description: クラス分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: created_at
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: updated_at
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: data_source_pattern
+  old_name: pdbptn
+  description: 情報取得元
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: '[J][M]情報取得元'
+- name: data_source_key1
+  old_name: pkey1
+  description: 情報取得キー1
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment: null
+- name: data_source_key2
+  old_name: pkey2
+  description: 情報取得キー2
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment: null
+- name: data_source_product_name
+  old_name: pname
+  description: 情報取得製品名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: data_source_product_kana
+  old_name: pkana
+  description: 情報取得カナ
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: data_source_product_code1
+  old_name: pcode1
+  description: 情報取得商品情報1
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 'JAHID:規格（半角）
+
+    MEDIE:規格'
+- name: data_source_product_code2
+  old_name: pcode2
+  description: 情報取得商品情報2
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 'JAHID:製品番号
+
+    MEDIE:商品コード'
+- name: data_source_product_code3
+  old_name: pcode3
+  description: 情報取得商品情報3
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 'JAHID:カタログコード
+
+    MEDIE:旧商品コード'
+- name: data_source_product_code4
+  old_name: pcode4
+  description: 情報取得商品情報4
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 'JAHID:(None)
+
+    MEDIE:型番'
+- name: data_source_manufacturer_name
+  old_name: pmaker
+  description: 情報取得メーカー名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: data_source_vendor_name
+  old_name: pvendor
+  description: 情報取得ベンダー名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: data_source_jan_code
+  old_name: pjan
+  description: 情報取得JANコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: data_source_jmdn_code
+  old_name: pjmdn
+  description: 情報取得JMDNコード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: data_source_common_name
+  old_name: pcommonname
+  description: 情報取得一般名称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: status_active
+  old_name: stsactive
+  description: 利用可能ステータス
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '01：利用可能
+
+    02：廃棄
+
+    03：みなし廃棄
+
+    04：みなし廃棄（稼働実績無し）
+
+    05：みなし廃棄（納入日・稼働実績なし）
+
+    09：状態不明'
+- name: status_rental
+  old_name: stsrental
+  description: 貸出状況ステータス
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '01：待機（貸出可能）
+
+    02：貸出中
+
+    03：貸出不可
+
+    09：不明'
+- name: status_repair
+  old_name: stsrepair
+  description: 修理状況ステータス
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '01：正常
+
+    02：保守点検中
+
+    03：修理対応中
+
+    04：廃棄
+
+    05：メーカー返却（自主回収含む）
+
+    09：不明'
+- name: flag_delivery_date
+  old_name: flgstock
+  description: 納入日フラグ
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: "1: 納入日記録あり\n 0: 納入日記録なし"
+- name: calculated_delivery_date
+  old_name: datestockcalc
+  description: 納入日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 再計算
+- name: device_category
+  old_name: bunrui
+  description: 機器分類
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: service_life_years
+  old_name: durableyears
+  description: 耐用年数
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: null
+- name: expiration_date
+  old_name: expirationdate
+  description: 機器使用期限
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 耐用年数が存在すれば納入日＋耐用年数、存在しなければ＋5年
+- name: calculated_disposal_date
+  old_name: datedisposalcalc
+  description: 廃棄日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 再計算

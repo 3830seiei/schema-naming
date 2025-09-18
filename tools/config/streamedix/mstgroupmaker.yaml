@@ -1,0 +1,77 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+  conversion_info:
+    source_file: mstgroupmaker.yaml
+    original_table_name: mstgroupmaker
+    conversion_date: '2025-09-18'
+    applied_rules: rename_dictionary.yaml v1
+
+#- tableinfo ----------------------------------------------
+table_name: mstgroupmaker
+description: メーカー名のグループ化情報のマスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: seq_id
+  old_name: seq
+  description: シリアル値
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment: seria
+- name: grp_id
+  old_name: grpid
+  description: グループID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 同一のグループメーカー名は同じ値
+- name: grpmakername
+  old_name: grpmakername
+  description: グループメーカー名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: makername
+  old_name: makername
+  description: メーカー名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: created_at
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: reguser
+  old_name: reguser
+  description: データ作成者
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: kintoneユーザ
+- name: updated_at
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: updateuser
+  old_name: updateuser
+  description: 最終更新者
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: kintoneユーザ

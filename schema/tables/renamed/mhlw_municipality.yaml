@@ -1,0 +1,70 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書（新命名規約適用済み）
+  author: Claude Code
+  conversion_info:
+    source_file: mstgovcity.yaml
+    original_table_name: mstgovcity
+    conversion_date: '2025-09-18'
+    applied_rules: rename_dictionary.yaml v1
+  history:
+  - version: 1.0.0
+    date: '2025-09-18'
+    author: Claude Code
+    comment: PoCのYAML(mstgovcity) → 新命名規約(mhlw_municipality)への変換
+
+#- tableinfo ----------------------------------------------
+table_name: mhlw_municipality
+description: 厚生労働省管理の市区町村コードマスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: municipality_code
+  old_name: citycode
+  description: 市区町村コード
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment: null
+- name: municipality_name
+  old_name: cityname
+  description: 市区町村名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: municipality_name_kana
+  old_name: cityname_kana
+  description: 市区町村名カナ
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: is_designated_city
+  old_name: isdesignatedcity
+  description: 政令指定都市フラグ
+  data_type: boolean
+  primary_key: false
+  nullable: true
+  comment: 政令指定都市に指定されている場合はTrue
+- name: published_at
+  old_name: update_date
+  description: 情報公開日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 厚生労働省が公開したデータがいつ時点かの情報
+- name: created_at
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: updated_at
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null

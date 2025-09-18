@@ -1,0 +1,63 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-09-12'
+    author: Claude Code
+    comment: Excel → YAML変換による初回作成
+  conversion_info:
+    source_file: mhlw_secondary_medical_area.yaml
+    original_table_name: mhlw_secondary_medical_area
+    conversion_date: '2025-09-18'
+    applied_rules: rename_dictionary.yaml v1
+
+#- tableinfo ----------------------------------------------
+table_name: mhlw_secondary_medical_area
+description: 厚生労働省管理の二次医療圏コードマスタ
+
+#- columns info -------------------------------------------
+columns:
+- name: secondary_medical_area_code_id
+  old_name: medareacode
+  description: 二次医療圏コード
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment: null
+- name: secondary_medical_area_name
+  old_name: medareaname
+  description: 二次医療圏名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: secondary_medical_area_name_kana
+  old_name: medareaname_kana
+  description: 二次医療圏名カナ
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: published_at
+  old_name: update_date
+  description: 情報公開日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 厚生労働省が公開したデータがいつ時点かの情報
+- name: created_at
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: updated_at
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null

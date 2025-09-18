@@ -1,0 +1,133 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書（新命名規約適用済み）
+  author: Claude Code
+  conversion_info:
+    source_file: mstjahidproductspackage.yaml
+    original_table_name: mstjahidproductspackage
+    conversion_date: '2025-09-18'
+    applied_rules: rename_dictionary.yaml v1
+  history:
+  - version: 1.0.0
+    date: '2025-09-18'
+    author: Claude Code
+    comment: PoCのYAML(mstjahidproductspackage) → 新命名規約(jahid_product_package)への変換
+
+#- tableinfo ----------------------------------------------
+table_name: jahid_product_package
+description: JAHID提供の商品マスタ（梱包情報）
+
+#- columns info -------------------------------------------
+columns:
+- name: jahid_product_package_id
+  old_name: id
+  description: ID
+  data_type: serial
+  primary_key: true
+  nullable: true
+  comment: Serial値
+- name: record_number
+  old_name: recnumber
+  description: レコード管理番号
+  data_type: bigint
+  primary_key: false
+  nullable: true
+  comment: 商品マスタ.レコード管理番号
+- name: package_id
+  old_name: packageid
+  description: 梱包ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 0〜9（JAHID情報の配列）
+- name: valid_from
+  old_name: startdate_use
+  description: 摘要開始日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: null
+- name: valid_to
+  old_name: enddate_use
+  description: 摘要終了日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 現在利用中の最新レコードはNULLがセット
+- name: package_type
+  old_name: packagetype
+  description: 梱包識別インジケータ
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: null
+- name: package_item_code
+  old_name: picode
+  description: 梱包識別インジケータ付商品コード
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: インジケータ＋JANコード
+- name: package_quantity
+  old_name: irisu
+  description: 梱包数（入数）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: null
+- name: unit_code
+  old_name: unitcode
+  description: 単位コード
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 単位マスタ.単位コード
+- name: unit_name
+  old_name: unitname
+  description: 単位呼称
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: null
+- name: total_quantity
+  old_name: qty
+  description: 数量（PI0の単位の総数量）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: null
+- name: has_barcode
+  old_name: isbarcode
+  description: バーコード表示有無
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: null
+- name: jahid_created_at
+  old_name: jahidregdate
+  description: 登録日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 提供されたJAHIDに記載せれている登録日で実際に作業した日付とは異なる
+- name: jahid_updated_at
+  old_name: jahidlastupdate
+  description: 更新日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 提供されたJAHIDに記載せれている更新日で実際に作業した日付とは異なる
+- name: created_at
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: updated_at
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null

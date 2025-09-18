@@ -1,0 +1,158 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書（新命名規約適用済み）
+  author: Claude Code
+  conversion_info:
+    source_file: tblimportstatus.yaml
+    original_table_name: tblimportstatus
+    conversion_date: '2025-09-18'
+    applied_rules: rename_dictionary.yaml v1
+  history:
+  - version: 1.0.0
+    date: '2025-09-18'
+    author: Claude Code
+    comment: PoCのYAML(tblimportstatus) → 新命名規約(tblimportstatus)への変換
+
+#- tableinfo ----------------------------------------------
+table_name: tblimportstatus
+description: 取込対象ファイルの作業状況
+
+#- columns info -------------------------------------------
+columns:
+- name: filetype_id
+  old_name: filetype
+  description: ファイル種別
+  data_type: integer
+  primary_key: true
+  nullable: true
+  comment: '1：機器台帳
+
+    2：貸出実績
+
+    3：故障実績
+
+    11：厚生労働省のコード内容別医療機関一覧表
+
+    12：厚生労働省の病床機能報告
+
+
+    ※病院取込：1〜10　マスタ：11以降'
+- name: medical_facility_id
+  old_name: hpcode
+  description: 病院コード
+  data_type: integer
+  primary_key: true
+  nullable: true
+  comment: マスタファイルの場合は0
+- name: recvdate_id
+  old_name: recvdate
+  description: データ受領日
+  data_type: date
+  primary_key: true
+  nullable: true
+  comment: RAWテーブルの同項目と同じにすることで、ファイルとレコードが紐付けられる
+- name: filename_id
+  old_name: filename
+  description: ファイル名
+  data_type: text
+  primary_key: true
+  nullable: true
+  comment: システムに保管したファイル名
+- name: url
+  old_name: url
+  description: ダウンロードサイト
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: サイトから取得した場合にセット
+- name: filename_zip
+  old_name: filename_zip
+  description: ZIPファイル名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: ZIPファイルから解凍した場合はセット
+- name: filename_original
+  old_name: filename_original
+  description: 変更前ファイル名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: リネームした場合はセット
+- name: memo
+  old_name: memo
+  description: 補足情報
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 'ファイルの補足情報
+
+    病院名や都道府県情報等調査する側がわかりやすい情報'
+- name: level
+  old_name: level
+  description: 反映状態
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: '1：ファイル取得済み
+
+    2：RAWテーブルへの取込済み
+
+    3：クリーニング済み
+
+
+    ※マスタの場合は登録で2をセットし、3は存在し無い'
+- name: isdel
+  old_name: isdel
+  description: 削除処理対象
+  data_type: boolean
+  primary_key: false
+  nullable: true
+  comment: 'False:削除未対象
+
+    True：削除処理
+
+    処理キャンセル（管理者のみ対応可能）を行うとTrueとなり、クリーニング対象外となる'
+- name: uploaddate
+  old_name: uploaddate
+  description: ファイル取得日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: '指定フォルダに配置された日時
+
+    手作業で処理した場合はRAWに取り込むタイミングと同一になる'
+- name: makerawdate
+  old_name: makerawdate
+  description: RAW反映日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: 'RAWテーブルに反映した日時
+
+
+    ※マスタの場合はマスタに登録した日時'
+- name: maketbldate
+  old_name: maketbldate
+  description: TBL反映日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: 'クリーニング処理を行い詳細テーブルに反映した日時
+
+
+    ※マスタの場合はnull'
+- name: created_at
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
+- name: updated_at
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: true
+  comment: null
