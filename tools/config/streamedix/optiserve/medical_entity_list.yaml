@@ -1,0 +1,174 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: H.Miyazawa
+  history:
+  - version: 1.0.0
+    date: '2025-06-27'
+    author: H.Miyazawa
+    comment: OptiServe用のデータベース設計
+  - version: 1.1.0
+    date: '2025-07-10'
+    author: H.Miyazawa
+    comment: 1.PK情報を変更（equipment_idのみに変更）。2.インデックス情報と外部キー情報を追加
+  conversion_info:
+    source_file: medical_entity_list.yaml
+    original_table_name: medical_entity_list
+    conversion_date: '2025-09-19'
+    applied_rules: rename_dictionary.yaml v1
+
+#- tableinfo ----------------------------------------------
+table_name: medical_entity_list
+old_table_name: medical_entity_list
+description: 医療機関別の医療機器台帳
+
+#- columns info -------------------------------------------
+columns:
+- name: equipment_id
+  old_name: equipment_id
+  description: 医療機器ID
+  data_type: serial
+  primary_key: true
+  nullable: false
+  comment: 医療機関に関係無く一意な医療機器のID。連番で管理される。
+- name: medical_id
+  old_name: medical_id
+  description: 医療機関ID
+  data_type: integer
+  primary_key: false
+  nullable: false
+  comment: null
+  references:
+    table: mst_medical_facility
+    column: medical_id
+    enforced: false
+    on_delete: restrict
+    on_update: restrict
+    comment: mst_medical_facilityテーブルのmedical_idを参照。医療機関ID。
+- name: facility_equipment_number
+  old_name: facility_equipment_number
+  description: 医療機関システムが管理する機器番号
+  data_type: text
+  primary_key: false
+  nullable: false
+  comment: 基本的にmedical_id内では一意であることが期待される。
+- name: classification_id_level1
+  old_name: classification_id_level1
+  description: 医療機器分類ID（レベル1）
+  data_type: integer
+  primary_key: false
+  nullable: false
+  comment: 医療機器分類のレベル1（大分類）ID
+  references:
+    table: mst_equipment_classification
+    column: classification_id
+    enforced: false
+    on_delete: restrict
+    on_update: restrict
+    comment: mst_equipment_classificationテーブルのclassification_idを参照。
+- name: classification_id_level2
+  old_name: classification_id_level2
+  description: 医療機器分類ID（レベル2）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 医療機器分類のレベル2（中分類）ID（オプション）
+  references:
+    table: mst_equipment_classification
+    column: classification_id
+    enforced: false
+    on_delete: restrict
+    on_update: restrict
+    comment: mst_equipment_classificationテーブルのclassification_idを参照。
+- name: classification_id_level3
+  old_name: classification_id_level3
+  description: 医療機器分類ID（レベル3）
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 医療機器分類のレベル3（小分類）ID（オプション）
+  references:
+    table: mst_equipment_classification
+    column: classification_id
+    enforced: false
+    on_delete: restrict
+    on_update: restrict
+    comment: mst_equipment_classificationテーブルのclassification_idを参照。
+- name: jahid_product_id
+  old_name: jahid_product_id
+  description: 医療機器のJAHID製品ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 医療機器のJAHID製品ID（オプション）
+  references:
+    table: mst_jahid_product
+    column: jahid_product_id
+    enforced: false
+    on_delete: restrict
+    on_update: restrict
+    comment: mst_jahid_productテーブルのjahid_product_idを参照。JAHID製品ID。
+- name: medie_product_id
+  old_name: medie_product_id
+  description: 医療機器のMedie製品ID
+  data_type: integer
+  primary_key: false
+  nullable: true
+  comment: 医療機器のMedie製品ID（オプション）
+  references:
+    table: mst_medie_product
+    column: medie_product_id
+    enforced: false
+    on_delete: restrict
+    on_update: restrict
+    comment: mst_medie_productテーブルのmedie_product_idを参照。Medie製品ID。
+- name: product_name
+  old_name: product_name
+  description: 医療機器の製品名
+  data_type: text
+  primary_key: false
+  nullable: false
+  comment: 医療機器の製品名（必須）
+- name: product_maker_name
+  old_name: product_maker_name
+  description: 医療機器の製造業者名
+  data_type: text
+  primary_key: false
+  nullable: true
+  comment: 医療機器の製造業者名（オプション）
+- name: date_purchase
+  old_name: date_purchase
+  description: 医療機器の購入日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 医療機器の購入日（オプション）
+- name: date_disposal
+  old_name: date_disposal
+  description: 医療機器の廃棄日
+  data_type: date
+  primary_key: false
+  nullable: true
+  comment: 医療機器の廃棄日（オプション）
+- name: regdate
+  old_name: regdate
+  description: データ作成日
+  data_type: timestamp
+  primary_key: false
+  nullable: false
+  comment: null
+- name: lastupdate
+  old_name: lastupdate
+  description: 最終更新日
+  data_type: timestamp
+  primary_key: false
+  nullable: false
+  comment: null
+indexes:
+- name: idx_medical_entity_list_medical_id_facility_equipment_number
+  old_name: idx_medical_entity_list_medical_id_facility_equipment_number
+  columns:
+  - medical_id
+  - facility_equipment_number
+  unique: true
+  note: 医療機関IDと医療機関システムが管理する機器番号の複合インデックス。一意になっているはずなので、ユニーク制約を設ける。

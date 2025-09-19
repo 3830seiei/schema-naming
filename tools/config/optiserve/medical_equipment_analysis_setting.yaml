@@ -1,0 +1,103 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-08-13'
+    author: h.miyazawa
+    comment: 機器単位での分析設定を新規作成
+  - version: 1.0.1
+    date: '2025-08-22'
+    author: H.Miyazawa
+    comment: 'ユーザーIDをintegerからtextに変更。'
+#- tableinfo ----------------------------------------------
+table_name: medical_equipment_analysis_setting
+description: 機器ごとの分析設定（対象フラグ、分類上書きなど）
+#- columns info -------------------------------------------
+columns:
+  - name: ledger_id
+    description: 機器台帳ID
+    data_type: integer
+    primary_key: true
+    nullable: false
+    auto_increment: false
+    comment: pg_optigate.medical_equipment_ledgerの値を参照する
+    references:
+      - table: medical_equipment_ledger
+        column: ledger_id
+        enforced: false  # DB制約無し
+        on_delete: restrict
+        on_update: restrict
+        comment: 'pg_optigate.medical_equipment_ledgerでの一意識別子'
+
+  - name: override_is_included
+    description: 分析対象に含めるかの上書き情報
+    data_type: boolean
+    primary_key: false
+    nullable: false
+    default: true
+    comment: |
+        'true: 分析対象に含める, false: 分析対象外'
+        'マスタは実績有無で設定されるが、医療機関側での分析対象外を設定する場合に使用'
+
+  - name: override_classification_id
+    description: 器機分類IDの上書き情報
+    data_type: integer
+    primary_key: false
+    nullable: true
+    comment: '医療機関独自の分類を適用する場合にセット'
+    references:
+      - table: mst_equipment_classification
+        column: classification_id
+        enforced: false
+        on_delete: restrict
+        on_update: restrict
+        comment: '共通もしくは、自医療機関の分類を参照'
+
+  - name: note
+    description: 備考（設定理由など）
+    data_type: json
+    primary_key: false
+    nullable: false
+    comment: 'user_id, timestamp, note の配列を格納するJSON形式'
+
+  - name: reg_user_id
+    description: 登録ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'この設定を行ったユーザーのID。'
+    references:
+      - table: mst_user
+        column: user_id
+        enforced: false
+        on_delete: restrict
+        on_update: restrict
+
+  - name: regdate
+    description: データ作成日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: null
+
+  - name: update_user_id
+    description: 更新ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'この設定を行ったユーザーのID。'
+    references:
+      - table: mst_user
+        column: user_id
+        enforced: false
+        on_delete: restrict
+        on_update: restrict
+
+  - name: lastupdate
+    description: 最終更新日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: null

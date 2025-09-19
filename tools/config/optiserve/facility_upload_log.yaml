@@ -7,88 +7,119 @@ metadata:
     date: '2025-06-27'
     author: H.Miyazawa
     comment: OptiServe用のデータベース設計
+  - version: 1.1.0
+    date: '2025-08-13'
+    author: H.Miyazawa
+    comment: '登録、更新のユーザーIDを追加'
+  - version: 1.2.0
+    date: '2025-08-22'
+    author: H.Miyazawa
+    comment: 'ユーザーIDをintegerからtextに変更。'
 
 #- tableinfo ----------------------------------------------
 table_name: facility_upload_log
-old_table_name: facility_upload_log
 description: 医療機関のデータアップロード履歴テーブル
 #- columns info -------------------------------------------
 columns:
-- name: uploadlog_id
-  old_name: uploadlog_id
-  description: アップロードログID
-  data_type: serial
-  primary_key: true
-  nullable: false
-  comment: null
-- name: medical_id
-  old_name: medical_id
-  description: 医療機関ID
-  data_type: integer
-  primary_key: false
-  nullable: false
-  comment: null
-  references:
-    table: mst_medical_facility
-    column: medical_id
-    enforced: false  # DB制約無し
-    on_delete: restrict  # restrict, cascade, set null, no action
-    on_update: restrict
-    comment: 'mst_medical_facilityテーブルのmedical_idを参照。医療機関ID。'
-- name: file_type
-  old_name: file_type
-  description: アップロードされたファイルの種類
-  data_type: integer
-  primary_key: false
-  nullable: false
-  comment: 'アップロードされたファイルの種類。1: 医療機器台帳, 2: 貸出履歴, 3: 故障履歴。'
-- name: file_name
-  old_name: file_name
-  description: アップロードされたファイル名
-  data_type: text
-  primary_key: false
-  nullable: false
-  comment: 'アップロードされたファイルの名前。'
-- name: upload_datetime
-  old_name: upload_datetime
-  description: アップロード日時
-  data_type: timestamp
-  primary_key: false
-  nullable: false
-  comment: 'アップロードが行われた日時'
-- name: upload_user_id
-  old_name: upload_user_id
-  description: アップロードを行ったユーザーID
-  data_type: integer
-  primary_key: false
-  nullable: false
-  comment: 'アップロードを行ったユーザーのID。ユーザーマスタのuser_idと紐づく。'
-- name: download_datetime
-  old_name: download_datetime
-  description: システム側でのダウンロード日時
-  data_type: timestamp
-  primary_key: false
-  nullable: true
-  comment: 'システム側でのダウンロードが行われた日時。ダウンロードが行われていない場合はNULL。'
-- name: regdate
-  old_name: regdate
-  description: データ作成日
-  data_type: timestamp
-  primary_key: false
-  nullable: false
-  comment: null
-- name: lastupdate
-  old_name: lastupdate
-  description: 最終更新日
-  data_type: timestamp
-  primary_key: false
-  nullable: false
-  comment: null
+  - name: uploadlog_id
+    description: アップロードログID
+    data_type: serial
+    primary_key: true
+    nullable: false
+    comment: null
+
+  - name: medical_id
+    description: 医療機関ID
+    data_type: integer
+    primary_key: false
+    nullable: false
+    comment: null
+    references:
+      table: mst_medical_facility
+      column: medical_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+      comment: 'mst_medical_facilityテーブルのmedical_idを参照。医療機関ID。'
+
+  - name: file_type
+    description: アップロードされたファイルの種類
+    data_type: integer
+    primary_key: false
+    nullable: false
+    comment: 'アップロードされたファイルの種類。1: 医療機器台帳, 2: 貸出履歴, 3: 故障履歴。'
+
+  - name: file_name
+    description: アップロードされたファイル名
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'アップロードされたファイルの名前。'
+
+  - name: upload_datetime
+    description: アップロード日時
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: 'アップロードが行われた日時'
+
+  - name: upload_user_id
+    description: アップロードを行ったユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'アップロードを行ったユーザーのID。ユーザーマスタのuser_idと紐づく。'
+
+  - name: download_datetime
+    description: システム側でのダウンロード日時
+    data_type: timestamp
+    primary_key: false
+    nullable: true
+    comment: 'システム側でのダウンロードが行われた日時。ダウンロードが行われていない場合はNULL。'
+
+  - name: reg_user_id
+    description: 登録ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'このレコードの登録を行ったユーザーのID。'
+    references:
+      table: mst_user
+      column: user_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+
+  - name: regdate
+    description: データ作成日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: null
+
+  - name: update_user_id
+    description: 更新ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'このレコードの更新を行ったユーザーのID。'
+    references:
+      table: mst_user
+      column: user_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+
+  - name: lastupdate
+    description: 最終更新日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: null
 
 #- indexes info -------------------------------------------
 indexes:
-- name: idx_facility_upload_log_medical_id_file_type
-  old_name: idx_facility_upload_log_medical_id_file_type
-  columns: [medical_id]
-  unique: false
-  comment: '医療機関IDに対するインデックス。医療機関ごとのアップロード履歴を効率的に検索するためのインデックス。'
+  - name: idx_facility_upload_log_medical_id_file_type
+    columns: [medical_id]
+    unique: false
+    comment: '医療機関IDに対するインデックス。医療機関ごとのアップロード履歴を効率的に検索するためのインデックス。'

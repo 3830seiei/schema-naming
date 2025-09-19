@@ -1,8 +1,15 @@
 version: 1
-notes: "Draft rename dictionary generated from smds_poc YAMLs.\nPriority for new names:\n\
-  \  1) New naming rules (snake_case, reserved avoidance, *_id suffix)\n  2) JMDN\
-  \ / MHLW canonical terms\n  3) Clear English names for global readability\n'todo'\
-  \ fields indicate items needing human review."
+notes: "Draft rename dictionary generated from smds_poc YAMLs.\nPriority for new names:\n  1) New naming rules (snake_case,\
+  \ reserved avoidance, *_id suffix)\n  2) JMDN / MHLW canonical terms\n  3) Clear English names for global readability\n\
+  'todo' fields indicate items needing human review."
+# -------------
+# checkline
+# status: crosswalk  PoC時のキュレーションテーブルなので、見直しなし
+# status: keep  このまま採用
+# status: pending  すぐに判断が付かないので保留
+# status: notfound  実際PoCでは使われていない
+# TODO: 作業を記載しておく
+# -------------
 tables:
   mstgovconbinationarea:
     new: mhlw_combined_area
@@ -16,10 +23,10 @@ tables:
   mstgovcity:
     new: mhlw_municipality
     description: 厚生労働省管理の市区町村コードマスタ
-  mstgroupbunrui:
+  mstgroupbunrui:  # status: crosswalk
     new: mstgroupbunrui
     description: 分類のグループ化情報のマスタ
-  mstgroupmaker:
+  mstgroupmaker:  # status: crosswalk
     new: mstgroupmaker
     description: メーカー名のグループ化情報のマスタ
   msthospital:
@@ -92,39 +99,12 @@ tables:
   tblrepairlog:
     new: core.medical_device_repair_history
     description: 修理履歴テーブル
-  tblimportstatus:
+  tblimportstatus:  # status: notfound
     new: tblimportstatus
     description: 取込対象ファイルの作業状況
-  tblregdate:
+  tblregdate:  # status: notfound
     new: tblcreated_at
     description: 各テーブルの更新日時管理
-  medical_equipment_ledger:
-    new: medical_equipment_ledger
-    description: '医療機関別機器台帳（オンプレミス側PostgreSQLのtblhpmelistから集約されたデータ） # optiserve v2追加'
-  mst_user:
-    new: mst_user
-    description: 'OptiServe管理のユーザーマスタ # optiserve v2追加'
-  mst_medical_facility:
-    new: mst_medical_facility
-    description: '医療機関マスタ（公開データ） # optiserve v2追加'
-  equipment_classification_report_selection:
-    new: equipment_classification_report_selection
-    description: 'レポート出力用の機器分類の選択情報 # optiserve v2追加'
-  user_entity_link:
-    new: map_user_entity
-    description: 'ユーザーと組織（医療機関・ディーラー・メーカー）の紐付け # optiserve v2追加'
-  report_publication_log:
-    new: report_publication_log
-    description: '医療機関向けレポートの公開履歴テーブル # optiserve v2追加'
-  medical_equipment_analysis_setting:
-    new: medical_equipment_analysis_setting
-    description: '機器ごとの分析設定（対象フラグ、分類上書きなど） # optiserve v2追加'
-  mst_equipment_classification:
-    new: mst_equipment_classification
-    description: '医療機関別と公開用（共通）の医療機器分類を管理するマスタテーブル # optiserve v2追加'
-  facility_upload_log:
-    new: facility_upload_log
-    description: '医療機関のデータアップロード履歴テーブル # optiserve v2追加'
 columns:
   mstgovconbinationarea:
     id:
@@ -180,7 +160,7 @@ columns:
     prefname_nopref:
       new: prefecture_name_short
       description: 都道府県名_都道府県情報なし
-      notes: 'prefecture_name_en との対比で、都道府県を省いた名称, 例: 東京, 大阪。今後enも追加しても良いかも。'
+      notes: "prefecture_name_en との対比で、都道府県を省いた名称, 例: 東京, 大阪。今後enも追加しても良いかも。"
     prefname_roman:
       new: prefecture_name_roman
       description: 都道府県_ローマ字
@@ -193,7 +173,8 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstgovcity:
+
+  mstgovcity:  # mhlw_municipality
     citycode:
       new: municipality_code
       description: 市区町村コード
@@ -215,7 +196,8 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstgroupbunrui:
+
+  mstgroupbunrui:  # status: crosswalk
     seq:
       new: seq_id
       description: シリアル値
@@ -243,7 +225,7 @@ columns:
     updateuser:
       new: updateuser
       description: 最終更新者
-  mstgroupmaker:
+  mstgroupmaker:  # status: crosswalk
     seq:
       new: seq_id
       description: シリアル値
@@ -419,7 +401,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  msthospitalizationgov:
+  msthospitalizationgov:  # mhlw_hospitalization_statistics
     id:
       new: mhlw_hospitalization_statistics_id
       description: ID
@@ -450,7 +432,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  msthospitalwardgov:
+  msthospitalwardgov:  # mhlw_medical_facility_ward
     id:
       new: mhlw_medical_facility_ward_id
       description: ID
@@ -496,7 +478,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstjahidiji:
+  mstjahidiji:  # jahid_medical_codes
     id:
       new: jahid_medical_codes_id
       description: ID
@@ -527,7 +509,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstjahidjmdn:
+  mstjahidjmdn:  # jahid_jmdn
     id:
       new: jahid_jmdn_id
       description: ID
@@ -579,7 +561,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstjahidkbn:
+  mstjahidkbn:  # mst_provider_codes status: pending レイアウト見直し
     id:
       new: id
       description: ID
@@ -616,7 +598,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstjahidmedisbunrui:
+  mstjahidmedisbunrui:  # jahid_medis_classification
     id:
       new: jahid_medis_classification_id
       description: ID
@@ -647,7 +629,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstjahidproducts:
+  mstjahidproducts:  # jahid_products
     id:
       new: id
       description: ID
@@ -844,7 +826,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstjahidproductspackage:
+  mstjahidproductspackage:  # jahid_product_package (pi情報を分離したもの)
     id:
       new: jahid_product_package_id
       description: ID
@@ -893,7 +875,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstjahidshoukanbunrui:
+  mstjahidshoukanbunrui:  # jahid_reimbursement_class
     id:
       new: jahid_reimbursement_class_id
       description: ID
@@ -972,7 +954,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstjahidunit:
+  mstjahidunit:  # jahid_packaging_units
     id:
       new: jahid_unit_id
       description: ID
@@ -1003,7 +985,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstjahidvendor:
+  mstjahidvendor:  # jahid_vendor
     id:
       new: jahid_vendor_id
       description: ID
@@ -1070,7 +1052,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstmedieproducts:
+  mstmedieproducts:  # medie_products
     id:
       new: medie_product_id
       description: ID
@@ -1467,7 +1449,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  mstrelationproducts:
+  mstrelationproducts:  # product_crosswalk status: pending
     productname:
       new: productname_id
       description: key製品名
@@ -1486,7 +1468,8 @@ columns:
     key2:
       new: key2
       description: key2
-  rawhpmelist:
+
+  rawhpmelist:  # raw.source_medical_device
     hpcode:
       new: medical_facility_id
       description: 病院コード
@@ -1574,7 +1557,8 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  rawrentallog:
+
+  rawrentallog:  # raw.raw.source_rental
     hpcode:
       new: medical_facility_id
       description: 病院コード
@@ -1632,7 +1616,8 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  rawrepairlog:
+
+  rawrepairlog:  # raw.source_repair
     hpcode:
       new: medical_facility_id
       description: 病院コード
@@ -1708,7 +1693,8 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  tblhpmelist:
+
+  tblhpmelist:  # core.tbl_medical_device_ledger
     hpcode:
       new: medical_facility_id
       description: 病院コード
@@ -1865,7 +1851,8 @@ columns:
     datedisposalcalc:
       new: calculated_disposal_date
       description: 廃棄日（再計算）
-  tblimportstatus:
+
+  tblimportstatus:  # status: pending
     filetype:
       new: filetype_id
       description: ファイル種別
@@ -1911,7 +1898,7 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  tblregdate:
+  tblregdate:  # status: pending
     id:
       new: id
       description: ID
@@ -1921,7 +1908,8 @@ columns:
     lastupdate:
       new: updated_at
       description: 最終更新日
-  tblrentallog:
+
+  tblrentallog:  # core.medical_device_rental_history
     hpcode:
       new: medical_facility_id
       description: 病院コード
@@ -1988,7 +1976,8 @@ columns:
     returndatecalc:
       new: calculated_return_date
       description: 返却日（再計算）
-  tblrepairlog:
+
+  tblrepairlog:  # core.medical_device_repair_history
     hpcode:
       new: medical_facility_id
       description: 病院コード
@@ -2076,321 +2065,3 @@ columns:
     downtimecalc:
       new: calculated_downtime_hours
       description: 障害時間（再計算）
-  medical_equipment_ledger:
-    ledger_id:
-      new: ledger_id
-      description: '機器台帳ID # optiserve v2追加'
-    medical_id:
-      new: medical_id
-      description: '医療機関ID # optiserve v2追加'
-    model_number:
-      new: model_number
-      description: 'メーカー型番 # optiserve v2追加'
-    product_name:
-      new: product_name
-      description: '機器製品名 # optiserve v2追加'
-    maker_name:
-      new: maker_name
-      description: 'メーカー名 # optiserve v2追加'
-    classification_id:
-      new: classification_id
-      description: '機器分類ID # optiserve v2追加'
-    stock_quantity:
-      new: stock_quantity
-      description: '台帳保有台数 # optiserve v2追加'
-    is_included:
-      new: is_included
-      description: '分析対象に含めるか # optiserve v2追加'
-    reg_user_id:
-      new: reg_user_id
-      description: '登録ユーザーID # optiserve v2追加'
-    regdate:
-      new: created_at
-      description: 'データ作成日 # claude-code set'
-    update_user_id:
-      new: update_user_id
-      description: '更新ユーザーID # optiserve v2追加'
-    lastupdate:
-      new: updated_at
-      description: '最終更新日 # claude-code set'
-  mst_user:
-    user_id:
-      new: user_id
-      description: 'ユーザーID # claude-code set'
-    user_name:
-      new: user_name
-      description: 'ユーザー名 # optiserve v2追加'
-    entity_type:
-      new: entity_type
-      description: '組織の種別 # optiserve v2追加'
-    entity_relation_id:
-      new: entity_relation_id
-      description: '連携する組織ID # optiserve v2追加'
-    password:
-      new: password
-      description: 'ユーザーパスワード # optiserve v2追加'
-    e_mail:
-      new: e_mail
-      description: 'メールアドレス # optiserve v2追加'
-    phone_number:
-      new: phone_number
-      description: '電話番号 # optiserve v2追加'
-    mobile_number:
-      new: mobile_number
-      description: '携帯電話番号 # optiserve v2追加'
-    user_status:
-      new: user_status
-      description: 'ユーザーステータス # optiserve v2追加'
-    inactive_reason_code:
-      new: inactive_reason_code
-      description: '無効化理由コード # optiserve v2追加'
-    inactive_reason_note:
-      new: inactive_reason_note
-      description: '無効化理由メモ # optiserve v2追加'
-    reg_user_id:
-      new: reg_user_id
-      description: '登録ユーザーID # claude-code set'
-    regdate:
-      new: created_at
-      description: 'データ作成日 # claude-code set'
-    update_user_id:
-      new: update_user_id
-      description: '更新ユーザーID # claude-code set'
-    lastupdate:
-      new: updated_at
-      description: '最終更新日 # claude-code set'
-  mst_medical_facility:
-    medical_id:
-      new: medical_id
-      description: '医療機関ID # claude-code set'
-    medical_name:
-      new: medical_name
-      description: '医療機関名 # optiserve v2追加'
-    address_postal_code:
-      new: address_postal_code
-      description: '医療機関の郵便番号 # optiserve v2追加'
-    address_prefecture:
-      new: address_prefecture
-      description: '医療機関の都道府県 # optiserve v2追加'
-    address_city:
-      new: address_city
-      description: '医療機関の市区町村 # optiserve v2追加'
-    address_line1:
-      new: address_line1
-      description: '医療機関の住所1 # optiserve v2追加'
-    address_line2:
-      new: address_line2
-      description: '医療機関の住所2 # optiserve v2追加'
-    phone_number:
-      new: phone_number
-      description: '医療機関の電話番号 # claude-code set'
-    reg_user_id:
-      new: reg_user_id
-      description: '登録ユーザーID # claude-code set'
-    regdate:
-      new: created_at
-      description: 'データ作成日 # claude-code set'
-    update_user_id:
-      new: update_user_id
-      description: '更新ユーザーID # claude-code set'
-    lastupdate:
-      new: updated_at
-      description: '最終更新日 # claude-code set'
-  equipment_classification_report_selection:
-    medical_id:
-      new: medical_id
-      description: '医療機関ID # claude-code set'
-    rank:
-      new: rank
-      description: '機器分類の表示順序 # optiserve v2追加'
-    classification_id:
-      new: classification_id
-      description: '機器分類ID # claude-code set'
-    reg_user_id:
-      new: reg_user_id
-      description: '登録ユーザーID # claude-code set'
-    regdate:
-      new: created_at
-      description: 'データ作成日 # claude-code set'
-    update_user_id:
-      new: update_user_id
-      description: '更新ユーザーID # claude-code set'
-    lastupdate:
-      new: updated_at
-      description: '最終更新日 # claude-code set'
-  user_entity_link:
-    entity_type:
-      new: entity_type
-      description: '組織の種別 # claude-code set'
-    entity_relation_id:
-      new: entity_relation_id
-      description: '連携する組織ID # claude-code set'
-    entity_name:
-      new: entity_name
-      description: '組織名 # optiserve v2追加'
-    entity_address_postal_code:
-      new: entity_address_postal_code
-      description: '組織の郵便番号 # optiserve v2追加'
-    entity_address_prefecture:
-      new: entity_address_prefecture
-      description: '組織の都道府県 # optiserve v2追加'
-    entity_address_city:
-      new: entity_address_city
-      description: '組織の市区町村 # optiserve v2追加'
-    entity_address_line1:
-      new: entity_address_line1
-      description: '組織の住所1 # optiserve v2追加'
-    entity_address_line2:
-      new: entity_address_line2
-      description: '組織の住所2 # optiserve v2追加'
-    entity_phone_number:
-      new: entity_phone_number
-      description: '組織の電話番号 # optiserve v2追加'
-    notification_email_list:
-      new: notification_email_list
-      description: '通知メールアドレス # optiserve v2追加'
-    count_reportout_classification:
-      new: count_reportout_classification
-      description: 'レポート公開の分類数 # optiserve v2追加'
-    analiris_classification_level:
-      new: analiris_classification_level
-      description: '分析レポートの分類レベル # optiserve v2追加'
-    reg_user_id:
-      new: reg_user_id
-      description: '登録ユーザーID # claude-code set'
-    regdate:
-      new: created_at
-      description: 'データ作成日 # claude-code set'
-    update_user_id:
-      new: update_user_id
-      description: '更新ユーザーID # claude-code set'
-    lastupdate:
-      new: updated_at
-      description: '最終更新日 # claude-code set'
-  report_publication_log:
-    publication_id:
-      new: publication_id
-      description: 'レポート公開ID # optiserve v2追加'
-    medical_id:
-      new: medical_id
-      description: '医療機関ID # claude-code set'
-    publication_ym:
-      new: publication_ym
-      description: 'レポート公開年月 # optiserve v2追加'
-    file_type:
-      new: file_type
-      description: '公開したファイルの種類 # optiserve v2追加'
-    file_name:
-      new: file_name
-      description: '公開したファイル名 # optiserve v2追加'
-    upload_datetime:
-      new: upload_datetime
-      description: 'サイトへの更新日時 # optiserve v2追加'
-    download_user_id:
-      new: download_user_id
-      description: 'ダウンロードを行ったユーザーID # optiserve v2追加'
-    download_datetime:
-      new: download_datetime
-      description: 'ユーザーのダウンロード日時 # optiserve v2追加'
-    reg_user_id:
-      new: reg_user_id
-      description: '登録ユーザーID # claude-code set'
-    regdate:
-      new: created_at
-      description: 'データ作成日 # claude-code set'
-    update_user_id:
-      new: update_user_id
-      description: '更新ユーザーID # claude-code set'
-    lastupdate:
-      new: updated_at
-      description: '最終更新日 # claude-code set'
-  medical_equipment_analysis_setting:
-    ledger_id:
-      new: ledger_id
-      description: '機器台帳ID # claude-code set'
-    override_is_included:
-      new: override_is_included
-      description: '分析対象に含めるかの上書き情報 # optiserve v2追加'
-    override_classification_id:
-      new: override_classification_id
-      description: '器機分類IDの上書き情報 # optiserve v2追加'
-    note:
-      new: note
-      description: '備考（設定理由など） # optiserve v2追加'
-    reg_user_id:
-      new: reg_user_id
-      description: '登録ユーザーID # claude-code set'
-    regdate:
-      new: created_at
-      description: 'データ作成日 # claude-code set'
-    update_user_id:
-      new: update_user_id
-      description: '更新ユーザーID # claude-code set'
-    lastupdate:
-      new: updated_at
-      description: '最終更新日 # claude-code set'
-  mst_equipment_classification:
-    classification_id:
-      new: classification_id
-      description: '機器分類ID # claude-code set'
-    medical_id:
-      new: medical_id
-      description: '医療機関ID # claude-code set'
-    classification_level:
-      new: classification_level
-      description: 'レベル（分類の階層） # optiserve v2追加'
-    classification_name:
-      new: classification_name
-      description: '機器分類名 # optiserve v2追加'
-    parent_classification_id:
-      new: parent_classification_id
-      description: '親となる機器分類ID # optiserve v2追加'
-    publication_classification_id:
-      new: publication_classification_id
-      description: '公開用の機器分類ID # optiserve v2追加'
-    reg_user_id:
-      new: reg_user_id
-      description: '登録ユーザーID # claude-code set'
-    regdate:
-      new: created_at
-      description: 'データ作成日 # claude-code set'
-    update_user_id:
-      new: update_user_id
-      description: '更新ユーザーID # claude-code set'
-    lastupdate:
-      new: updated_at
-      description: '最終更新日 # claude-code set'
-  facility_upload_log:
-    uploadlog_id:
-      new: uploadlog_id
-      description: 'アップロードログID # optiserve v2追加'
-    medical_id:
-      new: medical_id
-      description: '医療機関ID # claude-code set'
-    file_type:
-      new: file_type
-      description: 'アップロードされたファイルの種類 # claude-code set'
-    file_name:
-      new: file_name
-      description: 'アップロードされたファイル名 # claude-code set'
-    upload_datetime:
-      new: upload_datetime
-      description: 'アップロード日時 # claude-code set'
-    upload_user_id:
-      new: upload_user_id
-      description: 'アップロードを行ったユーザーID # optiserve v2追加'
-    download_datetime:
-      new: download_datetime
-      description: 'システム側でのダウンロード日時 # claude-code set'
-    reg_user_id:
-      new: reg_user_id
-      description: '登録ユーザーID # claude-code set'
-    regdate:
-      new: created_at
-      description: 'データ作成日 # claude-code set'
-    update_user_id:
-      new: update_user_id
-      description: '更新ユーザーID # claude-code set'
-    lastupdate:
-      new: updated_at
-      description: '最終更新日 # claude-code set'

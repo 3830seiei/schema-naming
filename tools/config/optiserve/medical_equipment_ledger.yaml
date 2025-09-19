@@ -1,0 +1,144 @@
+#- metadata -----------------------------------------------
+metadata:
+  description: テーブル定義書
+  author: Claude Code
+  history:
+  - version: 1.0.0
+    date: '2025-08-08'
+    author: Claude Code
+    comment: 機器台帳テーブル作成（オンプレミス側PostgreSQL機器台帳からの集約データ保管用）
+  - version: 1.0.1
+    date: '2025-08-22'
+    author: H.Miyazawa
+    comment: 'ユーザーIDをintegerからtextに変更。'
+
+#- tableinfo ----------------------------------------------
+table_name: medical_equipment_ledger
+description: 医療機関別機器台帳（オンプレミス側PostgreSQLのtblhpmelistから集約されたデータ）
+#- columns info -------------------------------------------
+columns:
+  - name: ledger_id
+    description: 機器台帳ID
+    data_type: serial
+    primary_key: true
+    nullable: false
+    auto_increment: true
+    comment: '自動採番される台帳レコードの一意識別子'
+
+  - name: medical_id
+    description: 医療機関ID
+    data_type: integer
+    primary_key: false
+    nullable: false
+    comment: 'オンプレミス側PostgreSQL tblhpmelist.hpcodeから取得される医療機関識別子'
+    references:
+      - table: mst_medical_facility
+        column: medical_id
+        enforced: false  # DB制約無し
+        on_delete: restrict
+        on_update: restrict
+        comment: 'mst_medical_facilityテーブルのmedical_idを参照'
+
+  - name: model_number
+    description: メーカー型番
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'オンプレミス側PostgreSQL tblhpmelist.modelnumberから取得される機器の型番'
+
+  - name: product_name
+    description: 機器製品名
+    data_type: text
+    primary_key: false
+    nullable: true
+    comment: 'オンプレミス側PostgreSQL tblhpmelist.productnameのMAX値から取得される製品名'
+
+  - name: maker_name
+    description: メーカー名
+    data_type: text
+    primary_key: false
+    nullable: true
+    comment: 'オンプレミス側PostgreSQL tblhpmelist.makernameのMAX値から取得されるメーカー名'
+
+  - name: classification_id
+    description: 機器分類ID
+    data_type: integer
+    primary_key: false
+    nullable: true
+    comment: 'user_entity_link.analiris_classification_levelの分類レベルに対して、オンプレミス側PostgreSQL tblhpmelist.equipmentclassificationのMAX値から取得される機器分類'
+    references:
+      table: mst_equipment_classification
+      column: classification_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+
+  - name: stock_quantity
+    description: 台帳保有台数
+    data_type: integer
+    primary_key: false
+    nullable: false
+    comment: 'オンプレミス側PostgreSQL tblhpmelistでCOUNT(*)により集計された保有台数'
+
+  - name: is_included
+    description: 分析対象に含めるか
+    data_type: boolean
+    primary_key: false
+    nullable: false
+    default: true
+    comment: 'true: 分析対象に含める, false: 分析対象外'
+
+  - name: reg_user_id
+    description: 登録ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'このレコードの登録を行ったユーザーのID。'
+    references:
+      table: mst_user
+      column: user_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+
+  - name: regdate
+    description: データ作成日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: 'レコードの作成日時'
+
+  - name: update_user_id
+    description: 更新ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'このレコードの更新を行ったユーザーのID。'
+    references:
+      table: mst_user
+      column: user_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+
+  - name: lastupdate
+    description: 最終更新日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: 'レコードの最終更新日時'
+
+#- indexes info -------------------------------------------
+indexes:
+  - name: idx_medical_equipment_medical_id
+    columns: [medical_id]
+    unique: false
+    note: '医療機関IDでの検索用インデックス'
+  - name: idx_medical_equipment_model
+    columns: [medical_id, model_number]
+    unique: false
+    note: '医療機関ID + 型番での複合検索用インデックス'
+  - name: idx_medical_equipment_maker
+    columns: [maker_name]
+    unique: false
+    note: 'メーカー名での検索用インデックス'

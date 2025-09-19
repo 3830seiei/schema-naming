@@ -2,9 +2,9 @@
 """
 既存YAMLファイルをrename_dictionary.yamlで変換するスクリプト
 
-Input: tools/config/smds_poc/*.yaml（既存PoCファイル）
+Input: tools/config/optiserve/*.yaml（既存opiserveファイル）
 Process: dictionary/rename_dictionary.yamlの変換ルールを適用
-Output: schema/tables/renamed/*.yaml（新命名）
+Output: tools/config/streamedix/optiserve/*.yaml（新命名）
 """
 
 import yaml
@@ -154,9 +154,9 @@ def main():
     project_root = script_dir.parent
 
     # パス設定
-    input_dir = project_root / 'tools/config/smds_poc'
+    input_dir = project_root / 'tools/config/optiserve'
     rename_dict_path = project_root / 'dictionary/rename_dictionary.yaml'
-    output_dir = project_root / 'tools/config/streamedix'
+    output_dir = project_root / 'tools/config/streamedix/optiserve'
 
     # rename_dictionary.yamlを読み込み
     if not rename_dict_path.exists():

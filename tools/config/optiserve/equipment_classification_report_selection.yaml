@@ -11,59 +11,91 @@ metadata:
     date: '2025-07-10'
     author: H.Miyazawa
     comment: '1.PK情報バグ修正（rank追加）。2.外部キー情報を追加'
+  - version: 1.2.0
+    date: '2025-08-13'
+    author: H.Miyazawa
+    comment: '登録、更新のユーザーIDを追加'
+  - version: 1.3.0
+    date: '2025-08-22'
+    author: H.Miyazawa
+    comment: 'ユーザーIDをintegerからtextに変更。'
 
 #- tableinfo ----------------------------------------------
 table_name: equipment_classification_report_selection
-old_table_name: equipment_classification_report_selection
 description: レポート出力用の機器分類の選択情報
 #- columns info -------------------------------------------
 columns:
-- name: medical_id
-  old_name: medical_id
-  description: 医療機関ID
-  data_type: integer
-  primary_key: true
-  nullable: false
-  comment: null
-  references:
-    table: mst_medical_facility
-    column: medical_id
-    enforced: false  # DB制約無し
-    on_delete: restrict  # restrict, cascade, set null, no action
-    on_update: restrict
-    comment: 'mst_medical_facilityテーブルのmedical_idを参照。'
-- name: rank
-  old_name: rank
-  description: 機器分類の表示順序
-  data_type: integer
-  primary_key: true
-  nullable: false
-  comment: 'レポートの機器分類の表示順序を示す。小さいほど上位に表示される。'
-- name: classification_id
-  old_name: classification_id
-  description: 機器分類ID
-  data_type: serial
-  primary_key: false
-  nullable: true
-  comment: 'レポート出力対象の機器分類ID。NULLの場合は、システムルールに従って自動的に選択される。'
-  references:
-    table: mst_equipment_classification
-    column: classification_id
-    enforced: false  # DB制約無し
-    on_delete: restrict  # restrict, cascade, set null, no action
-    on_update: restrict
-    comment: 'mst_equipment_classificationテーブルのclassification_idを参照。機器分類のID。'
-- name: regdate
-  old_name: regdate
-  description: データ作成日
-  data_type: timestamp
-  primary_key: false
-  nullable: false
-  comment: null
-- name: lastupdate
-  old_name: lastupdate
-  description: 最終更新日
-  data_type: timestamp
-  primary_key: false
-  nullable: false
-  comment: null
+  - name: medical_id
+    description: 医療機関ID
+    data_type: integer
+    primary_key: true
+    nullable: false
+    comment: null
+    references:
+      table: mst_medical_facility
+      column: medical_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+      comment: 'mst_medical_facilityテーブルのmedical_idを参照。'
+
+  - name: rank
+    description: 機器分類の表示順序
+    data_type: integer
+    primary_key: true
+    nullable: false
+    comment: 'レポートの機器分類の表示順序を示す。小さいほど上位に表示される。'
+
+  - name: classification_id
+    description: 機器分類ID
+    data_type: integer
+    primary_key: false
+    nullable: true
+    comment: 'レポート出力対象の機器分類ID。NULLの場合は、システムルールに従って自動的に選択される。'
+    references:
+      table: mst_equipment_classification
+      column: classification_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+      comment: 'mst_equipment_classificationテーブルのclassification_idを参照。機器分類のID。'
+
+  - name: reg_user_id
+    description: 登録ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'このレコードの登録を行ったユーザーのID。'
+    references:
+      table: mst_user
+      column: user_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+
+  - name: regdate
+    description: データ作成日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: null
+
+  - name: update_user_id
+    description: 更新ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'このレコードの更新を行ったユーザーのID。'
+    references:
+      table: mst_user
+      column: user_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+
+  - name: lastupdate
+    description: 最終更新日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: null

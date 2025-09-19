@@ -15,130 +15,162 @@ metadata:
     date: '2025-07-16'
     author: H.Miyazawa
     comment: '1. proc_type -> user_statusに変更し、inactive時の理由項目を追加。2. entity_typeに9: 管理者権限を追加。'
+  - version: 1.3.0
+    date: '2025-08-22'
+    author: H.Miyazawa
+    comment: 'ユーザーIDをintegerからtextに変更。'
 
 #- tableinfo ----------------------------------------------
 table_name: mst_user
-old_table_name: mst_user
 description: OptiServe管理のユーザーマスタ
 
 #- columns info -------------------------------------------
 columns:
-- name: user_id
-  old_name: user_id
-  description: ユーザーID
-  data_type: serial
-  primary_key: true
-  nullable: false
-  comment: null
-- name: user_name
-  old_name: user_name
-  description: ユーザー名
-  data_type: text
-  primary_key: false
-  nullable: false
-  comment: 'ユーザーの表示名'
-- name: entity_type
-  old_name: entity_type
-  description: 組織の種別
-  data_type: integer
-  primary_key: false
-  nullable: false
-  comment: '1: 医療機関, 2: ディーラー, 3: メーカー, 9:管理者権限'
-  references:
-    table: user_entity_link
-    column: entity_type
-    enforced: false  # DB制約無し
-    on_delete: restrict  # restrict, cascade, set null, no action
-    on_update: restrict
-    comment: 'user_entity_linkテーブルのentity_typeを参照。ユーザーが所属する組織の種別とIDのセット。'
-- name: entity_relation_id
-  old_name: entity_relation_id
-  description: 連携する組織ID
-  data_type: integer
-  primary_key: false
-  nullable: false
-  comment: '連携する組織のID。entity_typeに応じて医療機関ID、ディーラーID、メーカーIDが入る。管理者時は0がセットされる。'
-  references:
-    table: user_entity_link
-    column: entity_relation_id
-    enforced: false  # DB制約無し
-    on_delete: restrict  # restrict, cascade, set null, no action
-    on_update: restrict
-    comment: 'user_entity_linkテーブルのentity_relation_idを参照。所属する組織の種別とIDのセット'
-- name: password
-  old_name: password
-  description: ユーザーパスワード
-  data_type: text
-  primary_key: false
-  nullable: false
-  comment: 'ユーザーのパスワード（ハッシュ化して保存）'
-- name: e_mail
-  old_name: e_mail
-  description: メールアドレス
-  data_type: text
-  primary_key: false
-  nullable: false
-  comment: 'ユーザーのメールアドレス(ログインIDとしても使用)'
-- name: phone_number
-  old_name: phone_number
-  description: 電話番号
-  data_type: text
-  primary_key: false
-  nullable: true
-  comment: 'ユーザーの電話番号（オプション）'
-- name: mobile_number
-  old_name: mobile_number
-  description: 携帯電話番号
-  data_type: text
-  primary_key: false
-  nullable: false
-  comment: 'ユーザーの携帯電話番号（SMSによる二段階認証で利用）'
-- name: user_status
-  old_name: user_status
-  description: ユーザーステータス
-  data_type: integer
-  primary_key: false
-  nullable: false
-  comment: '0: temporary, 1: active, 9: inactive'
-- name: inactive_reason_code
-  old_name: inactive_reason_code
-  description: 無効化理由コード
-  data_type: integer
-  primary_key: false
-  nullable: true
-  comment: 'ユーザーが無効化された理由コード（1:組織退会, 2:組織の担当者変更, 3:処理ミス, 99:その他）'
-- name: inactive_reason_note
-  old_name: inactive_reason_note
-  description: 無効化理由メモ
-  data_type: text
-  primary_key: false
-  nullable: true
-  comment: 'ユーザー無効化の理由メモ（任意）'
-- name: regdate
-  old_name: regdate
-  description: データ作成日
-  data_type: timestamp
-  primary_key: false
-  nullable: false
-  comment: null
-- name: lastupdate
-  old_name: lastupdate
-  description: 最終更新日
-  data_type: timestamp
-  primary_key: false
-  nullable: false
-  comment: null
+  - name: user_id
+    description: ユーザーID
+    data_type: text
+    primary_key: true
+    nullable: false
+    auto_increment: false
+    comment: |
+      entity_typeに応じてユニークな値をシステムにて定義。
+      システム : 900001 - 999999
+      医療機関 : 100001 - 199999
+      ディーラー : 200001 - 299999
+      メーカー : 300001 - 399999
+
+  - name: user_name
+    description: ユーザー名
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'ユーザーの表示名'
+
+  - name: entity_type
+    description: 組織の種別
+    data_type: integer
+    primary_key: false
+    nullable: false
+    comment: '1: 医療機関, 2: ディーラー, 3: メーカー, 9:管理者権限'
+    references:
+      table: user_entity_link
+      column: entity_type
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+      comment: 'user_entity_linkテーブルのentity_typeを参照。ユーザーが所属する組織の種別とIDのセット。'
+
+  - name: entity_relation_id
+    description: 連携する組織ID
+    data_type: integer
+    primary_key: false
+    nullable: false
+    comment: '連携する組織のID。entity_typeに応じて医療機関ID、ディーラーID、メーカーIDが入る。管理者時は0がセットされる。'
+    references:
+      table: user_entity_link
+      column: entity_relation_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+      comment: 'user_entity_linkテーブルのentity_relation_idを参照。所属する組織の種別とIDのセット'
+
+  - name: password
+    description: ユーザーパスワード
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'ユーザーのパスワード（ハッシュ化して保存）'
+
+  - name: e_mail
+    description: メールアドレス
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'ユーザーのメールアドレス(ログインIDとしても使用)'
+
+  - name: phone_number
+    description: 電話番号
+    data_type: text
+    primary_key: false
+    nullable: true
+    comment: 'ユーザーの電話番号（オプション）'
+
+  - name: mobile_number
+    description: 携帯電話番号
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'ユーザーの携帯電話番号（SMSによる二段階認証で利用）'
+
+  - name: user_status
+    description: ユーザーステータス
+    data_type: integer
+    primary_key: false
+    nullable: false
+    comment: '0: temporary, 1: active, 9: inactive'
+
+  - name: inactive_reason_code
+    description: 無効化理由コード
+    data_type: integer
+    primary_key: false
+    nullable: true
+    comment: 'ユーザーが無効化された理由コード（1:組織退会, 2:組織の担当者変更, 3:処理ミス, 99:その他）'
+
+  - name: inactive_reason_note
+    description: 無効化理由メモ
+    data_type: text
+    primary_key: false
+    nullable: true
+    comment: 'ユーザー無効化の理由メモ（任意）'
+
+  - name: reg_user_id
+    description: 登録ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'このレコードの登録を行ったユーザーのID。'
+    references:
+      table: mst_user
+      column: user_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+
+  - name: regdate
+    description: データ作成日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: null
+
+  - name: update_user_id
+    description: 更新ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'このレコードの更新を行ったユーザーのID。'
+    references:
+      table: mst_user
+      column: user_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+
+  - name: lastupdate
+    description: 最終更新日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: null
 
 #- indexes info -------------------------------------------
 indexes:
   - name: idx_user_email
-    old_name: idx_user_email
     columns: [e-mail]
     unique: true
     note: 'メールアドレスの一意制約'
 
   - name: idx_user_entity
-    old_name: idx_user_entity
     columns: [entity_type, entity_relation_id]
     unique: false
     note: '組織種別と連携組織IDの複合インデックス'

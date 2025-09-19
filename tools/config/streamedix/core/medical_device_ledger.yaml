@@ -216,6 +216,10 @@ columns:
   primary_key: false
   nullable: true
   comment: null
+- name: created_by
+  data_type: TEXT
+  nullable: false
+  description: 作成者ID（ユーザーID・システムID）
 - name: updated_at
   old_name: lastupdate
   description: 最終更新日
@@ -223,6 +227,10 @@ columns:
   primary_key: false
   nullable: true
   comment: null
+- name: updated_by
+  data_type: TEXT
+  nullable: false
+  description: 最終更新者ID（ユーザーID・システムID）
 - name: data_source_pattern
   old_name: pdbptn
   description: 情報取得元

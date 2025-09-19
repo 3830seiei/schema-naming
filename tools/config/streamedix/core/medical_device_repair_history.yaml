@@ -188,6 +188,10 @@ columns:
   primary_key: false
   nullable: true
   comment: null
+- name: created_by
+  data_type: TEXT
+  nullable: false
+  description: 作成者ID（ユーザーID・システムID）
 - name: updated_at
   old_name: lastupdate
   description: 最終更新日
@@ -195,6 +199,10 @@ columns:
   primary_key: false
   nullable: true
   comment: null
+- name: updated_by
+  data_type: TEXT
+  nullable: false
+  description: 最終更新者ID（ユーザーID・システムID）
 - name: device_category
   old_name: bunrui
   description: 機器分類

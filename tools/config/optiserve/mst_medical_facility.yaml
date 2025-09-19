@@ -11,94 +11,129 @@ metadata:
     date: '2025-07-10'
     author: H.Miyazawa
     comment: 'インデックス情報を追加'
+  - version: 1.2.0
+    date: '2025-08-13'
+    author: H.Miyazawa
+    comment: '登録、更新のユーザーIDを追加'
+  - version: 1.3.0
+    date: '2025-08-22'
+    author: H.Miyazawa
+    comment: 'ユーザーIDをintegerからtextに変更。'
 
 #- tableinfo ----------------------------------------------
 table_name: mst_medical_facility
-old_table_name: mst_medical_facility
 description: 医療機関マスタ（公開データ）
 #- columns info -------------------------------------------
 columns:
-- name: medical_id
-  old_name: medical_id
-  description: 医療機関ID
-  data_type: serial
-  primary_key: true
-  nullable: false
-  comment: null
-- name: medical_name
-  old_name: medical_name
-  description: 医療機関名
-  data_type: text
-  primary_key: false
-  nullable: false
-  comment: '医療機関の名称。'
-- name: address_postal_code
-  old_name: address_postal_code
-  description: 医療機関の郵便番号
-  data_type: text
-  primary_key: false
-  nullable: true
-  comment: '医療機関の郵便番号（オプション）'
-- name: address_prefecture
-  old_name: address_prefecture
-  description: 医療機関の都道府県
-  data_type: text
-  primary_key: false
-  nullable: true
-  comment: '医療機関の都道府県（オプション）'
-- name: address_city
-  old_name: address_city
-  description: 医療機関の市区町村
-  data_type: text
-  primary_key: false
-  nullable: true
-  comment: '医療機関の市区町村（オプション）'
-- name: address_line1
-  old_name: address_line1
-  description: 医療機関の住所1
-  data_type: text
-  primary_key: false
-  nullable: true
-  comment: '医療機関の町名以降・番地（オプション）'
-- name: address_line2
-  old_name: address_line2
-  description: 医療機関の住所2
-  data_type: text
-  primary_key: false
-  nullable: true
-  comment: '医療機関の建物名等（オプション）'
-- name: phone_number
-  old_name: phone_number
-  description: 医療機関の電話番号
-  data_type: text
-  primary_key: false
-  nullable: true
-  comment: '医療機関の電話番号（オプション）'
-- name: regdate
-  old_name: regdate
-  description: データ作成日
-  data_type: timestamp
-  primary_key: false
-  nullable: false
-  comment: null
-- name: lastupdate
-  old_name: lastupdate
-  description: 最終更新日
-  data_type: timestamp
-  primary_key: false
-  nullable: false
-  comment: null
+  - name: medical_id
+    description: 医療機関ID
+    data_type: serial
+    primary_key: true
+    nullable: false
+    comment: null
+
+  - name: medical_name
+    description: 医療機関名
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: '医療機関の名称。'
+
+  - name: address_postal_code
+    description: 医療機関の郵便番号
+    data_type: text
+    primary_key: false
+    nullable: true
+    comment: '医療機関の郵便番号（オプション）'
+
+  - name: address_prefecture
+    description: 医療機関の都道府県
+    data_type: text
+    primary_key: false
+    nullable: true
+    comment: '医療機関の都道府県（オプション）'
+
+  - name: address_city
+    description: 医療機関の市区町村
+    data_type: text
+    primary_key: false
+    nullable: true
+    comment: '医療機関の市区町村（オプション）'
+
+  - name: address_line1
+    description: 医療機関の住所1
+    data_type: text
+    primary_key: false
+    nullable: true
+    comment: '医療機関の町名以降・番地（オプション）'
+
+  - name: address_line2
+    description: 医療機関の住所2
+    data_type: text
+    primary_key: false
+    nullable: true
+    comment: '医療機関の建物名等（オプション）'
+
+  - name: phone_number
+    description: 医療機関の電話番号
+    data_type: text
+    primary_key: false
+    nullable: true
+    comment: '医療機関の電話番号（オプション）'
+
+  - name: reg_user_id
+    description: 登録ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'このレコードの登録を行ったユーザーのID。'
+    references:
+      table: mst_user
+      column: user_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+
+  - name: regdate
+    description: データ作成日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: null
+
+  - name: update_user_id
+    description: 更新ユーザーID
+    data_type: text
+    primary_key: false
+    nullable: false
+    comment: 'このレコードの更新を行ったユーザーのID。'
+    references:
+      table: mst_user
+      column: user_id
+      enforced: false  # DB制約無し
+      on_delete: restrict  # restrict, cascade, set null, no action
+      on_update: restrict
+
+  - name: lastupdate
+    description: 最終更新日
+    data_type: timestamp
+    primary_key: false
+    nullable: false
+    comment: null
 
 #- indexes info -------------------------------------------
 indexes:
   - name: idx_medical_name
-    old_name: idx_medical_name
     columns: [address_prefecture, medical_name]
     unique: false
     note: '医療機関名のインデックスだけど、同名の医療機関が存在する可能性があるので、都道府県と組み合わせてできるだけ一意制約を設ける。'
 
   - name: idx_phone_number
-    old_name: idx_phone_number
     columns: [phone_number]
     unique: false
     note: '医療機関の電話番号のインデックス。'
+
+  - name: idx_address_prefecture
+    columns: [address_prefecture]
+    uniqui: false
+    note: '医療機関の都道府県のインデックス。'
