@@ -18,7 +18,7 @@ metadata:
     applied_rules: rename_dictionary.yaml v1
 
 #- tableinfo ----------------------------------------------
-table_name: user_entity_link
+table_name: map_user_entity
 old_table_name: user_entity_link
 description: ユーザーと組織（医療機関・ディーラー・メーカー）の紐付け
 
@@ -148,7 +148,7 @@ columns:
   nullable: false
   comment: null
 indexes:
-- name: idx_user_entity
+- name: idx_map_user_entity_type_id
   old_name: idx_user_entity
   columns:
   - entity_type

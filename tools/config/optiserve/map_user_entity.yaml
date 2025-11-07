@@ -17,7 +17,8 @@ metadata:
     comment: 'ユーザーIDをintegerからtextに変更。'
 
 #- tableinfo ----------------------------------------------
-table_name: user_entity_link
+table_name: map_user_entity
+old_table_name: user_entity_link
 description: ユーザーと組織（医療機関・ディーラー・メーカー）の紐付け
 #- columns info -------------------------------------------
 columns:
@@ -172,7 +173,8 @@ columns:
 
 #- indexes info -------------------------------------------
 indexes:
-  - name: idx_user_entity
+  - name: idx_map_user_entity_type_id
+    old_name: idx_user_entity
     columns: [entity_type, entity_relation_id]
     unique: false
     note: '組織種別と連携組織IDの複合インデックス'
