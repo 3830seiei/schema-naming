@@ -2394,3 +2394,197 @@ columns:
     lastupdate:
       new: updated_at
       description: '最終更新日 # claude-code set'
+  # ========================================
+  # 厚労省クローリング結果テーブル
+  # ========================================
+  mhlw_hospital_base_raw:
+    data_source:
+      new: data_source_type
+      description: データソース種別
+      notes: 種別であることを明示（code_list/facility_standard/beds_info）
+    bureau_name:
+      new: regional_health_bureau_name
+      description: 地方厚生局名
+      notes: Regional Health Bureau - インドネシアスタッフにも理解しやすい表現
+    medical_facility_type_primary:
+      new: primary_facility_type
+      description: 医科種別_主
+      notes: 医科、歯科、薬局、医科併設、歯科併設
+    medical_facility_type_secondary:
+      new: secondary_facility_type
+      description: 医科種別_副
+      notes: 医科併設の場合に設定
+    medical_facility_code:
+      new: mhlw_facility_code
+      description: 医療機関コード
+      notes: 7桁の数字、MHLWコードと明示
+    medical_facility_code_local:
+      new: mhlw_facility_code_regional
+      description: 医療機関コード_支局独自
+      notes: regional（地域別）の方が international staff に理解しやすい
+    medical_facility_name:
+      new: facility_name
+      description: 医療機関名
+    address:
+      new: full_address
+      description: 所在地
+      notes: 完全住所であることを明示
+    count_fulltime_total:
+      new: fulltime_staff_count_total
+      description: 勤務医数（常勤・合計）
+    count_fulltime_doctor:
+      new: fulltime_doctor_count
+      description: 勤務医数（常勤・医師）
+    count_fulltime_dentist:
+      new: fulltime_dentist_count
+      description: 勤務医数（常勤・歯科医師）
+    count_fulltime_pharmacist:
+      new: fulltime_pharmacist_count
+      description: 勤務医数（常勤・薬剤師）
+    count_parttime_total:
+      new: parttime_staff_count_total
+      description: 勤務医数（非常勤・合計）
+    count_parttime_doctor:
+      new: parttime_doctor_count
+      description: 勤務医数（非常勤・医師）
+    count_parttime_dentist:
+      new: parttime_dentist_count
+      description: 勤務医数（非常勤・歯科医師）
+    count_parttime_pharmacist:
+      new: parttime_pharmacist_count
+      description: 勤務医数（非常勤・薬剤師）
+    bed_count_general:
+      new: general_bed_count
+      description: 病床数（一般）
+      notes: 形容詞+名詞の語順（英語として自然）
+    bed_count_infection:
+      new: infectious_disease_bed_count
+      description: 病床数（感染）
+      notes: infectious_disease が医療用語として正確
+    bed_count_tuberculosis:
+      new: tuberculosis_bed_count
+      description: 病床数（結核）
+    bed_count_longterm:
+      new: long_term_care_bed_count
+      description: 病床数（療養）
+    bed_count_psychiatric:
+      new: psychiatric_bed_count
+      description: 病床数（精神）
+    bed_count_nursing:
+      new: nursing_care_bed_count
+      description: 病床数（介護）
+    bed_count_other:
+      new: other_bed_count
+      description: 病床数（その他）
+    bed_count_total:
+      new: total_bed_count
+      description: 病床数（合計）
+    departments:
+      new: clinical_departments
+      description: 診療科目（カンマ区切り）
+      notes: clinical を明示
+    hospital_founder:
+      new: facility_founder
+      description: 開設者氏名
+      notes: hospital → facility（医科・歯科・薬局全てを含む）
+    hospital_administrator:
+      new: facility_administrator
+      description: 管理者氏名
+    hospital_opening_date:
+      new: facility_opening_date
+      description: 開業日（指定年月日）
+    registration_reason:
+      new: designation_reason
+      description: 登録理由
+      notes: designation（保険医療機関としての指定）が正確
+    hospital_registration_date:
+      new: designation_start_date
+      description: 指定期間始
+    source_file_name:
+      new: source_excel_filename
+      description: 元ファイル名
+      notes: Excelファイルであることを明示
+    source_row_number:
+      new: source_excel_row_number
+      description: 元ファイル行番号
+    file_update_date:
+      new: mhlw_data_as_of_date
+      description: 厚労省ファイル更新日（令和○年○月現在）
+      notes: データの基準日を明示（as of date）
+    site_update_date:
+      new: mhlw_site_updated_at
+      description: 厚労省サイト更新日
+    downloaded_at:
+      new: file_downloaded_at
+      description: ダウンロード日時
+  mhlw_import_file_status:
+    file_type:
+      new: file_category
+      description: ファイル種別
+      notes: category の方が明確
+    bureau_name:
+      new: regional_health_bureau_name
+      description: 厚生局名
+    file_update_date:
+      new: mhlw_data_as_of_date
+      description: ファイル更新日
+    site_update_date:
+      new: mhlw_site_updated_at
+      description: サイト更新日
+    download_url:
+      new: source_url
+      description: ダウンロードURL
+      notes: source（情報源）URL
+    original_file_name:
+      new: original_filename
+      description: 元ファイル名
+      notes: file_name → filename（一般的な表記）
+    renamed_file_name:
+      new: renamed_filename
+      description: リネーム後ファイル名
+    zip_file_name:
+      new: zip_archive_filename
+      description: ZIPファイル名
+      notes: archive を明示
+    record_count:
+      new: imported_record_count
+      description: 登録レコード数
+      notes: imported（登録済み）を明示
+    downloaded_at:
+      new: file_downloaded_at
+      description: ダウンロード日時
+    imported_at:
+      new: data_imported_at
+      description: DB登録日時
+      notes: data を明示
+    memo:
+      new: notes
+      description: 備考
+      notes: notes（複数形）が一般的
+  mhlw_download_history:
+    bureau_name:
+      new: regional_health_bureau_name
+      description: 厚生局名
+    site_update_date:
+      new: mhlw_site_updated_at
+      description: サイト更新日
+    data_update_date:
+      new: mhlw_data_as_of_date
+      description: データ更新日
+    downloaded_count:
+      new: files_downloaded_count
+      description: ダウンロード件数
+      notes: files を明示
+    imported_count:
+      new: files_imported_count
+      description: DB登録件数
+    execution_start_at:
+      new: execution_started_at
+      description: 実行開始日時
+      notes: started（過去形）が自然
+    execution_end_at:
+      new: execution_ended_at
+      description: 実行終了日時
+    memo:
+      new: notes
+      description: 備考
